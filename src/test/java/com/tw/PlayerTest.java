@@ -2,6 +2,7 @@ package com.tw;
 
 import com.tw.exception.CannotUpgradeLandException;
 import com.tw.exception.NoEnoughFoundException;
+import com.tw.exception.TypeCastException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class PlayerTest {
         assertThat(land.getOwner(), sameInstance(player));
     }
 
-    @Test(expected = CannotBuyLocationException.class)
+    @Test(expected = TypeCastException.class)
     public void throw_exception_when_buy_land_if_current_location_if_not_land() throws Exception {
         when(game.location(anyInt())).thenReturn(new StartPoint());
         Player.createPlayer(game, 1).buyEmptyLand();
@@ -164,6 +165,12 @@ public class PlayerTest {
         when(game.location(anyInt())).thenReturn(land);
 
         player.upgradeLand();
+    }
+
+    @Test(expected = TypeCastException.class)
+    public void throw_exception_when_grade_land_if_current_location_if_not_land() throws Exception {
+        when(game.location(anyInt())).thenReturn(new StartPoint());
+        Player.createPlayer(game, 1).upgradeLand();
     }
 
     private Land createLandWithOwner(Player player) {
