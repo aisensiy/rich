@@ -15,7 +15,9 @@ public class Player {
     }
 
     public static Player createPlayer(int index) {
-        return players[index];
+        Player player = players[index];
+        player.resetLocation();
+        return player;
     }
 
     public String getName() {

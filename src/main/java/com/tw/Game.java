@@ -28,11 +28,7 @@ public class Game {
         }
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
-                .map(i -> {
-                    player = Player.createPlayer(i - 1);
-                    player.resetLocation();
-                    return player;
-                })
+                .map(i -> Player.createPlayer(i - 1))
                 .toArray(size -> new Player[size]);
     }
 }
