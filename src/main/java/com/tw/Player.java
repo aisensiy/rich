@@ -80,6 +80,7 @@ public class Player {
 
     public void upgradeLand() {
         Land land = (Land) game.location(currrentLocationIndex);
+        funding -= land.getPrice();
         land.upgradeLevel();
     }
 }

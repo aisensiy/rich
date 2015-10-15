@@ -112,4 +112,15 @@ public class PlayerTest {
 
         assertThat(land.getLevel(), is(1));
     }
+
+    @Test
+    public void should_decrease_same_money_as_buy_the_land_after_upgrade() throws Exception {
+        Land land = new Land();
+        when(game.location(anyInt())).thenReturn(land);
+        Player player = Player.createPlayer(game, 1);
+        int originalFunding = player.getFunding();
+
+        player.upgradeLand();
+        assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
+    }
 }
