@@ -1,5 +1,6 @@
 package com.tw;
 
+import com.tw.exception.CannotUpgradeLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 
@@ -78,8 +79,12 @@ public class Player {
         return funding;
     }
 
-    public void upgradeLand() {
+    public void upgradeLand() throws RichGameException {
         Land land = (Land) game.location(currrentLocationIndex);
+
+        if (land.getOwner() != this) {
+            throw new CannotUpgradeLandException("can not upgrade others' land");
+        }
         funding -= land.getPrice();
         land.upgradeLevel();
     }

@@ -1,5 +1,6 @@
 package com.tw;
 
+import com.tw.exception.CannotUpgradeLandException;
 import com.tw.exception.NoEnoughFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,5 +123,18 @@ public class PlayerTest {
 
         player.upgradeLand();
         assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
+    }
+
+    @Test(expected = CannotUpgradeLandException.class)
+    public void upgradeLand_should_throw_exception_is_the_land_is_owned_by_others() throws Exception {
+        Player player1 = Player.createPlayer(game, 1);
+        Player player2 = Player.createPlayer(game, 2);
+
+        Location landOwnByOthers = new Land();
+        landOwnByOthers.setOwner(player2);
+
+        when(game.location(anyInt())).thenReturn(landOwnByOthers);
+
+        player1.upgradeLand();
     }
 }
