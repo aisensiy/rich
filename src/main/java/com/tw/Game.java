@@ -28,7 +28,7 @@ public class Game {
         }
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
-                .map(i -> Player.createPlayer(i - 1))
+                .map(i -> Player.createPlayer(this, i - 1))
                 .toArray(size -> new Player[size]);
     }
 }
