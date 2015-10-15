@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -65,22 +66,30 @@ public class GameTest {
 
     @Test
     public void should_show_info_to_type_init_funding() throws Exception {
-        systemInRule.provideText("2000\n");
+        systemInRule.provideLines("2000", "23");
         game.run();
         assertThat(systemOutRule.getLog(), startsWith("Set init funding: 1000 ~ 50000, default 10000 >"));
     }
 
     @Test
     public void should_set_funding() throws Exception {
-        systemInRule.provideText("2000\n");
+        systemInRule.provideLines("2000", "23");
         game.run();
         assertThat(game.initFunding, is(2000));
     }
 
     @Test
     public void should_get_default_funding_without_set() throws Exception {
-        systemInRule.provideLines("");
+        systemInRule.provideLines("", "23");
         game.run();
         assertThat(game.initFunding, is(10000));
+    }
+
+    @Test
+    public void should_set_players_to_select_players() throws Exception {
+        systemInRule.provideLines("", "23");
+        game.run();
+        assertThat(systemOutRule.getLog(), containsString("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):"));
+        assertThat(game.getPlayer(1).getName(), is(Player.createPlayer(game, 2).getName()));
     }
 }

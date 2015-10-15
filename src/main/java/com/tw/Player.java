@@ -33,12 +33,12 @@ public class Player {
     }
 
     public static Player createPlayer(Game game, int index) {
-        Player player = new Player(game, playerNames[index], Game.DEFAULT_FUNDING);
+        Player player = createPlayer(game, index, Game.DEFAULT_FUNDING);
         return player;
     }
 
     public static Player createPlayer(Game game, int index, int funding) {
-        Player player = new Player(game, playerNames[index], funding);
+        Player player = new Player(game, playerNames[index - 1], funding);
         return player;
     }
 

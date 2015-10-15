@@ -15,9 +15,7 @@ public class Game {
     public static final int MAP_SIZE = 70;
     public int initFunding = DEFAULT_FUNDING;
 
-    private String playersString;
     private Player[] players;
-    private Player player;
 
     public void setInitFunding(int initFunding) {
         this.initFunding = initFunding;
@@ -36,7 +34,7 @@ public class Game {
 
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
-                .map(i -> Player.createPlayer(this, i - 1, initFunding))
+                .map(i -> Player.createPlayer(this, i, initFunding))
                 .toArray(size -> new Player[size]);
     }
 
@@ -57,13 +55,28 @@ public class Game {
         return null;
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, RichGameException {
+        setInitFunding();
+        setPlayers();
+    }
+
+    void setInitFunding() throws IOException {
         System.out.print("Set init funding: 1000 ~ 50000, default 10000 > ");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String fundingString = br.readLine();
         if (!fundingString.isEmpty()) {
             setInitFunding(Integer.parseInt(fundingString));
+        }
+    }
+
+    public void setPlayers() throws IOException, RichGameException {
+        System.out.print("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String playerString = br.readLine();
+        if (!playerString.isEmpty()) {
+            setPlayers(playerString);
         }
     }
 }
