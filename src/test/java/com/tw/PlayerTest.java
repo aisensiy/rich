@@ -1,5 +1,6 @@
 package com.tw;
 
+import com.tw.exception.NoEnoughFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -92,4 +93,15 @@ public class PlayerTest {
         player.buyEmptyLand();
         assertThat(originalFunding - player.getFunding(), is(200));
     }
+
+    @Test(expected = NoEnoughFoundException.class)
+    public void should_throw_exception_if_player_funding_is_not_enough() throws Exception {
+        Location land = new Location("land");
+        when(game.location(anyInt())).thenReturn(land);
+
+        Player player = Player.createPlayer(game, 1, 20);
+        player.buyEmptyLand();
+    }
+
+    
 }

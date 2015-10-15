@@ -1,5 +1,8 @@
 package com.tw;
 
+import com.tw.exception.NoEnoughFoundException;
+import com.tw.exception.RichGameException;
+
 public class Player {
     private final String name;
     private static final String[] playerNames = new String[] {
@@ -12,13 +15,19 @@ public class Player {
     private Game game;
     private int funding;
 
-    private Player(Game game, String name) {
+    private Player(Game game, String name, int funding) {
         this.game = game;
         this.name = name;
+        this.funding = funding;
     }
 
     public static Player createPlayer(Game game, int index) {
-        Player player = new Player(game, playerNames[index]);
+        Player player = new Player(game, playerNames[index], Game.DEFAULT_FUNDING);
+        return player;
+    }
+
+    public static Player createPlayer(Game game, int index, int funding) {
+        Player player = new Player(game, playerNames[index], funding);
         return player;
     }
 
@@ -46,13 +55,17 @@ public class Player {
         return game.location(currrentLocationIndex);
     }
 
-    public void buyEmptyLand() throws CannotBuyLocationException {
+    public void buyEmptyLand() throws RichGameException {
         Location location = game.location(currrentLocationIndex);
         if (location.getType() != "land") {
             throw new CannotBuyLocationException("current location is not a land");
         }
         if (location.getOwner() != null) {
             throw new CannotBuyLocationException("current location already get an owner");
+        }
+
+        if (funding < location.getPrice()) {
+            throw new NoEnoughFoundException("");
         }
         getCurrentLocation().setOwner(this);
         funding -= location.getPrice();
