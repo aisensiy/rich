@@ -15,6 +15,7 @@ public class Player {
     private int currrentLocationIndex = 0;
     private Game game;
     private int funding;
+    private int point;
 
     private Player(Game game, String name, int funding) {
         this.game = game;
@@ -81,5 +82,13 @@ public class Player {
 
     public void decreaseBy(int price) {
         funding -= price;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void increasePoint(int point) {
+        this.point += point;
     }
 }
