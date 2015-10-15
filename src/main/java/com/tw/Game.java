@@ -7,9 +7,12 @@ import java.util.stream.Stream;
 
 public class Game {
     public static final int DEFAULT_FUNDING = 10000;
+    public static final int MAP_SIZE = 70;
+
     public int initFunding = DEFAULT_FUNDING;
     private String playersString;
     private Player[] players;
+    private Player player;
 
     public void setInitFunding(int initFunding) {
         this.initFunding = initFunding;
@@ -25,7 +28,11 @@ public class Game {
         }
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
-                .map(i -> Player.createPlayer(i - 1))
+                .map(i -> {
+                    player = Player.createPlayer(i - 1);
+                    player.resetLocation();
+                    return player;
+                })
                 .toArray(size -> new Player[size]);
     }
 }

@@ -8,6 +8,7 @@ public class Player {
         new Player("孙小美"),
         new Player("金贝贝")
     };
+    private int currentLocation = 0;
 
     private Player(String name) {
         this.name = name;
@@ -19,5 +20,21 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(int currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public void go(int step) {
+        currentLocation = (currentLocation + step) % Game.MAP_SIZE;
+    }
+
+    public void resetLocation() {
+        currentLocation = 0;
     }
 }
