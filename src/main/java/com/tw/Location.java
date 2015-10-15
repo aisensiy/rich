@@ -4,6 +4,7 @@ public class Location {
 
     private String type;
     private Player owner;
+    private int price = 200;
 
     public Location(String type) {
         this.type = type;
@@ -19,5 +20,9 @@ public class Location {
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

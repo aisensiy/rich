@@ -10,6 +10,7 @@ public class Player {
     };
     private int currrentLocationIndex = 0;
     private Game game;
+    private int funding;
 
     private Player(Game game, String name) {
         this.game = game;
@@ -54,5 +55,10 @@ public class Player {
             throw new CannotBuyLocationException("current location already get an owner");
         }
         getCurrentLocation().setOwner(this);
+        funding -= location.getPrice();
+    }
+
+    public int getFunding() {
+        return funding;
     }
 }

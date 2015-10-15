@@ -80,4 +80,16 @@ public class PlayerTest {
 
         player1.buyEmptyLand();
     }
+
+    @Test
+    public void should_decrease_money_after_buy_land_successfully() throws Exception {
+        Location land = new Location("land");
+        when(game.location(anyInt())).thenReturn(land);
+
+        Player player = Player.createPlayer(game, 1);
+        int originalFunding = player.getFunding();
+
+        player.buyEmptyLand();
+        assertThat(originalFunding - player.getFunding(), is(200));
+    }
 }
