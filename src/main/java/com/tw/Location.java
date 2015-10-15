@@ -1,8 +1,9 @@
 package com.tw;
 
-public class Location {
+public abstract class Location {
 
     private Player owner;
+    private String name;
 
     public Player getOwner() {
         return owner;
@@ -15,4 +16,6 @@ public class Location {
     public boolean isLand() {
         return this.getClass() == Land.class;
     }
+
+    public abstract String getName();
 }

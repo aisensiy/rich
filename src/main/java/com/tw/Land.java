@@ -16,4 +16,18 @@ public class Land extends Location {
     public void upgradeLevel() {
         level++;
     }
+
+    @Override
+    public String getName() {
+        switch (level) {
+            case 1:
+                return "茅屋";
+            case 2:
+                return "洋房";
+            case 3:
+                return "摩天楼";
+            default:
+                return "空地";
+        }
+    }
 }
