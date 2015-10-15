@@ -91,4 +91,24 @@ public class Player {
     public void increasePoint(int point) {
         this.point += point;
     }
+
+    public void buyTool(ToolShop toolShop, int i) {
+        toolShop.buy(this, i);
+    }
+
+    public int getCountOfRoadBlock() {
+        return 1;
+    }
+
+    public void addTool(int toolIdx) {
+
+    }
+
+    public void decreasePoint(int toolPoint) {
+        point -= toolPoint;
+    }
+
+    public int getCountOfRobot() {
+        return 1;
+    }
 }
