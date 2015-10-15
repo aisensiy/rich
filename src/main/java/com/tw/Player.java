@@ -68,11 +68,15 @@ public class Player {
 
         Land land = (Land) location;
 
-        if (funding < land.getPrice()) {
-            throw new NoEnoughFoundException("");
-        }
+        ensureFoundingIsEnough(land.getPrice());
         getCurrentLocation().setOwner(this);
         funding -= land.getPrice();
+    }
+
+    private void ensureFoundingIsEnough(int price) throws NoEnoughFoundException {
+        if (funding < price) {
+            throw new NoEnoughFoundException("");
+        }
     }
 
     public int getFunding() {
@@ -89,6 +93,8 @@ public class Player {
         if (land.isHighestLevel()) {
             throw new CannotUpgradeLandException("can not upgrade land with highest level");
         }
+
+        ensureFoundingIsEnough(land.getPrice());
 
         funding -= land.getPrice();
         land.upgradeLevel();

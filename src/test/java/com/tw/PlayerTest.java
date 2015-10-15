@@ -107,8 +107,7 @@ public class PlayerTest {
     @Test
     public void should_upgrade_level_by_1_after_upgrade() throws Exception {
         Player player = Player.createPlayer(game, 1);
-        Land land = new Land();
-        land.setOwner(player);
+        Land land = createLandWithOwner(player);
         when(game.location(anyInt())).thenReturn(land);
         assertThat(land.getLevel(), is(0));
 
@@ -120,8 +119,7 @@ public class PlayerTest {
     @Test
     public void upgradeLand_should_decrease_same_money_as_buy_the_land_after_upgrade() throws Exception {
         Player player = Player.createPlayer(game, 1);
-        Land land = new Land();
-        land.setOwner(player);
+        Land land = createLandWithOwner(player);
         when(game.location(anyInt())).thenReturn(land);
         int originalFunding = player.getFunding();
 
@@ -134,8 +132,7 @@ public class PlayerTest {
         Player player1 = Player.createPlayer(game, 1);
         Player player2 = Player.createPlayer(game, 2);
 
-        Location landOwnByOthers = new Land();
-        landOwnByOthers.setOwner(player2);
+        Location landOwnByOthers = createLandWithOwner(player2);
 
         when(game.location(anyInt())).thenReturn(landOwnByOthers);
 
@@ -151,13 +148,28 @@ public class PlayerTest {
         expectedException.expectMessage("can not upgrade land with highest level");
 
         Player player = Player.createPlayer(game, 1);
-        Land land = new Land();
-        land.setOwner(player);
+        Land land = createLandWithOwner(player);
         when(game.location(anyInt())).thenReturn(land);
 
         player.upgradeLand();
         player.upgradeLand();
         player.upgradeLand();
         player.upgradeLand();
+    }
+
+    @Test(expected = NoEnoughFoundException.class)
+    public void upgradeLand_should_throw_exception_if_player_funding_is_not_enough() throws Exception {
+        Player player = Player.createPlayer(game, 1, 20);
+        Land land = createLandWithOwner(player);
+        when(game.location(anyInt())).thenReturn(land);
+
+        player.upgradeLand();
+    }
+
+    private Land createLandWithOwner(Player player) {
+        Land land;
+        land = new Land();
+        land.setOwner(player);
+        return land;
     }
 }
