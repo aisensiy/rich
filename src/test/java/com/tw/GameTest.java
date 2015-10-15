@@ -17,11 +17,12 @@ public class GameTest {
     }
 
     @Test
-    public void should_init_funding_for_users() {
+    public void should_init_funding_for_users() throws Exception {
         assertThat(game.initFunding, is(Game.DEFAULT_FUNDING));
 
         game.setInitFunding(1000);
-        assertThat(game.initFunding, is(1000));
+        game.setPlayers("12");
+        assertThat(game.getPlayer(1).getFunding(), is(1000));
     }
 
     @Test

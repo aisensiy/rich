@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 public class Game {
     public static final int DEFAULT_FUNDING = 10000;
     public static final int MAP_SIZE = 70;
-
     public int initFunding = DEFAULT_FUNDING;
+
     private String playersString;
     private Player[] players;
     private Player player;
@@ -33,7 +33,7 @@ public class Game {
 
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
-                .map(i -> Player.createPlayer(this, i - 1))
+                .map(i -> Player.createPlayer(this, i - 1, initFunding))
                 .toArray(size -> new Player[size]);
     }
 
@@ -41,7 +41,7 @@ public class Game {
         Set<Integer> set = new HashSet<>();
         for (int i = 0; i < playersString.length(); i++) {
             int index = playersString.charAt(i) - '0';
-            if (i > 4 || i < 1)
+            if (index > 4 || index < 1)
                 throw new IllegalPlayerSettingException("1 ~ 4 number required");
             set.add(index);
         }
