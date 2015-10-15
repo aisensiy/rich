@@ -92,15 +92,15 @@ public class Player {
         this.point += point;
     }
 
-    public void buyTool(ToolShop toolShop, int i) {
-        toolShop.buy(this, i);
+    public void buyTool(ToolShop toolShop, Tool tool) {
+        toolShop.buy(this, tool);
     }
 
     public int getCountOfRoadBlock() {
         return 1;
     }
 
-    public void addTool(int toolIdx) {
+    public void addTool(Tool toolIdx) {
 
     }
 

@@ -13,13 +13,8 @@ public class ToolShop extends Location {
 
     }
 
-    public void buy(Player player, int idx) {
-        int price = 0;
-        switch (idx) {
-            case 1: price = 50; break;
-            case 2: price = 30; break;
-        }
-        player.addTool(idx);
-        player.decreasePoint(price);
+    public void buy(Player player, Tool tool) {
+        player.addTool(tool);
+        player.decreasePoint(tool.getPrice());
     }
 }
