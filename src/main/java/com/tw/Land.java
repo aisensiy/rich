@@ -49,6 +49,11 @@ public class Land extends Location {
         }
     }
 
+    @Override
+    public String getSymbol() {
+        return Integer.toString(level);
+    }
+
     private void upgrade(Player player) throws RichGameException {
         if (getOwner() != player) {
             throw new CannotAccessLandException("can not upgrade land which is not belong to you");

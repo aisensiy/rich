@@ -12,4 +12,9 @@ public class StartPoint extends Location {
     public void process(Player player) throws RichGameException {
 
     }
+
+    @Override
+    public String getSymbol() {
+        return "S";
+    }
 }

@@ -6,7 +6,9 @@ import com.tw.exception.RichGameException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -16,6 +18,40 @@ public class Game {
     public int initFunding = DEFAULT_FUNDING;
 
     private Player[] players;
+    private Player currentPlayer;
+    private List<Location> locations = new ArrayList<>();
+
+    public Game() {
+        initMap();
+    }
+
+    private void initMap() {
+        locations.add(new StartPoint());
+        for (int i = 0; i < 13; i++) {
+            locations.add(new Land(200));
+        }
+        locations.add(new Hospital());
+        for (int i = 0; i < 13; i++) {
+            locations.add(new Land(200));
+        }
+        locations.add(new ToolShop());
+        for (int i = 0; i < 6; i++) {
+            locations.add(new Land(500));
+        }
+        locations.add(new GiftShop());
+        for (int i = 0; i < 13; i++) {
+            locations.add(new Land(300));
+        }
+        locations.add(new Prison());
+        for (int i = 0; i < 13; i++) {
+            locations.add(new Land(300));
+        }
+        locations.add(new Magic());
+        locations.add(new ToolShop());
+        for (int i = 0; i < 6; i++) {
+            locations.add(new Mine(10));
+        }
+    }
 
     public void setInitFunding(int initFunding) {
         this.initFunding = initFunding;
@@ -36,6 +72,8 @@ public class Game {
                 .map(Integer::parseInt)
                 .map(i -> Player.createPlayer(this, i, initFunding))
                 .toArray(size -> new Player[size]);
+
+        currentPlayer = players[0];
     }
 
     private void ensureValidPlayersString(String playersString) throws IllegalPlayerSettingException {
@@ -52,7 +90,7 @@ public class Game {
     }
 
     public Location location(int currrentLocationIndex) {
-        return null;
+        return locations.get(currrentLocationIndex);
     }
 
     public void run() throws IOException, RichGameException {
@@ -78,5 +116,29 @@ public class Game {
         if (!playerString.isEmpty()) {
             setPlayers(playerString);
         }
+    }
+
+    public String display() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 29; i++) {
+            if (currentPlayer.getCurrentLocation() == locations.get(i)) {
+                sb.append(currentPlayer.getSymbol());
+            } else {
+                sb.append(locations.get(i).getSymbol());
+            }
+        }
+        sb.append("\n");
+        int size = locations.size();
+        for (int i = 0; i < 6; i++) {
+            sb.append(locations.get(size - i - 1).getSymbol());
+            sb.append("                           ");
+            sb.append(locations.get(29 + i).getSymbol());
+            sb.append("\n");
+        }
+        for (int i = 63; i > 63 - 29; i--) {
+            sb.append(locations.get(i).getSymbol());
+        }
+        return sb.toString();
     }
 }

@@ -20,15 +20,23 @@ public class Player {
         "孙小美",
         "金贝贝"
     };
+    private static final String[] playerSymbols = new String[] {
+            "Q",
+            "A",
+            "S",
+            "J"
+    };
     private int currrentLocationIndex = 0;
     private Game game;
     private int funding;
     private int point;
     private Map<Tool, Integer> toolMap = new HashMap<>();
+    private String symbol;
 
-    private Player(Game game, String name, int funding) {
+    private Player(Game game, String name, String symbol, int funding) {
         this.game = game;
         this.name = name;
+        this.symbol = symbol;
         this.funding = funding;
     }
 
@@ -38,7 +46,7 @@ public class Player {
     }
 
     public static Player createPlayer(Game game, int index, int funding) {
-        Player player = new Player(game, playerNames[index - 1], funding);
+        Player player = new Player(game, playerNames[index - 1], playerSymbols[index - 1], funding);
         return player;
     }
 
@@ -133,5 +141,9 @@ public class Player {
 
     public int getCountOfRobot() {
         return toolMap.getOrDefault(ROBOT, 0);
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

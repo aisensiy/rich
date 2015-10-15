@@ -2,7 +2,7 @@ package com.tw;
 
 import com.tw.exception.RichGameException;
 
-public class ToolShop extends Location {
+public class Magic extends Location {
     @Override
     public String getName() {
         return null;
@@ -15,11 +15,6 @@ public class ToolShop extends Location {
 
     @Override
     public String getSymbol() {
-        return "T";
-    }
-
-    public void buy(Player player, Tool tool) {
-        player.addTool(tool);
-        player.decreasePoint(tool.getPrice());
+        return "M";
     }
 }

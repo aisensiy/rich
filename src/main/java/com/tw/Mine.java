@@ -18,4 +18,9 @@ public class Mine extends Location {
     public void process(Player player) throws RichGameException {
         player.increasePoint(point);
     }
+
+    @Override
+    public String getSymbol() {
+        return "$";
+    }
 }

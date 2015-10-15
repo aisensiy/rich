@@ -92,4 +92,29 @@ public class GameTest {
         assertThat(systemOutRule.getLog(), containsString("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):"));
         assertThat(game.getPlayer(1).getName(), is(Player.createPlayer(game, 2).getName()));
     }
+
+    @Test
+    public void should_show_map_with_player_position() throws Exception {
+        game.setPlayers("12");
+        String expected =
+            "Q0000000000000H0000000000000T\n" +
+            "$                           0\n" +
+            "$                           0\n" +
+            "$                           0\n" +
+            "$                           0\n" +
+            "$                           0\n" +
+            "$                           0\n" +
+            "M0000000000000P0000000000000G";
+        assertThat(game.display(), is(expected));
+//        game.getPlayer(1).go(2);
+//        expected = "A0Q00000000000H0000000000000T\n" +
+//                "$                           0\n" +
+//                "$                           0\n" +
+//                "$                           0\n" +
+//                "$                           0\n" +
+//                "$                           0\n" +
+//                "$                           0\n" +
+//                "M0000000000000P0000000000000G";
+//        assertThat(game.display(), is(expected));
+    }
 }

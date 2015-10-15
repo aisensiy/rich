@@ -21,4 +21,6 @@ public abstract class Location {
     public abstract String getName();
 
     public abstract void process(Player player) throws RichGameException;
+
+    public abstract String getSymbol();
 }
