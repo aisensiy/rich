@@ -50,6 +50,9 @@ public class Player {
         if (location.getType() != "land") {
             throw new CannotBuyLocationException("current location is not a land");
         }
+        if (location.getOwner() != null) {
+            throw new CannotBuyLocationException("current location already get an owner");
+        }
         getCurrentLocation().setOwner(this);
     }
 }
