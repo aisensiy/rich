@@ -83,8 +83,13 @@ public class Player {
         Land land = (Land) game.location(currrentLocationIndex);
 
         if (land.getOwner() != this) {
-            throw new CannotUpgradeLandException("can not upgrade others' land");
+            throw new CannotUpgradeLandException("can not upgrade land which is not belong to you");
         }
+
+        if (land.isHighestLevel()) {
+            throw new CannotUpgradeLandException("can not upgrade land with highest level");
+        }
+
         funding -= land.getPrice();
         land.upgradeLevel();
     }

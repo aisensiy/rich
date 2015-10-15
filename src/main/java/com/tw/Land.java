@@ -30,4 +30,8 @@ public class Land extends Location {
                 return "空地";
         }
     }
+
+    public boolean isHighestLevel() {
+        return level == 3;
+    }
 }

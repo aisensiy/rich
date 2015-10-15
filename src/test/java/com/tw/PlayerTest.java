@@ -3,7 +3,9 @@ package com.tw;
 import com.tw.exception.CannotUpgradeLandException;
 import com.tw.exception.NoEnoughFoundException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -104,21 +106,23 @@ public class PlayerTest {
 
     @Test
     public void should_upgrade_level_by_1_after_upgrade() throws Exception {
+        Player player = Player.createPlayer(game, 1);
         Land land = new Land();
+        land.setOwner(player);
         when(game.location(anyInt())).thenReturn(land);
         assertThat(land.getLevel(), is(0));
 
-        Player player = Player.createPlayer(game, 1);
         player.upgradeLand();
 
         assertThat(land.getLevel(), is(1));
     }
 
     @Test
-    public void should_decrease_same_money_as_buy_the_land_after_upgrade() throws Exception {
-        Land land = new Land();
-        when(game.location(anyInt())).thenReturn(land);
+    public void upgradeLand_should_decrease_same_money_as_buy_the_land_after_upgrade() throws Exception {
         Player player = Player.createPlayer(game, 1);
+        Land land = new Land();
+        land.setOwner(player);
+        when(game.location(anyInt())).thenReturn(land);
         int originalFunding = player.getFunding();
 
         player.upgradeLand();
@@ -136,5 +140,24 @@ public class PlayerTest {
         when(game.location(anyInt())).thenReturn(landOwnByOthers);
 
         player1.upgradeLand();
+    }
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void upgradeLand_should_throw_exception_if_land_is_already_highest_level() throws Exception {
+        expectedException.expect(CannotUpgradeLandException.class);
+        expectedException.expectMessage("can not upgrade land with highest level");
+
+        Player player = Player.createPlayer(game, 1);
+        Land land = new Land();
+        land.setOwner(player);
+        when(game.location(anyInt())).thenReturn(land);
+
+        player.upgradeLand();
+        player.upgradeLand();
+        player.upgradeLand();
+        player.upgradeLand();
     }
 }
