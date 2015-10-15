@@ -12,4 +12,8 @@ public class Land extends Location {
     public int getLevel() {
         return level;
     }
+
+    public void upgradeLevel() {
+        level++;
+    }
 }

@@ -93,7 +93,7 @@ public class PlayerTest {
 
     @Test(expected = NoEnoughFoundException.class)
     public void should_throw_exception_if_player_funding_is_not_enough() throws Exception {
-        Location land = new Land();
+        Land land = new Land();
         when(game.location(anyInt())).thenReturn(land);
 
         Player player = Player.createPlayer(game, 1, 20);
@@ -101,11 +101,15 @@ public class PlayerTest {
     }
 
 
-//    @Test
-//    public void should_set_land_to_building_after_upgrade() throws Exception {
-//        Location land = new Land();
-//        when(game.location(anyInt())).thenReturn(land);
-//
-//        assertThat(land.getLevel(), is(0));
-//    }
+    @Test
+    public void should_upgrade_level_by_1_after_upgrade() throws Exception {
+        Land land = new Land();
+        when(game.location(anyInt())).thenReturn(land);
+        assertThat(land.getLevel(), is(0));
+
+        Player player = Player.createPlayer(game, 1);
+        player.upgradeLand();
+
+        assertThat(land.getLevel(), is(1));
+    }
 }

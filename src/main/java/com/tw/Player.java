@@ -79,6 +79,7 @@ public class Player {
     }
 
     public void upgradeLand() {
-
+        Land land = (Land) game.location(currrentLocationIndex);
+        land.upgradeLevel();
     }
 }
