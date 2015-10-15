@@ -61,4 +61,10 @@ public class PlayerTest {
         player.buyEmptyLand();
         assertThat(land.getOwner(), sameInstance(player));
     }
+
+    @Test(expected = CannotBuyLocationException.class)
+    public void throw_exception_when_buy_land_if_current_location_if_not_land() throws Exception {
+        when(game.location(anyInt())).thenReturn(new Location("start"));
+        Player.createPlayer(game, 1).buyEmptyLand();
+    }
 }

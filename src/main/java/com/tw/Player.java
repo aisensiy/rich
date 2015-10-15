@@ -45,7 +45,11 @@ public class Player {
         return game.location(currrentLocationIndex);
     }
 
-    public void buyEmptyLand() {
+    public void buyEmptyLand() throws CannotBuyLocationException {
+        Location location = game.location(currrentLocationIndex);
+        if (location.getType() != "land") {
+            throw new CannotBuyLocationException("current location is not a land");
+        }
         getCurrentLocation().setOwner(this);
     }
 }
