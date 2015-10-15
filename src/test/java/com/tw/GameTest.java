@@ -40,9 +40,15 @@ public class GameTest {
         game.setPlayers("12345");
     }
 
-//    @Test(expected = IllegalPlayerSettingException.class)
-//    public void should_throw_exception_with_player_number_not_in_1_to_4() throws Exception {
-//        Game game = new Game();
-//        game.setPlayers("1235");
-//    }
+    @Test(expected = IllegalPlayerSettingException.class)
+    public void should_throw_exception_with_player_number_not_in_1_to_4() throws Exception {
+        Game game = new Game();
+        game.setPlayers("1235");
+    }
+
+    @Test(expected = IllegalPlayerSettingException.class)
+    public void should_throw_exception_with_duplicate_players() throws Exception {
+        Game game = new Game();
+        game.setPlayers("1132");
+    }
 }
