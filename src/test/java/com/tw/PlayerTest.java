@@ -50,8 +50,8 @@ public class PlayerTest {
         Player player = Player.createPlayer(game, 1);
         assertThat(player.getCurrentLocation().getType(), is("land"));
 
-        when(game.location(anyInt())).thenReturn(new Location("build"));
-        assertThat(player.getCurrentLocation().getType(), is("build"));
+        when(game.location(anyInt())).thenReturn(new Location("building"));
+        assertThat(player.getCurrentLocation().getType(), is("building"));
     }
 
     @Test
@@ -103,5 +103,12 @@ public class PlayerTest {
         player.buyEmptyLand();
     }
 
-    
+
+    @Test
+    public void should_set_land_to_building_after_upgrade() throws Exception {
+        Location land = new Location("land");
+        when(game.location(anyInt())).thenReturn(land);
+
+        assertThat(land.getLevel(), is(0));
+    }
 }

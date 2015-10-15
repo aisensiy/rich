@@ -5,6 +5,7 @@ public class Location {
     private String type;
     private Player owner;
     private int price = 200;
+    private int level = 0;
 
     public Location(String type) {
         this.type = type;
@@ -24,5 +25,9 @@ public class Location {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
