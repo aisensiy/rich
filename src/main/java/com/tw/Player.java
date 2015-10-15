@@ -44,4 +44,8 @@ public class Player {
     public Location getCurrentLocation() {
         return game.location(currrentLocationIndex);
     }
+
+    public void buyEmptyLand() {
+        getCurrentLocation().setOwner(this);
+    }
 }

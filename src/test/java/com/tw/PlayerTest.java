@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -50,5 +51,14 @@ public class PlayerTest {
 
         when(game.location(anyInt())).thenReturn(new Location("build"));
         assertThat(player.getCurrentLocation().getType(), is("build"));
+    }
+
+    @Test
+    public void can_buy_land_if_current_location_is_land_and_empty() throws Exception {
+        Location land = new Location("land");
+        when(game.location(anyInt())).thenReturn(land);
+        Player player = Player.createPlayer(game, 1);
+        player.buyEmptyLand();
+        assertThat(land.getOwner(), sameInstance(player));
     }
 }
