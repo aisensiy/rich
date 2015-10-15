@@ -13,18 +13,20 @@ import static org.mockito.Mockito.mock;
 public class ToolShopTest {
 
     private Game game;
+    private Player player;
+    private ToolShop toolShop;
 
     @Before
     public void setUp() throws Exception {
         game = mock(Game.class);
+        player = Player.createPlayer(game, 1);
+        toolShop = new ToolShop();
     }
 
     @Test
     public void should_buy_tool_in_tool_shop() throws Exception {
-        Player player = Player.createPlayer(game, 1);
         player.increasePoint(50);
         int originPoint = player.getPoint();
-        ToolShop toolShop = new ToolShop();
 
         player.buyTool(toolShop, ROADBLOCK);
         assertThat(player.getCountOfRoadBlock(), is(1));
@@ -39,9 +41,7 @@ public class ToolShopTest {
 
     @Test(expected = CannotBuyToolException.class)
     public void buy_tool_should_throw_exception_when_get_more_than_10_roadblocks() throws Exception {
-        Player player = Player.createPlayer(game, 1);
         player.increasePoint(11 * ROADBLOCK.getPrice());
-        ToolShop toolShop = new ToolShop();
 
         for (int i = 0; i < 11; i++)
             player.buyTool(toolShop, ROADBLOCK);
@@ -49,9 +49,7 @@ public class ToolShopTest {
 
     @Test(expected = CannotBuyToolException.class)
     public void buy_tool_should_throw_exception_when_get_more_than_10_different_tools() throws Exception {
-        Player player = Player.createPlayer(game, 1);
         player.increasePoint(5 * ROADBLOCK.getPrice() + 5 * ROBOT.getPrice() + BOMB.getPrice());
-        ToolShop toolShop = new ToolShop();
 
         for (int i = 0; i < 5; i++)
             player.buyTool(toolShop, ROADBLOCK);
@@ -60,5 +58,11 @@ public class ToolShopTest {
             player.buyTool(toolShop, ROBOT);
 
         player.buyTool(toolShop, BOMB);
+    }
+
+    @Test(expected = CannotBuyToolException.class)
+    public void buy_tool_should_throw_exception_when_point_if_less_than_tool_price() throws Exception {
+        player.increasePoint(ROADBLOCK.getPrice() - 10);
+        player.buyTool(toolShop, ROADBLOCK);
     }
 }

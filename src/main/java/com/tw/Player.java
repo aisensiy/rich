@@ -105,6 +105,9 @@ public class Player {
         if (getToolCount() >= 10) {
             throw new CannotBuyToolException("the player already get 10 tools");
         }
+        if (point < tool.getPrice()) {
+            throw new CannotBuyToolException("no enough point to buy the tool");
+        }
         toolShop.buy(this, tool);
     }
 
