@@ -45,18 +45,15 @@ public class PlayerTest {
     }
 
     @Test
-    public void should_get_type_of_location() throws Exception {
-        when(game.location(anyInt())).thenReturn(new Location("land"));
+    public void should_get_type_of_land() throws Exception {
+        when(game.location(anyInt())).thenReturn(new Land());
         Player player = Player.createPlayer(game, 1);
-        assertThat(player.getCurrentLocation().getType(), is("land"));
-
-        when(game.location(anyInt())).thenReturn(new Location("building"));
-        assertThat(player.getCurrentLocation().getType(), is("building"));
+        assertThat(player.getCurrentLocation().isLand(), is(true));
     }
 
     @Test
     public void can_buy_land_if_current_location_is_land_and_empty() throws Exception {
-        Location land = new Location("land");
+        Location land = new Land();
         when(game.location(anyInt())).thenReturn(land);
         Player player = Player.createPlayer(game, 1);
         player.buyEmptyLand();
@@ -65,7 +62,7 @@ public class PlayerTest {
 
     @Test(expected = CannotBuyLocationException.class)
     public void throw_exception_when_buy_land_if_current_location_if_not_land() throws Exception {
-        when(game.location(anyInt())).thenReturn(new Location("start"));
+        when(game.location(anyInt())).thenReturn(new StartPoint());
         Player.createPlayer(game, 1).buyEmptyLand();
     }
 
@@ -74,7 +71,7 @@ public class PlayerTest {
         Player player1 = Player.createPlayer(game, 1);
         Player player2 = Player.createPlayer(game, 2);
 
-        Location landOwnByOthers = new Location("land");
+        Location landOwnByOthers = new Land();
 
         landOwnByOthers.setOwner(player2);
         when(game.location(anyInt())).thenReturn(landOwnByOthers);
@@ -84,7 +81,7 @@ public class PlayerTest {
 
     @Test
     public void should_decrease_money_after_buy_land_successfully() throws Exception {
-        Location land = new Location("land");
+        Location land = new Land();
         when(game.location(anyInt())).thenReturn(land);
 
         Player player = Player.createPlayer(game, 1);
@@ -96,7 +93,7 @@ public class PlayerTest {
 
     @Test(expected = NoEnoughFoundException.class)
     public void should_throw_exception_if_player_funding_is_not_enough() throws Exception {
-        Location land = new Location("land");
+        Location land = new Land();
         when(game.location(anyInt())).thenReturn(land);
 
         Player player = Player.createPlayer(game, 1, 20);
@@ -104,11 +101,11 @@ public class PlayerTest {
     }
 
 
-    @Test
-    public void should_set_land_to_building_after_upgrade() throws Exception {
-        Location land = new Location("land");
-        when(game.location(anyInt())).thenReturn(land);
-
-        assertThat(land.getLevel(), is(0));
-    }
+//    @Test
+//    public void should_set_land_to_building_after_upgrade() throws Exception {
+//        Location land = new Land();
+//        when(game.location(anyInt())).thenReturn(land);
+//
+//        assertThat(land.getLevel(), is(0));
+//    }
 }

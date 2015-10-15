@@ -57,21 +57,28 @@ public class Player {
 
     public void buyEmptyLand() throws RichGameException {
         Location location = game.location(currrentLocationIndex);
-        if (location.getType() != "land") {
+        if (!location.isLand()) {
             throw new CannotBuyLocationException("current location is not a land");
         }
+
         if (location.getOwner() != null) {
             throw new CannotBuyLocationException("current location already get an owner");
         }
 
-        if (funding < location.getPrice()) {
+        Land land = (Land) location;
+
+        if (funding < land.getPrice()) {
             throw new NoEnoughFoundException("");
         }
         getCurrentLocation().setOwner(this);
-        funding -= location.getPrice();
+        funding -= land.getPrice();
     }
 
     public int getFunding() {
         return funding;
+    }
+
+    public void upgradeLand() {
+
     }
 }
