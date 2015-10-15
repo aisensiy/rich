@@ -31,4 +31,8 @@ public class Game {
                 .map(i -> Player.createPlayer(this, i - 1))
                 .toArray(size -> new Player[size]);
     }
+
+    public Location location(int currrentLocationIndex) {
+        return null;
+    }
 }

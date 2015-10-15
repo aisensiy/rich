@@ -5,7 +5,9 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerTest {
 
@@ -40,10 +42,13 @@ public class PlayerTest {
         assertThat(player.getLocationIndex(), is(1));
     }
 
-//    @Test
-//    public void should_get_type_of_location() throws Exception {
-//        Player player = Player.createPlayer(game, 1);
-//        player.go(2);
-//        assertThat(player.getCurrentLocation().getType(), is("land"));
-//    }
+    @Test
+    public void should_get_type_of_location() throws Exception {
+        when(game.location(anyInt())).thenReturn(new Location("land"));
+        Player player = Player.createPlayer(game, 1);
+        assertThat(player.getCurrentLocation().getType(), is("land"));
+
+        when(game.location(anyInt())).thenReturn(new Location("build"));
+        assertThat(player.getCurrentLocation().getType(), is("build"));
+    }
 }

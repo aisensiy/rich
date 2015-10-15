@@ -40,8 +40,8 @@ public class Player {
     public void resetLocation() {
         currrentLocationIndex = 0;
     }
-//
-//    public Location getCurrentLocation() {
-//        return game.location(currrentLocationIndex);
-//    }
+
+    public Location getCurrentLocation() {
+        return game.location(currrentLocationIndex);
+    }
 }
