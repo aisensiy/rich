@@ -2,21 +2,22 @@ package com.tw;
 
 public class Player {
     private final String name;
-    private static final Player[] players = new Player[] {
-        new Player("钱夫人"),
-        new Player("阿土伯"),
-        new Player("孙小美"),
-        new Player("金贝贝")
+    private static final String[] playerNames = new String[] {
+        "钱夫人",
+        "阿土伯",
+        "孙小美",
+        "金贝贝"
     };
-    private int currentLocation = 0;
+    private int currrentLocationIndex = 0;
+    private Game game;
 
-    private Player(String name) {
+    private Player(Game game, String name) {
+        this.game = game;
         this.name = name;
     }
 
-    public static Player createPlayer(int index) {
-        Player player = players[index];
-        player.resetLocation();
+    public static Player createPlayer(Game game, int index) {
+        Player player = new Player(game, playerNames[index]);
         return player;
     }
 
@@ -24,19 +25,23 @@ public class Player {
         return name;
     }
 
-    public int getLocation() {
-        return currentLocation;
+    public int getLocationIndex() {
+        return currrentLocationIndex;
     }
 
     public void setCurrentLocation(int currentLocation) {
-        this.currentLocation = currentLocation;
+        this.currrentLocationIndex = currentLocation;
     }
 
     public void go(int step) {
-        currentLocation = (currentLocation + step) % Game.MAP_SIZE;
+        currrentLocationIndex = (currrentLocationIndex + step) % Game.MAP_SIZE;
     }
 
     public void resetLocation() {
-        currentLocation = 0;
+        currrentLocationIndex = 0;
     }
+//
+//    public Location getCurrentLocation() {
+//        return game.location(currrentLocationIndex);
+//    }
 }
