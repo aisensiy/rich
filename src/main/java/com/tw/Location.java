@@ -1,5 +1,7 @@
 package com.tw;
 
+import com.tw.exception.RichGameException;
+
 public abstract class Location {
 
     private Player owner;
@@ -17,4 +19,6 @@ public abstract class Location {
     }
 
     public abstract String getName();
+
+    public abstract void process(Player player) throws RichGameException;
 }

@@ -1,6 +1,5 @@
 package com.tw;
 
-import com.tw.exception.CannotUpgradeLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.exception.TypeCastException;
@@ -54,15 +53,8 @@ public class Player {
     }
 
     public void buyEmptyLand() throws RichGameException {
-        Land land = castToLand(game.location(currrentLocationIndex));
-
-        if (land.getOwner() != null) {
-            throw new CannotBuyLocationException("current location already get an owner");
-        }
-
-        ensureFoundingIsEnough(land.getPrice());
-        getCurrentLocation().setOwner(this);
-        funding -= land.getPrice();
+        Location location = game.location(currrentLocationIndex);
+        location.process(this);
     }
 
     private void ensureFoundingIsEnough(int price) throws NoEnoughFoundException {
@@ -76,20 +68,8 @@ public class Player {
     }
 
     public void upgradeLand() throws RichGameException {
-        Land land = castToLand(game.location(currrentLocationIndex));
-
-        if (land.getOwner() != this) {
-            throw new CannotUpgradeLandException("can not upgrade land which is not belong to you");
-        }
-
-        if (land.isHighestLevel()) {
-            throw new CannotUpgradeLandException("can not upgrade land with highest level");
-        }
-
-        ensureFoundingIsEnough(land.getPrice());
-
-        funding -= land.getPrice();
-        land.upgradeLevel();
+        Location location = game.location(currrentLocationIndex);
+        location.process(this);
     }
 
     private Land castToLand(Location location) throws TypeCastException {
@@ -97,5 +77,9 @@ public class Player {
             throw new TypeCastException("can not convert other type to land");
         }
         return (Land) location;
+    }
+
+    public void decreaseBy(int price) {
+        funding -= price;
     }
 }

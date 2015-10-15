@@ -1,15 +1,13 @@
 package com.tw;
 
-import com.tw.exception.CannotUpgradeLandException;
+import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
-import com.tw.exception.TypeCastException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -56,68 +54,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void can_buy_land_if_current_location_is_land_and_empty() throws Exception {
-        Location land = new Land(200);
-        when(game.location(anyInt())).thenReturn(land);
-        Player player = Player.createPlayer(game, 1);
-        player.buyEmptyLand();
-        assertThat(land.getOwner(), sameInstance(player));
-    }
-
-    @Test(expected = TypeCastException.class)
-    public void throw_exception_when_buy_land_if_current_location_if_not_land() throws Exception {
-        when(game.location(anyInt())).thenReturn(new StartPoint());
-        Player.createPlayer(game, 1).buyEmptyLand();
-    }
-
-    @Test(expected = CannotBuyLocationException.class)
-    public void throw_exception_when_buy_land_if_current_location_if_not_empty() throws Exception {
-        Player player1 = Player.createPlayer(game, 1);
-        Player player2 = Player.createPlayer(game, 2);
-
-        Location landOwnByOthers = new Land(200);
-
-        landOwnByOthers.setOwner(player2);
-        when(game.location(anyInt())).thenReturn(landOwnByOthers);
-
-        player1.buyEmptyLand();
-    }
-
-    @Test
-    public void should_decrease_money_after_buy_land_successfully() throws Exception {
-        Location land = new Land(200);
-        when(game.location(anyInt())).thenReturn(land);
-
-        Player player = Player.createPlayer(game, 1);
-        int originalFunding = player.getFunding();
-
-        player.buyEmptyLand();
-        assertThat(originalFunding - player.getFunding(), is(200));
-    }
-
-    @Test
-    public void should_buy_land_with_different_type() throws Exception {
-        Location land = new Land(300);
-        when(game.location(anyInt())).thenReturn(land);
-
-        Player player = Player.createPlayer(game, 1);
-        int originalFunding = player.getFunding();
-
-        player.buyEmptyLand();
-        assertThat(originalFunding - player.getFunding(), is(300));
-    }
-
-    @Test(expected = NoEnoughFoundException.class)
-    public void should_throw_exception_if_player_funding_is_not_enough() throws Exception {
-        Land land = new Land(200);
-        when(game.location(anyInt())).thenReturn(land);
-
-        Player player = Player.createPlayer(game, 1, 20);
-        player.buyEmptyLand();
-    }
-
-
-    @Test
     public void should_upgrade_level_by_1_after_upgrade() throws Exception {
         Player player = Player.createPlayer(game, 1);
         Land land = createLandWithOwner(player);
@@ -140,8 +76,10 @@ public class PlayerTest {
         assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
     }
 
-    @Test(expected = CannotUpgradeLandException.class)
+    @Test
     public void upgradeLand_should_throw_exception_is_the_land_is_owned_by_others() throws Exception {
+        expectedException.expect(CannotAccessLandException.class);
+        expectedException.expectMessage("can not upgrade land which is not belong to you");
         Player player1 = Player.createPlayer(game, 1);
         Player player2 = Player.createPlayer(game, 2);
 
@@ -157,7 +95,7 @@ public class PlayerTest {
 
     @Test
     public void upgradeLand_should_throw_exception_if_land_is_already_highest_level() throws Exception {
-        expectedException.expect(CannotUpgradeLandException.class);
+        expectedException.expect(CannotAccessLandException.class);
         expectedException.expectMessage("can not upgrade land with highest level");
 
         Player player = Player.createPlayer(game, 1);
@@ -177,12 +115,6 @@ public class PlayerTest {
         when(game.location(anyInt())).thenReturn(land);
 
         player.upgradeLand();
-    }
-
-    @Test(expected = TypeCastException.class)
-    public void throw_exception_when_grade_land_if_current_location_if_not_land() throws Exception {
-        when(game.location(anyInt())).thenReturn(new StartPoint());
-        Player.createPlayer(game, 1).upgradeLand();
     }
 
     private Land createLandWithOwner(Player player) {
