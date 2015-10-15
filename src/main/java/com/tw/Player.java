@@ -49,10 +49,6 @@ public class Player {
         currrentLocationIndex = (currrentLocationIndex + step) % Game.MAP_SIZE;
     }
 
-    public void resetLocation() {
-        currrentLocationIndex = 0;
-    }
-
     public Location getCurrentLocation() {
         return game.location(currrentLocationIndex);
     }
