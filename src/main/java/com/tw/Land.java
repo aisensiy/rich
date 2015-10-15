@@ -1,9 +1,14 @@
 package com.tw;
 
 public class Land extends Location {
-    private int price = 200;
-    private int level = 0;
+    private int price;
+    private int level;
 
+    public Land(int price) {
+        super();
+        this.price = price;
+        level = 0;
+    }
 
     public int getPrice() {
         return price;

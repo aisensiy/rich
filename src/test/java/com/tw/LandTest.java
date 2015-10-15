@@ -8,7 +8,7 @@ import static org.hamcrest.core.Is.is;
 public class LandTest {
     @Test
     public void should_get_different_name_of_land_with_different_level() throws Exception {
-        Land land = new Land();
+        Land land = new Land(200);
         assertThat(land.getName(), is("空地"));
 
         land.upgradeLevel();

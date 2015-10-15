@@ -3,7 +3,6 @@ package com.tw;
 public abstract class Location {
 
     private Player owner;
-    private String name;
 
     public Player getOwner() {
         return owner;
