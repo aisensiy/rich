@@ -1,8 +1,16 @@
 package com.tw;
 
+import com.tw.exception.CannotBuyToolException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.exception.TypeCastException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.tw.Tool.BOMB;
+import static com.tw.Tool.ROADBLOCK;
+import static com.tw.Tool.ROBOT;
 
 public class Player {
     private final String name;
@@ -16,6 +24,7 @@ public class Player {
     private Game game;
     private int funding;
     private int point;
+    private Map<Tool, Integer> toolMap = new HashMap<>();
 
     private Player(Game game, String name, int funding) {
         this.game = game;
@@ -92,16 +101,27 @@ public class Player {
         this.point += point;
     }
 
-    public void buyTool(ToolShop toolShop, Tool tool) {
+    public void buyTool(ToolShop toolShop, Tool tool) throws RichGameException {
+        if (getToolCount() >= 10) {
+            throw new CannotBuyToolException("the player already get 10 tools");
+        }
         toolShop.buy(this, tool);
     }
 
-    public int getCountOfRoadBlock() {
-        return 1;
+    private int getToolCount() {
+        return getCountOfRoadBlock() + getCountOfRobot() + getCountOfBomb();
     }
 
-    public void addTool(Tool toolIdx) {
+    private int getCountOfBomb() {
+        return toolMap.getOrDefault(BOMB, 0);
+    }
 
+    public int getCountOfRoadBlock() {
+        return toolMap.getOrDefault(ROADBLOCK, 0);
+    }
+
+    public void addTool(Tool tool) {
+        toolMap.put(tool, toolMap.getOrDefault(tool, 0) + 1);
     }
 
     public void decreasePoint(int toolPoint) {
@@ -109,6 +129,6 @@ public class Player {
     }
 
     public int getCountOfRobot() {
-        return 1;
+        return toolMap.getOrDefault(ROBOT, 0);
     }
 }
