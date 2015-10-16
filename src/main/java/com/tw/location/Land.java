@@ -49,9 +49,15 @@ public class Land extends Location {
     public void process(Player player) throws RichGameException {
         if (getOwner() == null) {
             buy(player);
-        } else {
+        } else if(getOwner() == player) {
             upgrade(player);
+        } else {
+            player.decreaseBy(punish());
         }
+    }
+
+    private int punish() {
+        return price / 2 * (level + 1);
     }
 
     @Override

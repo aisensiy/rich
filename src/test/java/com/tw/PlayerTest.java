@@ -117,6 +117,24 @@ public class PlayerTest {
         assertThat(player.countOfLandWithLevel(Land.LEVEL_ONE), is(1));
     }
 
+    @Test
+    public void should_decrease_money_when_arrive_at_others_land() throws Exception {
+        Player player = Player.createPlayer(game, 1);
+        Land land = new Land(300);
+        land.setOwner(player);
+        when(game.location(anyInt())).thenReturn(land);
+
+        Player otherPlayer = Player.createPlayer(game, 2);
+        int originalFunding = otherPlayer.getFunding();
+        land.process(otherPlayer);
+        assertThat(originalFunding - otherPlayer.getFunding(), is(150));
+
+        player.upgradeLand();
+        originalFunding = otherPlayer.getFunding();
+        land.process(otherPlayer);
+        assertThat(originalFunding - otherPlayer.getFunding(), is(300));
+    }
+
     private Land createLandWithOwner(Player player) {
         Land land;
         land = new Land(200);
