@@ -17,13 +17,13 @@ import static com.tw.Tool.ROBOT;
 
 public class Player {
     private final String name;
-    private static final String[] playerNames = new String[] {
-        "钱夫人",
-        "阿土伯",
-        "孙小美",
-        "金贝贝"
+    private static final String[] playerNames = new String[]{
+            "钱夫人",
+            "阿土伯",
+            "孙小美",
+            "金贝贝"
     };
-    private static final String[] playerSymbols = new String[] {
+    private static final String[] playerSymbols = new String[]{
             "Q",
             "A",
             "S",
@@ -153,5 +153,14 @@ public class Player {
     @Override
     public String toString() {
         return String.format("%s(%s)", name, symbol);
+    }
+
+    public String getInfo() {
+        return String.format(
+                "资金: %d元\n" +
+                "点数: %d点\n" +
+                "地产: 空地0处；茅屋0处；洋房0处；摩天楼0处\n" +
+                "道具: 路障%d个；炸弹%d个；机器娃娃%d个",
+                funding, point, getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
     }
 }

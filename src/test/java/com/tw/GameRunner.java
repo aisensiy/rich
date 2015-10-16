@@ -17,10 +17,12 @@ public class GameRunner {
     public void run() throws IOException, RichGameException {
         setInitFunding();
         setPlayers();
-        String command = readLine();
+        String command = readLine().toLowerCase();
         while (true) {
-            if (command.toLowerCase().equals("roll")) {
+            if (command.equals("roll")) {
                 turn();
+            } else if (command.equals("query")) {
+                System.out.println(game.getCurrentPlayer().getInfo());
             } else {
                 break;
             }

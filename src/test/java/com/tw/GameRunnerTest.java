@@ -134,4 +134,11 @@ public class GameRunnerTest {
         assertThat(game.getPlayer(1).getLocationIndex(), is(10));
         assertThat(game.getPlayer(2).getLocationIndex(), is(5));
     }
+
+    @Test
+    public void should_show_player_info_with_command_query() throws Exception {
+        systemInRule.provideLines("", "12", "query", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString(game.getCurrentPlayer().getInfo()));
+    }
 }
