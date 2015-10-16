@@ -171,16 +171,29 @@ public class GameRunnerTest {
 
     @Test
     public void should_upgrade_land_when_arrive_at_own_land() throws Exception {
-        game = new Game(new LandMap());
-        game.setDice(dice);
-        runner.setGame(game);
-
+        game = gameWithOneLand();
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
         Land land = (Land) game.getLocation(0);
         assertThat(systemOutRule.getLog(), containsString("是否升级该处地产，200 元（Y/N）?"));
         assertThat(land.getLevel(), is(1));
+    }
+
+    @Test
+    public void should_show_error_message_when_upgrade_land_with_level_3() throws Exception {
+        game = gameWithOneLand();
+        when(dice.getInt()).thenReturn(1);
+        systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("can not upgrade land with highest level"));
+    }
+
+    private Game gameWithOneLand() {
+        Game game = new Game(new LandMap());
+        game.setDice(dice);
+        runner.setGame(game);
+        return game;
     }
 
     private class HospitalMap extends GameMap {
