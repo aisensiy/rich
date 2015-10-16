@@ -102,6 +102,17 @@ public class PlayerTest {
         player.upgradeLand();
     }
 
+    @Test
+    public void should_update_user_land_info_after_manipulate_land() throws Exception {
+        Player player = Player.createPlayer(game, 1);
+        when(game.location(anyInt())).thenReturn(new Land(100));
+        player.buyEmptyLand();
+        assertThat(player.countOfEmptyLand(), is(1));
+        when(game.location(anyInt())).thenReturn(new Land(300));
+        player.buyEmptyLand();
+        assertThat(player.countOfEmptyLand(), is(2));
+    }
+
     private Land createLandWithOwner(Player player) {
         Land land;
         land = new Land(200);

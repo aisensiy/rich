@@ -159,9 +159,23 @@ public class Player {
         return String.format(
                 "资金: %d元\n" +
                 "点数: %d点\n" +
-                "地产: 空地0处；茅屋0处；洋房0处；摩天楼0处\n" +
+                "地产: 空地%d处；茅屋%d处；洋房%d处；摩天楼%d处\n" +
                 "%s",
-                funding, point, toolBox);
+                funding, point,
+                countOfEmptyLand(), countOfLevelOneLand(), countOfLevelTwoLand(), countOfLevelThreeLand(),
+                toolBox);
+    }
+
+    private int countOfLevelThreeLand() {
+        return landMap.getOrDefault(Land.LEVEL_THREE, new ArrayList<>()).size();
+    }
+
+    private int countOfLevelTwoLand() {
+        return landMap.getOrDefault(Land.LEVEL_TWO, new ArrayList<>()).size();
+    }
+
+    private int countOfLevelOneLand() {
+        return landMap.getOrDefault(Land.LEVEL_ONE, new ArrayList<>()).size();
     }
 
     public int countOfEmptyLand() {
@@ -173,4 +187,5 @@ public class Player {
         locations.add(land);
         landMap.put(Land.EMPTY_LAND, locations);
     }
+
 }

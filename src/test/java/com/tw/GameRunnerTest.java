@@ -159,10 +159,10 @@ public class GameRunnerTest {
     @Test
     public void should_ask_buy_land_when_arrive_at_empty_land() throws Exception {
         when(dice.getInt()).thenReturn(3);
-        systemInRule.provideLines("", "12", "roll", "Y", "quit");
+        systemInRule.provideLines("", "12", "roll", "Y", "roll", "query", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("是否购买该处空地，200 元（Y/N）? "));
-        assertThat(game.getPlayer(1).countOfEmptyLand(), is(1));
+        assertThat(systemOutRule.getLog(), containsString("空地1处"));
     }
 
     @Test

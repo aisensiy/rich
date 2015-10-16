@@ -7,6 +7,9 @@ import com.tw.exception.RichGameException;
 
 public class Land extends Location {
     public static final int EMPTY_LAND = 0;
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_TWO = 2;
+    public static final int LEVEL_THREE = 3;
     private int price;
     private int level;
 
