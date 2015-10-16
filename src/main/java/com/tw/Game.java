@@ -155,4 +155,13 @@ public class Game {
     public Location getLocation(int idx) {
         return locations.get(idx);
     }
+
+    public String getSymbol(Location location) {
+        Player playerAtLocation = getPlayerAtLocation(location);
+        if (playerAtLocation != null) {
+            return playerAtLocation.getSymbol();
+        } else {
+            return location.getSymbol();
+        }
+    }
 }

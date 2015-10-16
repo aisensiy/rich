@@ -119,4 +119,19 @@ public class GameTest {
         game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
     }
+
+    @Test
+    public void should_show_the_nearest_player_to_roll_with_overlap() throws Exception {
+        game.setPlayers("123");
+        assertThat(game.getSymbol(game.getLocation(0)), is("Q"));
+        when(dice.getInt()).thenReturn(1);
+        game.roll();// Q roll
+        when(dice.getInt()).thenReturn(3);
+        game.roll();// A roll
+        when(dice.getInt()).thenReturn(2);
+        game.roll();// S roll
+        when(dice.getInt()).thenReturn(2);
+        game.roll();// Q roll
+        assertThat(game.getSymbol(game.getLocation(3)), is("A"));
+    }
 }
