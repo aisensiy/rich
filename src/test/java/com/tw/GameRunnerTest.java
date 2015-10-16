@@ -101,12 +101,10 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_current_player_name_and_symbol() throws Exception {
-        systemInRule.provideLines("roll");
         game.setPlayers("123");
         runner.turn();
         assertThat(systemOutRule.getLog(), containsString("钱夫人(Q)>"));
 
-        systemInRule.provideLines("roll");
         game.setPlayers("32");
         runner.turn();
         assertThat(systemOutRule.getLog(), containsString("孙小美(S)>"));
@@ -117,13 +115,11 @@ public class GameRunnerTest {
         game.setPlayers("12");
 
         when(dice.getInt()).thenReturn(3);
-        systemInRule.provideLines("roll");
         runner.turn();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
 
         when(dice.getInt()).thenReturn(5);
-        systemInRule.provideLines("roll");
         runner.turn();
         assertThat(game.getPlayer(2).getLocationIndex(), is(5));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
