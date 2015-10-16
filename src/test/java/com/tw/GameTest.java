@@ -162,4 +162,13 @@ public class GameTest {
         game.removePlayer(player);
         assertThat(game.isOver(), is(true));
     }
+
+    @Test
+    public void should_remove_player_and_get_next_player() throws Exception {
+        game.setPlayers("123");
+        Player player = game.getPlayer(1);
+        game.removePlayer(player);
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
+    }
 }

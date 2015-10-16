@@ -20,6 +20,7 @@ public class Game {
     public int initFunding = DEFAULT_FUNDING;
 
     private List<Player> players;
+    private int currentPlayerIndex;
     private Player currentPlayer;
     private List<Location> locations = new ArrayList<>();
     private Dice dice = new Dice();
@@ -56,7 +57,7 @@ public class Game {
                 .map(i -> Player.createPlayer(this, i, initFunding))
                 .collect(toList());
 
-        currentPlayer = players.get(0);
+        currentPlayerIndex = 0;
     }
 
     private void ensureValidPlayersString(String playersString) throws IllegalPlayerSettingException {
@@ -77,12 +78,12 @@ public class Game {
     }
 
     public Player getPlayerAtLocation(Location location) {
-        if (currentPlayer.getCurrentLocation() == location) {
-            return currentPlayer;
+        if (getCurrentPlayer().getCurrentLocation() == location) {
+            return getCurrentPlayer();
         }
 
-        Player player = nextPlayer(currentPlayer);
-        while (player != currentPlayer) {
+        Player player = nextPlayer(getCurrentPlayer());
+        while (player != getCurrentPlayer()) {
             if (player.getCurrentLocation() == location) {
                 return player;
             }
@@ -97,7 +98,7 @@ public class Game {
     }
 
     public void setCurrentPlayerToNext() {
-        currentPlayer = nextPlayer(currentPlayer);
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
     private int getCurrentPlayerIndex() {
@@ -109,11 +110,11 @@ public class Game {
     }
 
     public Player getCurrentPlayer() {
-        return currentPlayer;
+        return players.get(currentPlayerIndex);
     }
 
     public void roll() {
-        currentPlayer.go(dice.getInt());
+        getCurrentPlayer().go(dice.getInt());
     }
 
     public void setDice(Dice dice) {
@@ -145,12 +146,9 @@ public class Game {
         return (player.getLocationIndex() + step) % getMapSize();
     }
 
-    public boolean checkFundingIsGreaterThanZero() {
-        return currentPlayer.getFunding() > 0;
-    }
-
     public void removePlayer(Player player) {
         players.remove(player);
+        currentPlayerIndex--;
     }
 
     public boolean isOver() {
