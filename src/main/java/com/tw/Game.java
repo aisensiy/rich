@@ -139,8 +139,7 @@ public class Game {
     }
 
     public void roll() {
-        int step = dice.getInt();
-        currentPlayer.go(step);
+        currentPlayer.go(dice.getInt());
         setCurrentPlayerToNext();
     }
 

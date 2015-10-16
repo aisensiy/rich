@@ -10,6 +10,7 @@ import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameRunnerTest {
     private Game game;
@@ -111,10 +112,19 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("孙小美(S)>"));
     }
 
-//    @Test
-//    public void should_receive_roll_command_and_update_location() throws Exception {
-//        systemInRule.provideLines("", "12", "roll");
-//        runner.run();
-//        assertThat(game.getPlayer(1).getLocationIndex(), not(0));
-//    }
+    @Test
+    public void should_receive_roll_command_and_update_location() throws Exception {
+        when(dice.getInt()).thenReturn(3);
+        game.setPlayers("12");
+        systemInRule.provideLines("roll");
+        runner.turn();
+        assertThat(game.getPlayer(1).getLocationIndex(), is(3));
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
+
+        when(dice.getInt()).thenReturn(5);
+        systemInRule.provideLines("roll");
+        runner.turn();
+        assertThat(game.getPlayer(2).getLocationIndex(), is(5));
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
+    }
 }
