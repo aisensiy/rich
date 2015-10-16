@@ -157,14 +157,19 @@ public class Player {
         return String.format(
                 "资金: %d元\n" +
                 "点数: %d点\n" +
-                "地产: 空地%d处；茅屋%d处；洋房%d处；摩天楼%d处\n" +
+                "%s\n" +
                 "%s",
                 funding, point,
+                getLandInfo(),
+                toolBox);
+    }
+
+    public String getLandInfo() {
+        return String.format("地产: 空地%d处；茅屋%d处；洋房%d处；摩天楼%d处",
                 countOfLandWithLevel(Land.EMPTY_LAND),
                 countOfLandWithLevel(Land.LEVEL_ONE),
                 countOfLandWithLevel(Land.LEVEL_TWO),
-                countOfLandWithLevel(Land.LEVEL_THREE),
-                toolBox);
+                countOfLandWithLevel(Land.LEVEL_THREE));
     }
 
     public void addLand(Land land) {
