@@ -2,6 +2,7 @@ package com.tw;
 
 import com.tw.generator.GameMap;
 import com.tw.location.Hospital;
+import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.util.Dice;
 import org.junit.Before;
@@ -170,14 +171,34 @@ public class GameRunnerTest {
 
     @Test
     public void should_upgrade_land_when_arrive_at_own_land() throws Exception {
-        when(dice.getInt()).thenReturn(3);
-        systemInRule.provideLines("", "12");
+        game = new Game(new LandMap());
+        game.setDice(dice);
+        runner.setGame(game);
+
+        when(dice.getInt()).thenReturn(1);
+        systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "quit");
+        runner.run();
+        Land land = (Land) game.getLocation(0);
+        assertThat(systemOutRule.getLog(), containsString("是否升级该处地产，200 元（Y/N）?"));
+//        assertThat(land.getLevel(), is(1));
     }
 
     private class HospitalMap extends GameMap {
         @Override
         public void init() {
             locations = asList(new Hospital(), new Hospital(), new Hospital());
+        }
+
+        @Override
+        public String display() {
+            return locations.stream().map(Location::getSymbol).collect(Collectors.joining(""));
+        }
+    }
+
+    private class LandMap extends GameMap {
+        @Override
+        public void init() {
+            locations = asList(new Land(200));
         }
 
         @Override
