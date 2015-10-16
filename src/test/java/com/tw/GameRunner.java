@@ -63,6 +63,13 @@ public class GameRunner {
                     System.out.print(e.getMessage());
                 }
             }
+        } else if (location.isMine()) {
+            try {
+                location.process(game.getCurrentPlayer());
+                System.out.println(location.getMessage());
+            } catch (RichGameException e) {
+                System.out.println(e.getMessage());
+            }
         }
         game.setCurrentPlayerToNext();
     }

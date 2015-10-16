@@ -32,4 +32,12 @@ public abstract class Location {
         Land land = (Land) this;
         return land.getOwner() == null;
     }
+
+    public boolean isMine() {
+        return this.getClass() == Mine.class;
+    }
+
+    public String getMessage() {
+        return "";
+    };
 }

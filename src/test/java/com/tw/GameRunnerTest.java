@@ -3,6 +3,7 @@ package com.tw;
 import com.tw.location.Land;
 import com.tw.map.HospitalMap;
 import com.tw.map.LandMap;
+import com.tw.map.MineMap;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -183,6 +184,23 @@ public class GameRunnerTest {
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("can not upgrade land with highest level"));
+    }
+
+    @Test
+    public void should_get_point_when_arrive_at_mine() throws Exception {
+        game = gameWithOneMine();
+        when(dice.getInt()).thenReturn(1);
+        systemInRule.provideLines("", "12", "roll", "roll", "query", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("点数: 100"));
+        assertThat(systemOutRule.getLog(), containsString("在矿点获取点数100"));
+    }
+
+    private Game gameWithOneMine() {
+        Game game = new Game(new MineMap());
+        game.setDice(dice);
+        runner.setGame(game);
+        return game;
     }
 
     private Game gameWithOneLand() {

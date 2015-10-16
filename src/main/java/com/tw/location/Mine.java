@@ -24,4 +24,9 @@ public class Mine extends Location {
     public String getSymbol() {
         return "$";
     }
+
+    @Override
+    public String getMessage() {
+        return String.format("在矿点获取点数" + point);
+    }
 }
