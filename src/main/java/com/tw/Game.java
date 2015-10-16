@@ -70,7 +70,7 @@ public class Game {
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
                 .map(i -> Player.createPlayer(this, i, initFunding))
-                .toArray(size -> new Player[size]);
+                .toArray(Player[]::new);
 
         currentPlayer = players[0];
     }
@@ -95,6 +95,7 @@ public class Game {
     public void run() throws IOException, RichGameException {
         setInitFunding();
         setPlayers();
+        System.out.println(display());
     }
 
     void setInitFunding() throws IOException {

@@ -98,6 +98,22 @@ public class GameTest {
     }
 
     @Test
+    public void should_show_init_map() throws Exception {
+        systemInRule.provideLines("", "12");
+        game.run();
+        String expected =
+                "Q0000000000000H0000000000000T\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "M0000000000000P0000000000000G";
+        assertThat(systemOutRule.getLog(), containsString(expected));
+    }
+
+    @Test
     public void should_show_map_with_player_position() throws Exception {
         game.setPlayers("12");
         game.getPlayer(2).go(2);
