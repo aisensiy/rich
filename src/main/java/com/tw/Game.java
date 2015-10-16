@@ -143,4 +143,8 @@ public class Game {
     public String display() {
         return map.display();
     }
+
+    public int forward(Player player, int step) {
+        return (player.getLocationIndex() + step) % getMapSize();
+    }
 }

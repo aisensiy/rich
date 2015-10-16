@@ -32,24 +32,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void should_get_new_location_after_roll() throws Exception {
-        Player player = Player.createPlayer(game, 1);
-        player.go(3);
-        assertThat(player.getLocationIndex(), is(3));
-
-        player.go(3);
-        assertThat(player.getLocationIndex(), is(6));
-    }
-
-    @Test
-    public void should_go_back_to_start_point_after_location_out_of_the_map() throws Exception {
-        Player player = Player.createPlayer(game, 1);
-        player.setCurrentLocation(69);
-        player.go(2);
-        assertThat(player.getLocationIndex(), is(1));
-    }
-
-    @Test
     public void should_get_type_of_land() throws Exception {
         when(game.location(anyInt())).thenReturn(new Land(200));
         Player player = Player.createPlayer(game, 1);
