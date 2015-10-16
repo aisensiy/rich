@@ -141,4 +141,11 @@ public class GameRunnerTest {
         runner.run();
         assertThat(systemOutRule.getLog(), containsString(game.getCurrentPlayer().getInfo()));
     }
+
+    @Test
+    public void should_show_help_with_command_help() throws Exception {
+        systemInRule.provideLines("", "12", "help", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString(runner.help()));
+    }
 }
