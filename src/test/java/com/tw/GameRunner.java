@@ -63,7 +63,15 @@ public class GameRunner {
                     System.out.print(e.getMessage());
                 }
             }
-        } else if (location.isMine()) {
+        } else if (!location.isEmptyLand() && location.getOwner() != game.getCurrentPlayer()) {
+            Land land = (Land) location;
+            try {
+                land.process(game.getCurrentPlayer());
+            } catch (RichGameException e) {
+                System.out.print(e.getMessage());
+            }
+        }
+        else if (location.isMine()) {
             try {
                 location.process(game.getCurrentPlayer());
                 System.out.println(location.getMessage());

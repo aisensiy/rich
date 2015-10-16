@@ -196,6 +196,16 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("在矿点获取点数100"));
     }
 
+    @Test
+    public void should_show_lost_money_message_when_arrive_at_others_land() throws Exception {
+        game = gameWithOneLand();
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("", "12", "roll", "y", "roll", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("到达钱夫人的空地,损失金钱100元"));
+    }
+
     private Game gameWithOneMine() {
         Game game = new Game(new MineMap());
         game.setDice(dice);
