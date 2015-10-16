@@ -5,10 +5,10 @@ import com.tw.exception.RichGameException;
 import com.tw.location.*;
 import com.tw.util.Dice;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class Game {
@@ -93,62 +93,7 @@ public class Game {
         return locations.get(currrentLocationIndex);
     }
 
-    public void run() throws IOException, RichGameException {
-        setInitFunding();
-        setPlayers();
-        System.out.println(display());
-    }
-
-    void setInitFunding() throws IOException {
-        System.out.print("Set init funding: 1000 ~ 50000, default 10000 > ");
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String fundingString = br.readLine();
-        if (!fundingString.isEmpty()) {
-            setInitFunding(Integer.parseInt(fundingString));
-        }
-    }
-
-    public void setPlayers() throws IOException, RichGameException {
-        System.out.print("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):");
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String playerString = br.readLine();
-        if (!playerString.isEmpty()) {
-            setPlayers(playerString);
-        }
-    }
-
-    public String display() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 29; i++) {
-            sb.append(getSymbol(locations.get(i)));
-        }
-        sb.append("\n");
-        int size = locations.size();
-        for (int i = 0; i < 6; i++) {
-            sb.append(getSymbol(locations.get(size - i - 1)));
-            sb.append("                           ");
-            sb.append(getSymbol(locations.get(29 + i)));
-            sb.append("\n");
-        }
-        for (int i = 63; i > 63 - 29; i--) {
-            sb.append(getSymbol(locations.get(i)));
-        }
-        return sb.toString();
-    }
-
-    private String getSymbol(Location location) {
-        Player playerAtLocation = getPlayerAtLocation(location);
-        if (playerAtLocation != null) {
-            return playerAtLocation.getSymbol();
-        } else {
-            return location.getSymbol();
-        }
-    }
-
-    private Player getPlayerAtLocation(Location location) {
+    public Player getPlayerAtLocation(Location location) {
         for (int i = 0; i < players.length; i++) {
             if (players[i].getCurrentLocation() == location) {
                 return players[i];
@@ -174,5 +119,13 @@ public class Game {
 
     public void setDice(Dice dice) {
         this.dice = dice;
+    }
+
+    public int getLocationSize() {
+        return locations.size();
+    }
+
+    public Location getLocation(int idx) {
+        return locations.get(idx);
     }
 }
