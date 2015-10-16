@@ -1,9 +1,8 @@
 package com.tw;
 
-import com.tw.generator.GameMap;
-import com.tw.location.Hospital;
 import com.tw.location.Land;
-import com.tw.location.Location;
+import com.tw.map.HospitalMap;
+import com.tw.map.LandMap;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,9 +10,6 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -194,29 +190,5 @@ public class GameRunnerTest {
         game.setDice(dice);
         runner.setGame(game);
         return game;
-    }
-
-    private class HospitalMap extends GameMap {
-        @Override
-        public void init() {
-            locations = asList(new Hospital(), new Hospital(), new Hospital());
-        }
-
-        @Override
-        public String display() {
-            return locations.stream().map(Location::getSymbol).collect(Collectors.joining(""));
-        }
-    }
-
-    private class LandMap extends GameMap {
-        @Override
-        public void init() {
-            locations = asList(new Land(200));
-        }
-
-        @Override
-        public String display() {
-            return locations.stream().map(Location::getSymbol).collect(Collectors.joining(""));
-        }
     }
 }

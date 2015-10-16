@@ -101,7 +101,7 @@ public class PlayerTest {
 
         player.upgradeLand();
     }
-    
+
     private Land createLandWithOwner(Player player) {
         Land land;
         land = new Land(200);
