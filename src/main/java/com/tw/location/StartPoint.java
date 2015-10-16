@@ -1,11 +1,12 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
 import com.tw.exception.RichGameException;
 
-public class Hospital extends Location {
+public class StartPoint extends Location {
     @Override
     public String getName() {
-        return null;
+        return "起点";
     }
 
     @Override
@@ -15,6 +16,6 @@ public class Hospital extends Location {
 
     @Override
     public String getSymbol() {
-        return "H";
+        return "S";
     }
 }

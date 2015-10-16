@@ -1,5 +1,6 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
 import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;

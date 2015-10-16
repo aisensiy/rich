@@ -2,6 +2,7 @@ package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
 import com.tw.exception.RichGameException;
+import com.tw.location.*;
 import com.tw.util.Dice;
 
 import java.io.BufferedReader;

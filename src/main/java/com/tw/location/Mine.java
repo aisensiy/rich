@@ -1,8 +1,15 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
 import com.tw.exception.RichGameException;
 
-public class Magic extends Location {
+public class Mine extends Location {
+    private int point;
+
+    public Mine(int point) {
+        this.point = point;
+    }
+
     @Override
     public String getName() {
         return null;
@@ -10,11 +17,11 @@ public class Magic extends Location {
 
     @Override
     public void process(Player player) throws RichGameException {
-
+        player.increasePoint(point);
     }
 
     @Override
     public String getSymbol() {
-        return "M";
+        return "$";
     }
 }

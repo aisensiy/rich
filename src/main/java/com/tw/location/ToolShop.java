@@ -1,5 +1,7 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
+import com.tw.Tool;
 import com.tw.exception.RichGameException;
 
 public class ToolShop extends Location {

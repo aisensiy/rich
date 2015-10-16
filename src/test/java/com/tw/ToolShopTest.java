@@ -1,6 +1,7 @@
 package com.tw;
 
 import com.tw.exception.CannotBuyToolException;
+import com.tw.location.ToolShop;
 import org.junit.Before;
 import org.junit.Test;
 

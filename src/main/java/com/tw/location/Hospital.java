@@ -1,8 +1,9 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
 import com.tw.exception.RichGameException;
 
-public class Prison extends Location {
+public class Hospital extends Location {
     @Override
     public String getName() {
         return null;
@@ -15,6 +16,6 @@ public class Prison extends Location {
 
     @Override
     public String getSymbol() {
-        return "P";
+        return "H";
     }
 }

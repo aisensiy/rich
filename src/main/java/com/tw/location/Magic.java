@@ -1,11 +1,12 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Player;
 import com.tw.exception.RichGameException;
 
-public class StartPoint extends Location {
+public class Magic extends Location {
     @Override
     public String getName() {
-        return "起点";
+        return null;
     }
 
     @Override
@@ -15,6 +16,6 @@ public class StartPoint extends Location {
 
     @Override
     public String getSymbol() {
-        return "S";
+        return "M";
     }
 }

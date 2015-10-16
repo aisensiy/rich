@@ -4,6 +4,9 @@ import com.tw.exception.CannotBuyToolException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.exception.TypeCastException;
+import com.tw.location.Land;
+import com.tw.location.Location;
+import com.tw.location.ToolShop;
 
 import java.util.HashMap;
 import java.util.Map;

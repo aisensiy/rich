@@ -1,5 +1,7 @@
 package com.tw;
 
+import com.tw.location.Location;
+import com.tw.location.Mine;
 import org.junit.Before;
 import org.junit.Test;
 
