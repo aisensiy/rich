@@ -121,4 +121,27 @@ public class GameTest {
                 "M0000000000000P0000000000000G";
         assertThat(game.display(), is(expected));
     }
+
+    @Test
+    public void should_current_player_change_to_another_player_after_roll_with_2_players() throws Exception {
+        game.setPlayers("12");
+        Player anotherPlayer = game.getPlayer(2);
+        game.roll();
+        assertThat(game.getCurrentPlayer(), is(anotherPlayer));
+    }
+
+    @Test
+    public void should_current_player_change_to_another_player_after_roll_with_3_players() throws Exception {
+        game.setPlayers("312");
+        Player player1 = game.getCurrentPlayer();
+        Player player2 = game.getPlayer(2);
+        Player player3 = game.getPlayer(3);
+
+        game.roll();
+        assertThat(game.getCurrentPlayer(), is(player2));
+        game.roll();
+        assertThat(game.getCurrentPlayer(), is(player3));
+        game.roll();
+        assertThat(game.getCurrentPlayer(), is(player1));
+    }
 }

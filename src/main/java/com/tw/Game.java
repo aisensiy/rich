@@ -155,4 +155,19 @@ public class Game {
         }
         return null;
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void roll() {
+        int step = 5;
+        currentPlayer.go(step);
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == currentPlayer) {
+                currentPlayer = players[(i + 1) % players.length];
+                break;
+            }
+        }
+    }
 }
