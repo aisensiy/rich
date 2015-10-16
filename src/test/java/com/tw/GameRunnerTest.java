@@ -103,4 +103,11 @@ public class GameRunnerTest {
                         "M0000000000000P0000000000000G";
         assertThat(runner.display(), is(expected));
     }
+
+    @Test
+    public void should_show_current_player_name_and_symbol() throws Exception {
+        systemInRule.provideLines("", "12");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("钱夫人(Q)>"));
+    }
 }

@@ -18,6 +18,7 @@ public class GameRunner {
         setInitFunding();
         setPlayers();
         System.out.println(display());
+        System.out.println(String.format("%s> ", game.getCurrentPlayer()));
     }
 
     void setInitFunding() throws IOException {

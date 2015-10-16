@@ -149,4 +149,9 @@ public class Player {
     public String getSymbol() {
         return symbol;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", name, symbol);
+    }
 }
