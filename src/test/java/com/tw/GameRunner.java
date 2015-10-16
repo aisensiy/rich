@@ -17,15 +17,23 @@ public class GameRunner {
     public void run() throws IOException, RichGameException {
         setInitFunding();
         setPlayers();
+        turn();
+    }
+
+    public void turn() throws IOException {
         System.out.println(display());
         System.out.println(String.format("%s> ", game.getCurrentPlayer()));
+        String command = readLine();
+        if (command.toLowerCase().equals("roll")) {
+            game.roll();
+        }
     }
 
     void setInitFunding() throws IOException {
         System.out.print("Set init funding: 1000 ~ 50000, default 10000 > ");
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String fundingString = br.readLine();
+        String fundingString;
+        fundingString = readLine();
         if (!fundingString.isEmpty()) {
             game.setInitFunding(Integer.parseInt(fundingString));
         }
@@ -34,13 +42,11 @@ public class GameRunner {
     public void setPlayers() throws IOException, RichGameException {
         System.out.print("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):");
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String playerString = br.readLine();
+        String playerString = readLine();
         if (!playerString.isEmpty()) {
             game.setPlayers(playerString);
         }
     }
-
 
     public String display() {
         StringBuilder sb = new StringBuilder();
@@ -60,6 +66,12 @@ public class GameRunner {
             sb.append(game.getSymbol(game.getLocation(i)));
         }
         return sb.toString();
+    }
+
+
+    private String readLine() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        return br.readLine();
     }
 
 }

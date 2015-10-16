@@ -32,37 +32,36 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_info_to_type_init_funding() throws Exception {
-        systemInRule.provideLines("2000", "23");
-        runner.run();
+        systemInRule.provideLines("2000");
+        runner.setInitFunding();
         assertThat(systemOutRule.getLog(), startsWith("Set init funding: 1000 ~ 50000, default 10000 >"));
     }
 
     @Test
     public void should_set_funding() throws Exception {
-        systemInRule.provideLines("2000", "23");
-        runner.run();
+        systemInRule.provideLines("2000");
+        runner.setInitFunding();
         assertThat(game.initFunding, is(2000));
     }
 
     @Test
     public void should_get_default_funding_without_set() throws Exception {
-        systemInRule.provideLines("", "23");
-        runner.run();
+        systemInRule.provideLines("");
+        runner.setInitFunding();
         assertThat(game.initFunding, is(10000));
     }
 
     @Test
     public void should_set_players_to_select_players() throws Exception {
-        systemInRule.provideLines("", "23");
-        runner.run();
+        systemInRule.provideLines("23");
+        runner.setPlayers();
         assertThat(systemOutRule.getLog(), containsString("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):"));
         assertThat(game.getPlayer(1).getName(), is(Player.createPlayer(game, 2).getName()));
     }
 
     @Test
-    public void should_show_init_map() throws Exception {
-        systemInRule.provideLines("", "12");
-        runner.run();
+    public void should_show_map_with_player_position() throws Exception {
+        game.setPlayers("12");
         String expected =
                 "Q0000000000000H0000000000000T\n" +
                         "$                           0\n" +
@@ -72,15 +71,10 @@ public class GameRunnerTest {
                         "$                           0\n" +
                         "$                           0\n" +
                         "M0000000000000P0000000000000G";
-        assertThat(systemOutRule.getLog(), containsString(expected));
-    }
+        assertThat(runner.display(), containsString(expected));
 
-    @Test
-    public void should_show_map_with_player_position() throws Exception {
-        game.setPlayers("12");
         game.getPlayer(2).go(2);
 
-        String expected;
         expected =
                 "Q0A00000000000H0000000000000T\n" +
                         "$                           0\n" +
@@ -106,8 +100,21 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_current_player_name_and_symbol() throws Exception {
-        systemInRule.provideLines("", "12");
-        runner.run();
+        systemInRule.provideLines("roll");
+        game.setPlayers("123");
+        runner.turn();
         assertThat(systemOutRule.getLog(), containsString("钱夫人(Q)>"));
+
+        systemInRule.provideLines("roll");
+        game.setPlayers("32");
+        runner.turn();
+        assertThat(systemOutRule.getLog(), containsString("孙小美(S)>"));
     }
+
+//    @Test
+//    public void should_receive_roll_command_and_update_location() throws Exception {
+//        systemInRule.provideLines("", "12", "roll");
+//        runner.run();
+//        assertThat(game.getPlayer(1).getLocationIndex(), not(0));
+//    }
 }
