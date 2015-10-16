@@ -32,6 +32,9 @@ public class GameRunner {
             } else {
                 break;
             }
+            if (game.isOver()) {
+                return;
+            }
             System.out.println(game.display());
             System.out.print(String.format("%s> ", game.getCurrentPlayer()));
             command = readLine();
@@ -39,44 +42,52 @@ public class GameRunner {
     }
 
     public void turn() throws IOException {
+        Player currentPlayer = game.getCurrentPlayer();
         System.out.println(game.display());
-        System.out.print(String.format("%s> ", game.getCurrentPlayer()));
+        System.out.print(String.format("%s> ", currentPlayer));
         game.roll();
-        Location location = game.getCurrentPlayer().getCurrentLocation();
+        Location location = currentPlayer.getCurrentLocation();
         if (location.isEmptyLand()) {
             System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
             String command = readLine().toLowerCase();
             if (command.equals("y")) {
                 try {
-                    location.process(game.getCurrentPlayer());
+                    location.process(currentPlayer);
                 } catch (RichGameException e) {
                     System.out.print(e.getMessage());
                 }
             }
-        } else if (location.getOwner() == game.getCurrentPlayer()) {
+        } else if (location.getOwner() == currentPlayer) {
             System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
             String command = readLine().toLowerCase();
             if (command.equals("y")) {
                 try {
-                    location.process(game.getCurrentPlayer());
+                    location.process(currentPlayer);
                 } catch (RichGameException e) {
                     System.out.print(e.getMessage());
                 }
             }
-        } else if (location.isLand() && location.getOwner() != game.getCurrentPlayer()) {
+        } else if (location.isLand() && location.getOwner() != currentPlayer) {
             Land land = (Land) location;
             try {
-                land.process(game.getCurrentPlayer());
+                land.process(currentPlayer);
             } catch (RichGameException e) {
                 System.out.print(e.getMessage());
             }
         }
         else if (location.isMine()) {
             try {
-                location.process(game.getCurrentPlayer());
+                location.process(currentPlayer);
                 System.out.println(location.getMessage());
             } catch (RichGameException e) {
                 System.out.println(e.getMessage());
+            }
+        }
+        if (currentPlayer.getFunding() < 0) {
+            System.out.println(String.format("%s已经破产", currentPlayer.getName()));
+            game.removePlayer(currentPlayer);
+            if (game.isOver()) {
+                System.out.println("游戏结束");
             }
         }
         game.setCurrentPlayerToNext();

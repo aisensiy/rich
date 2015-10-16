@@ -206,6 +206,17 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("到达钱夫人的空地,损失金钱100元"));
     }
 
+    @Test
+    public void game_over_when_only_one_player_left() throws Exception {
+        game = gameWithOneLand();
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "n", "roll");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("阿土伯已经破产"));
+        assertThat(systemOutRule.getLog(), containsString("游戏结束"));
+    }
+
     private Game gameWithOneMine() {
         Game game = new Game(new MineMap());
         game.setDice(dice);
