@@ -1,9 +1,7 @@
 package com.tw;
 
 import com.tw.exception.CannotBuyToolException;
-import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
-import com.tw.exception.TypeCastException;
 import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.location.ToolShop;
@@ -71,31 +69,8 @@ public class Player {
         return game.location(currrentLocationIndex);
     }
 
-    public void buyEmptyLand() throws RichGameException {
-        Location location = game.location(currrentLocationIndex);
-        location.process(this);
-    }
-
-    private void ensureFoundingIsEnough(int price) throws NoEnoughFoundException {
-        if (funding < price) {
-            throw new NoEnoughFoundException("");
-        }
-    }
-
     public int getFunding() {
         return funding;
-    }
-
-    public void upgradeLand() throws RichGameException {
-        Location location = game.location(currrentLocationIndex);
-        location.process(this);
-    }
-
-    private Land castToLand(Location location) throws TypeCastException {
-        if (!location.isLand()) {
-            throw new TypeCastException("can not convert other type to land");
-        }
-        return (Land) location;
     }
 
     public void decreaseBy(int price) {

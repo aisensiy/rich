@@ -42,7 +42,7 @@ public class LandTest {
         Location land = new Land(200);
         when(game.location(anyInt())).thenReturn(land);
         Player player = Player.createPlayer(game, 1);
-        player.buyEmptyLand();
+        land.process(player);
         assertThat(land.getOwner(), sameInstance(player));
     }
 
@@ -54,7 +54,7 @@ public class LandTest {
         Player player = Player.createPlayer(game, 1);
         int originalFunding = player.getFunding();
 
-        player.buyEmptyLand();
+        land.process(player);
         assertThat(originalFunding - player.getFunding(), CoreMatchers.is(200));
     }
 
@@ -66,7 +66,7 @@ public class LandTest {
         Player player = Player.createPlayer(game, 1);
         int originalFunding = player.getFunding();
 
-        player.buyEmptyLand();
+        land.process(player);
         assertThat(originalFunding - player.getFunding(), CoreMatchers.is(300));
     }
 
@@ -76,6 +76,6 @@ public class LandTest {
         when(game.location(anyInt())).thenReturn(land);
 
         Player player = Player.createPlayer(game, 1, 20);
-        player.buyEmptyLand();
+        land.process(player);
     }
 }

@@ -3,6 +3,7 @@ package com.tw;
 import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
+import com.tw.location.Location;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class PlayerTest {
         when(game.location(anyInt())).thenReturn(land);
         assertThat(land.getLevel(), is(0));
 
-        player.upgradeLand();
+        land.process(player);
 
         assertThat(land.getLevel(), is(1));
     }
@@ -56,7 +57,7 @@ public class PlayerTest {
         when(game.location(anyInt())).thenReturn(land);
         int originalFunding = player.getFunding();
 
-        player.upgradeLand();
+        land.process(player);
         assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
     }
 
@@ -72,10 +73,10 @@ public class PlayerTest {
         Land land = createLandWithOwner(player);
         when(game.location(anyInt())).thenReturn(land);
 
-        player.upgradeLand();
-        player.upgradeLand();
-        player.upgradeLand();
-        player.upgradeLand();
+        land.process(player);
+        land.process(player);
+        land.process(player);
+        land.process(player);
     }
 
     @Test(expected = NoEnoughFoundException.class)
@@ -84,21 +85,20 @@ public class PlayerTest {
         Land land = createLandWithOwner(player);
         when(game.location(anyInt())).thenReturn(land);
 
-        player.upgradeLand();
+        land.process(player);
     }
 
     @Test
     public void should_update_user_land_info_after_manipulate_land() throws Exception {
         Player player = Player.createPlayer(game, 1);
-        when(game.location(anyInt())).thenReturn(new Land(100));
-        player.buyEmptyLand();
+        new Land(100).process(player);
         assertThat(player.countOfLandWithLevel(Land.EMPTY_LAND), is(1));
 
         Land land = new Land(300);
         when(game.location(anyInt())).thenReturn(land);
-        player.buyEmptyLand();
+        land.process(player);
         assertThat(player.countOfLandWithLevel(Land.EMPTY_LAND), is(2));
-        player.upgradeLand();
+        land.process(player);
         assertThat(player.countOfLandWithLevel(Land.LEVEL_ONE), is(1));
     }
 
@@ -114,7 +114,7 @@ public class PlayerTest {
         land.process(otherPlayer);
         assertThat(originalFunding - otherPlayer.getFunding(), is(150));
 
-        player.upgradeLand();
+        land.process(player);
         originalFunding = otherPlayer.getFunding();
         land.process(otherPlayer);
         assertThat(originalFunding - otherPlayer.getFunding(), is(300));
