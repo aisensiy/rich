@@ -2,14 +2,12 @@ package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
 import com.tw.exception.RichGameException;
+import com.tw.util.Dice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Game {
@@ -20,6 +18,7 @@ public class Game {
     private Player[] players;
     private Player currentPlayer;
     private List<Location> locations = new ArrayList<>();
+    private Dice dice = new Dice();
 
     public Game() {
         initMap();
@@ -161,7 +160,7 @@ public class Game {
     }
 
     public void roll() {
-        int step = 5;
+        int step = dice.getInt();
         currentPlayer.go(step);
         for (int i = 0; i < players.length; i++) {
             if (players[i] == currentPlayer) {
@@ -169,5 +168,9 @@ public class Game {
                 break;
             }
         }
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
     }
 }

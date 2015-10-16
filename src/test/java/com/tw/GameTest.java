@@ -1,16 +1,17 @@
 package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
+import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameTest {
 
@@ -21,10 +22,13 @@ public class GameTest {
 
     @Rule
     public final TextFromStandardInputStream systemInRule = TextFromStandardInputStream.emptyStandardInputStream();
+    private Dice dice;
 
     @Before
     public void setUp() throws Exception {
         game = new Game();
+        dice = mock(Dice.class);
+        game.setDice(dice);
     }
 
     @Test
@@ -143,5 +147,21 @@ public class GameTest {
         assertThat(game.getCurrentPlayer(), is(player3));
         game.roll();
         assertThat(game.getCurrentPlayer(), is(player1));
+    }
+
+    @Test
+    public void should_update_current_player_location_after_roll() throws Exception {
+        when(dice.getInt()).thenReturn(5);
+        game.setPlayers("12");
+        Player player1 = game.getCurrentPlayer();
+        Player player2 = game.getPlayer(2);
+
+        int player1OriginalLocation = game.getCurrentPlayer().getLocationIndex();
+        game.roll();
+        assertThat(player1.getLocationIndex() - player1OriginalLocation, is(5));
+
+        int player2OriginalLocation = game.getCurrentPlayer().getLocationIndex();
+        game.roll();
+        assertThat(player2.getLocationIndex() - player2OriginalLocation, is(5));
     }
 }
