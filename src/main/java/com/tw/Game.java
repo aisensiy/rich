@@ -122,23 +122,37 @@ public class Game {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < 29; i++) {
-            if (currentPlayer.getCurrentLocation() == locations.get(i)) {
-                sb.append(currentPlayer.getSymbol());
-            } else {
-                sb.append(locations.get(i).getSymbol());
-            }
+            sb.append(getSymbol(locations.get(i)));
         }
         sb.append("\n");
         int size = locations.size();
         for (int i = 0; i < 6; i++) {
-            sb.append(locations.get(size - i - 1).getSymbol());
+            sb.append(getSymbol(locations.get(size - i - 1)));
             sb.append("                           ");
-            sb.append(locations.get(29 + i).getSymbol());
+            sb.append(getSymbol(locations.get(29 + i)));
             sb.append("\n");
         }
         for (int i = 63; i > 63 - 29; i--) {
-            sb.append(locations.get(i).getSymbol());
+            sb.append(getSymbol(locations.get(i)));
         }
         return sb.toString();
+    }
+
+    private String getSymbol(Location location) {
+        Player playerAtLocation = getPlayerAtLocation(location);
+        if (playerAtLocation != null) {
+            return playerAtLocation.getSymbol();
+        } else {
+            return location.getSymbol();
+        }
+    }
+
+    private Player getPlayerAtLocation(Location location) {
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getCurrentLocation() == location) {
+                return players[i];
+            }
+        }
+        return null;
     }
 }

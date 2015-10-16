@@ -96,25 +96,29 @@ public class GameTest {
     @Test
     public void should_show_map_with_player_position() throws Exception {
         game.setPlayers("12");
-        String expected =
-            "Q0000000000000H0000000000000T\n" +
-            "$                           0\n" +
-            "$                           0\n" +
-            "$                           0\n" +
-            "$                           0\n" +
-            "$                           0\n" +
-            "$                           0\n" +
-            "M0000000000000P0000000000000G";
+        game.getPlayer(2).go(2);
+
+        String expected;
+        expected =
+                "Q0A00000000000H0000000000000T\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "M0000000000000P0000000000000G";
         assertThat(game.display(), is(expected));
-//        game.getPlayer(1).go(2);
-//        expected = "A0Q00000000000H0000000000000T\n" +
-//                "$                           0\n" +
-//                "$                           0\n" +
-//                "$                           0\n" +
-//                "$                           0\n" +
-//                "$                           0\n" +
-//                "$                           0\n" +
-//                "M0000000000000P0000000000000G";
-//        assertThat(game.display(), is(expected));
+        game.getPlayer(1).go(3);
+        expected =
+                "S0AQ0000000000H0000000000000T\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "$                           0\n" +
+                "M0000000000000P0000000000000G";
+        assertThat(game.display(), is(expected));
     }
 }
