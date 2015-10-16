@@ -48,7 +48,7 @@ public class GameRunner {
             String command = readLine().toLowerCase();
             if (command.equals("y")) {
                 try {
-                    game.getCurrentPlayer().buyEmptyLand();
+                    location.process(game.getCurrentPlayer());
                 } catch (RichGameException e) {
                     System.out.print(e.getMessage());
                 }
@@ -58,7 +58,7 @@ public class GameRunner {
             String command = readLine().toLowerCase();
             if (command.equals("y")) {
                 try {
-                    game.getCurrentPlayer().buyEmptyLand();
+                    location.process(game.getCurrentPlayer());
                 } catch (RichGameException e) {
                     System.out.print(e.getMessage());
                 }
