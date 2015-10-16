@@ -114,8 +114,9 @@ public class GameRunnerTest {
 
     @Test
     public void should_receive_roll_command_and_update_location() throws Exception {
-        when(dice.getInt()).thenReturn(3);
         game.setPlayers("12");
+
+        when(dice.getInt()).thenReturn(3);
         systemInRule.provideLines("roll");
         runner.turn();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
@@ -126,5 +127,15 @@ public class GameRunnerTest {
         runner.turn();
         assertThat(game.getPlayer(2).getLocationIndex(), is(5));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
+    }
+
+    @Test
+    public void should_run_infinit_without_quit_command() throws Exception {
+        when(dice.getInt()).thenReturn(5);
+        systemInRule.provideLines("", "12", "roll", "roll", "roll", "quit");
+        runner.run();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
+        assertThat(game.getPlayer(1).getLocationIndex(), is(10));
+        assertThat(game.getPlayer(2).getLocationIndex(), is(5));
     }
 }

@@ -17,16 +17,21 @@ public class GameRunner {
     public void run() throws IOException, RichGameException {
         setInitFunding();
         setPlayers();
-        turn();
+        String command = readLine();
+        while (true) {
+            if (command.toLowerCase().equals("roll")) {
+                turn();
+            } else {
+                break;
+            }
+            command = readLine();
+        }
     }
 
     public void turn() throws IOException {
         System.out.println(display());
-        System.out.println(String.format("%s> ", game.getCurrentPlayer()));
-        String command = readLine();
-        if (command.toLowerCase().equals("roll")) {
-            game.roll();
-        }
+        System.out.print(String.format("%s> ", game.getCurrentPlayer()));
+        game.roll();
     }
 
     void setInitFunding() throws IOException {
@@ -40,7 +45,7 @@ public class GameRunner {
     }
 
     public void setPlayers() throws IOException, RichGameException {
-        System.out.print("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝):");
+        System.out.print("请选择2~4位不重复玩家，输入编号即可。(1.钱夫人; 2.阿土伯; 3.孙小美; 4.金贝贝): ");
 
         String playerString = readLine();
         if (!playerString.isEmpty()) {
@@ -74,4 +79,7 @@ public class GameRunner {
         return br.readLine();
     }
 
+    public static void main(String... args) throws IOException, RichGameException {
+        new GameRunner(new Game()).run();
+    }
 }
