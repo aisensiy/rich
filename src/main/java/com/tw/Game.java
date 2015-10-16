@@ -48,9 +48,13 @@ public class Game {
         }
         locations.add(new Magic());
         locations.add(new ToolShop());
-        for (int i = 0; i < 6; i++) {
-            locations.add(new Mine(10));
-        }
+
+        locations.add(new Mine(20));
+        locations.add(new Mine(80));
+        locations.add(new Mine(100));
+        locations.add(new Mine(40));
+        locations.add(new Mine(80));
+        locations.add(new Mine(60));
     }
 
     public void setInitFunding(int initFunding) {
