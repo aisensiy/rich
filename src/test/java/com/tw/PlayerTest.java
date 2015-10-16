@@ -22,6 +22,7 @@ public class PlayerTest {
     @Before
     public void setUp() throws Exception {
         game = mock(Game.class);
+        when(game.getMapSize()).thenReturn(70);
     }
 
     @Test

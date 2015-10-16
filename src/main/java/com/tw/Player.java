@@ -67,7 +67,7 @@ public class Player {
     }
 
     public void go(int step) {
-        currrentLocationIndex = (currrentLocationIndex + step) % Game.MAP_SIZE;
+        currrentLocationIndex = (currrentLocationIndex + step) % game.getMapSize();
     }
 
     public Location getCurrentLocation() {

@@ -1,5 +1,8 @@
 package com.tw;
 
+import com.tw.generator.GameMap;
+import com.tw.location.Hospital;
+import com.tw.location.Location;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -7,6 +10,9 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -112,18 +118,20 @@ public class GameRunnerTest {
 
     @Test
     public void should_receive_roll_command_and_update_location() throws Exception {
-        game.setPlayers("12");
+        game = new Game(new HospitalMap());
+        game.setDice(dice);
 
-        when(dice.getInt()).thenReturn(3);
-        systemInRule.provideLines("n");
+        game.setPlayers("12");
+        runner.setGame(game);
+
+        when(dice.getInt()).thenReturn(1);
         runner.turn();
-        assertThat(game.getPlayer(1).getLocationIndex(), is(3));
+        assertThat(game.getPlayer(1).getLocationIndex(), is(1));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
 
-        when(dice.getInt()).thenReturn(5);
-        systemInRule.provideLines("n");
+        when(dice.getInt()).thenReturn(2);
         runner.turn();
-        assertThat(game.getPlayer(2).getLocationIndex(), is(5));
+        assertThat(game.getPlayer(2).getLocationIndex(), is(2));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
     }
 
@@ -158,5 +166,23 @@ public class GameRunnerTest {
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("是否购买该处空地，200 元（Y/N）? "));
         assertThat(game.getPlayer(1).countOfEmptyLand(), is(1));
+    }
+
+    @Test
+    public void should_upgrade_land_when_arrive_at_own_land() throws Exception {
+        when(dice.getInt()).thenReturn(3);
+        systemInRule.provideLines("", "12");
+    }
+
+    private class HospitalMap extends GameMap {
+        @Override
+        public void init() {
+            locations = asList(new Hospital(), new Hospital(), new Hospital());
+        }
+
+        @Override
+        public String display() {
+            return locations.stream().map(Location::getSymbol).collect(Collectors.joining(""));
+        }
     }
 }

@@ -35,7 +35,7 @@ public class GameRunner {
     }
 
     public void turn() throws IOException {
-        System.out.println(display());
+        System.out.println(game.display());
         System.out.print(String.format("%s> ", game.getCurrentPlayer()));
         game.roll();
         Location location = game.getCurrentPlayer().getCurrentLocation();
@@ -79,7 +79,7 @@ public class GameRunner {
             sb.append(game.getSymbol(game.getLocation(i)));
         }
         sb.append("\n");
-        int size = game.getLocationSize();
+        int size = game.getMapSize();
         for (int i = 0; i < 6; i++) {
             sb.append(game.getSymbol(game.getLocation(size - i - 1)));
             sb.append("                           ");
@@ -113,5 +113,9 @@ public class GameRunner {
                 "query        显示自家资产信息   \n" +
                 "help          查看命令帮助   \n" +
                 "quit           强制退出";
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

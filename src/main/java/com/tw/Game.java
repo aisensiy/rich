@@ -2,7 +2,9 @@ package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
 import com.tw.exception.RichGameException;
-import com.tw.location.*;
+import com.tw.generator.DefaultMap;
+import com.tw.generator.GameMap;
+import com.tw.location.Location;
 import com.tw.util.Dice;
 
 import java.util.ArrayList;
@@ -13,48 +15,23 @@ import java.util.stream.Stream;
 
 public class Game {
     public static final int DEFAULT_FUNDING = 10000;
-    public static final int MAP_SIZE = 70;
     public int initFunding = DEFAULT_FUNDING;
 
     private Player[] players;
     private Player currentPlayer;
     private List<Location> locations = new ArrayList<>();
     private Dice dice = new Dice();
+    private GameMap map;
 
     public Game() {
-        initMap();
+        this.map = new DefaultMap(this);
+        this.locations = map.getLocations();
     }
 
-    private void initMap() {
-        locations.add(new StartPoint());
-        for (int i = 0; i < 13; i++) {
-            locations.add(new Land(200));
-        }
-        locations.add(new Hospital());
-        for (int i = 0; i < 13; i++) {
-            locations.add(new Land(200));
-        }
-        locations.add(new ToolShop());
-        for (int i = 0; i < 6; i++) {
-            locations.add(new Land(500));
-        }
-        locations.add(new GiftShop());
-        for (int i = 0; i < 13; i++) {
-            locations.add(new Land(300));
-        }
-        locations.add(new Prison());
-        for (int i = 0; i < 13; i++) {
-            locations.add(new Land(300));
-        }
-        locations.add(new Magic());
-        locations.add(new ToolShop());
-
-        locations.add(new Mine(20));
-        locations.add(new Mine(80));
-        locations.add(new Mine(100));
-        locations.add(new Mine(40));
-        locations.add(new Mine(80));
-        locations.add(new Mine(60));
+    public Game(GameMap map) {
+        this.map = map;
+        this.map.setGame(this);
+        this.locations = map.getLocations();
     }
 
     public void setInitFunding(int initFunding) {
@@ -146,7 +123,7 @@ public class Game {
         this.dice = dice;
     }
 
-    public int getLocationSize() {
+    public int getMapSize() {
         return locations.size();
     }
 
@@ -161,5 +138,9 @@ public class Game {
         } else {
             return location.getSymbol();
         }
+    }
+
+    public String display() {
+        return map.display();
     }
 }
