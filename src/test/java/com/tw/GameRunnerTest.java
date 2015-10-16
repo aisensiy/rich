@@ -180,7 +180,7 @@ public class GameRunnerTest {
         runner.run();
         Land land = (Land) game.getLocation(0);
         assertThat(systemOutRule.getLog(), containsString("是否升级该处地产，200 元（Y/N）?"));
-//        assertThat(land.getLevel(), is(1));
+        assertThat(land.getLevel(), is(1));
     }
 
     private class HospitalMap extends GameMap {
