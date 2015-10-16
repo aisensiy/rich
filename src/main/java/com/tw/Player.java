@@ -10,9 +10,7 @@ import com.tw.location.ToolShop;
 import com.tw.util.ToolBox;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Player {
     private final String name;
@@ -34,7 +32,7 @@ public class Player {
     private int point;
     private ToolBox toolBox = new ToolBox(this);
     private String symbol;
-    private Map<Integer, List<Location>> landMap = new HashMap<>();
+    private List<Land> lands = new ArrayList<>();
 
     private Player(Game game, String name, String symbol, int funding) {
         this.game = game;
@@ -162,30 +160,18 @@ public class Player {
                 "地产: 空地%d处；茅屋%d处；洋房%d处；摩天楼%d处\n" +
                 "%s",
                 funding, point,
-                countOfEmptyLand(), countOfLevelOneLand(), countOfLevelTwoLand(), countOfLevelThreeLand(),
+                countOfLandWithLevel(Land.EMPTY_LAND),
+                countOfLandWithLevel(Land.LEVEL_ONE),
+                countOfLandWithLevel(Land.LEVEL_TWO),
+                countOfLandWithLevel(Land.LEVEL_THREE),
                 toolBox);
     }
 
-    private int countOfLevelThreeLand() {
-        return landMap.getOrDefault(Land.LEVEL_THREE, new ArrayList<>()).size();
+    public void addLand(Land land) {
+        lands.add(land);
     }
 
-    private int countOfLevelTwoLand() {
-        return landMap.getOrDefault(Land.LEVEL_TWO, new ArrayList<>()).size();
+    public int countOfLandWithLevel(int level) {
+        return (int) lands.stream().filter(land -> land.getLevel() == level).count();
     }
-
-    private int countOfLevelOneLand() {
-        return landMap.getOrDefault(Land.LEVEL_ONE, new ArrayList<>()).size();
-    }
-
-    public int countOfEmptyLand() {
-        return landMap.getOrDefault(Land.EMPTY_LAND, new ArrayList<>()).size();
-    }
-
-    public void addEmptyLand(Land land) {
-        List<Location> locations = landMap.getOrDefault(Land.EMPTY_LAND, new ArrayList<>());
-        locations.add(land);
-        landMap.put(Land.EMPTY_LAND, locations);
-    }
-
 }

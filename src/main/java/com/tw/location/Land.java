@@ -80,7 +80,7 @@ public class Land extends Location {
 
         ensureFoundingIsEnough(player);
         setOwner(player);
-        player.addEmptyLand(this);
+        player.addLand(this);
         player.decreaseBy(price);
     }
 

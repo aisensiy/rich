@@ -107,10 +107,14 @@ public class PlayerTest {
         Player player = Player.createPlayer(game, 1);
         when(game.location(anyInt())).thenReturn(new Land(100));
         player.buyEmptyLand();
-        assertThat(player.countOfEmptyLand(), is(1));
-        when(game.location(anyInt())).thenReturn(new Land(300));
+        assertThat(player.countOfLandWithLevel(Land.EMPTY_LAND), is(1));
+
+        Land land = new Land(300);
+        when(game.location(anyInt())).thenReturn(land);
         player.buyEmptyLand();
-        assertThat(player.countOfEmptyLand(), is(2));
+        assertThat(player.countOfLandWithLevel(Land.EMPTY_LAND), is(2));
+        player.upgradeLand();
+        assertThat(player.countOfLandWithLevel(Land.LEVEL_ONE), is(1));
     }
 
     private Land createLandWithOwner(Player player) {
