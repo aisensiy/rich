@@ -19,6 +19,8 @@ public class GameRunner {
     public void run() throws IOException, RichGameException {
         setInitFunding();
         setPlayers();
+        System.out.println(game.display());
+        System.out.print(String.format("%s> ", game.getCurrentPlayer()));
         String command = readLine().toLowerCase();
         while (true) {
             if (command.equals("roll")) {
@@ -30,6 +32,8 @@ public class GameRunner {
             } else {
                 break;
             }
+            System.out.println(game.display());
+            System.out.print(String.format("%s> ", game.getCurrentPlayer()));
             command = readLine();
         }
     }
