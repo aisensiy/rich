@@ -24,4 +24,12 @@ public abstract class Location {
     public abstract void process(Player player) throws RichGameException;
 
     public abstract String getSymbol();
+
+    public boolean isEmptyLand() {
+        if (!isLand()) {
+            return false;
+        }
+        Land land = (Land) this;
+        return land.getOwner() == null;
+    }
 }

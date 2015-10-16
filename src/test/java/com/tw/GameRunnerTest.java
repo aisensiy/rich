@@ -148,4 +148,12 @@ public class GameRunnerTest {
         runner.run();
         assertThat(systemOutRule.getLog(), containsString(runner.help()));
     }
+
+    @Test
+    public void should_ask_buy_land_when_arrive_at_empty_land() throws Exception {
+        when(dice.getInt()).thenReturn(3);
+        systemInRule.provideLines("", "12", "roll", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("是否购买该处空地，200 元（Y/N）? "));
+    }
 }

@@ -1,6 +1,8 @@
 package com.tw;
 
 import com.tw.exception.RichGameException;
+import com.tw.location.Land;
+import com.tw.location.Location;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,6 +38,11 @@ public class GameRunner {
         System.out.println(display());
         System.out.print(String.format("%s> ", game.getCurrentPlayer()));
         game.roll();
+        Location location = game.getCurrentPlayer().getCurrentLocation();
+        if (location.isEmptyLand()) {
+            System.out.println(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
+        }
+        game.setCurrentPlayerToNext();
     }
 
     void setInitFunding() throws IOException {

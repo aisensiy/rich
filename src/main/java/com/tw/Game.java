@@ -140,7 +140,6 @@ public class Game {
 
     public void roll() {
         currentPlayer.go(dice.getInt());
-        setCurrentPlayerToNext();
     }
 
     public void setDice(Dice dice) {

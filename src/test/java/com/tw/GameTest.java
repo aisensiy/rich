@@ -73,6 +73,7 @@ public class GameTest {
         game.setPlayers("12");
         Player anotherPlayer = game.getPlayer(2);
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(anotherPlayer));
     }
 
@@ -84,10 +85,13 @@ public class GameTest {
         Player player3 = game.getPlayer(3);
 
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player2));
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player3));
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player1));
     }
 
@@ -100,10 +104,12 @@ public class GameTest {
 
         int player1OriginalLocation = game.getCurrentPlayer().getLocationIndex();
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(player1.getLocationIndex() - player1OriginalLocation, is(5));
 
         int player2OriginalLocation = game.getCurrentPlayer().getLocationIndex();
         game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(player2.getLocationIndex() - player2OriginalLocation, is(5));
     }
 
@@ -125,13 +131,17 @@ public class GameTest {
         game.setPlayers("123");
         assertThat(game.getSymbol(game.getLocation(0)), is("Q"));
         when(dice.getInt()).thenReturn(1);
-        game.roll();// Q roll
+        game.roll();
+        game.setCurrentPlayerToNext();
         when(dice.getInt()).thenReturn(3);
-        game.roll();// A roll
+        game.roll();
+        game.setCurrentPlayerToNext();
         when(dice.getInt()).thenReturn(2);
-        game.roll();// S roll
+        game.roll();
+        game.setCurrentPlayerToNext();
         when(dice.getInt()).thenReturn(2);
-        game.roll();// Q roll
+        game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(game.getSymbol(game.getLocation(3)), is("A"));
     }
 }
