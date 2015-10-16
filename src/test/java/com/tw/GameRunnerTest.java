@@ -7,11 +7,10 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameRunnerTest {
     private Game game;
@@ -104,5 +103,20 @@ public class GameRunnerTest {
                         "$                           0\n" +
                         "M0000000000000P0000000000000G";
         assertThat(runner.display(), is(expected));
+    }
+
+    @Test
+    public void should_show_the_nearest_player_to_roll_with_overlap() throws Exception {
+        game.setPlayers("123");
+        assertThat(runner.getSymbol(game.getLocation(0)), is("Q"));
+        when(dice.getInt()).thenReturn(1);
+        game.roll();// Q roll
+        when(dice.getInt()).thenReturn(3);
+        game.roll();// A roll
+        when(dice.getInt()).thenReturn(2);
+        game.roll();// S roll
+        when(dice.getInt()).thenReturn(2);
+        game.roll();// Q roll
+        assertThat(runner.getSymbol(game.getLocation(3)), is("A"));
     }
 }

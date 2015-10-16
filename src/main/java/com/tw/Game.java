@@ -98,12 +98,40 @@ public class Game {
     }
 
     public Player getPlayerAtLocation(Location location) {
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getCurrentLocation() == location) {
-                return players[i];
+        if (currentPlayer.getCurrentLocation() == location) {
+            return currentPlayer;
+        }
+
+        Player player = nextPlayer(currentPlayer);
+        while (player != currentPlayer) {
+            if (player.getCurrentLocation() == location) {
+                return player;
             }
+            player = nextPlayer(player);
         }
         return null;
+    }
+
+    public Player nextPlayer(Player player) {
+        int currentPlayerIndex = getPlayerIndex(player);
+        return players[(currentPlayerIndex + 1) % players.length];
+    }
+
+    public void setCurrentPlayerToNext() {
+        currentPlayer = nextPlayer(currentPlayer);
+    }
+
+    private int getCurrentPlayerIndex() {
+        return getPlayerIndex(currentPlayer);
+    }
+
+    private int getPlayerIndex(Player player) {
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == player) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public Player getCurrentPlayer() {
@@ -113,12 +141,7 @@ public class Game {
     public void roll() {
         int step = dice.getInt();
         currentPlayer.go(step);
-        for (int i = 0; i < players.length; i++) {
-            if (players[i] == currentPlayer) {
-                currentPlayer = players[(i + 1) % players.length];
-                break;
-            }
-        }
+        setCurrentPlayerToNext();
     }
 
     public void setDice(Dice dice) {

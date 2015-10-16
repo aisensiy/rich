@@ -106,4 +106,17 @@ public class GameTest {
         game.roll();
         assertThat(player2.getLocationIndex() - player2OriginalLocation, is(5));
     }
+
+    @Test
+    public void should_set_current_player_to_next() throws Exception {
+        game.setPlayers("1234");
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(3)));
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(4)));
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
+    }
 }

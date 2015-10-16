@@ -62,7 +62,7 @@ public class GameRunner {
         return sb.toString();
     }
 
-    private String getSymbol(Location location) {
+    public String getSymbol(Location location) {
         Player playerAtLocation = game.getPlayerAtLocation(location);
         if (playerAtLocation != null) {
             return playerAtLocation.getSymbol();
