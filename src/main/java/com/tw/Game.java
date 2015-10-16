@@ -13,11 +13,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class Game {
     public static final int DEFAULT_FUNDING = 10000;
     public int initFunding = DEFAULT_FUNDING;
 
-    private Player[] players;
+    private List<Player> players;
     private Player currentPlayer;
     private List<Location> locations = new ArrayList<>();
     private Dice dice = new Dice();
@@ -39,7 +41,7 @@ public class Game {
     }
 
     public Player getPlayer(int idx) {
-        return players[idx - 1];
+        return players.get(idx - 1);
     }
 
     public void setPlayers(String playersString) throws RichGameException {
@@ -52,9 +54,9 @@ public class Game {
         players = Stream.of(playersString.split(""))
                 .map(Integer::parseInt)
                 .map(i -> Player.createPlayer(this, i, initFunding))
-                .toArray(Player[]::new);
+                .collect(toList());
 
-        currentPlayer = players[0];
+        currentPlayer = players.get(0);
     }
 
     private void ensureValidPlayersString(String playersString) throws IllegalPlayerSettingException {
@@ -91,7 +93,7 @@ public class Game {
 
     public Player nextPlayer(Player player) {
         int currentPlayerIndex = getPlayerIndex(player);
-        return players[(currentPlayerIndex + 1) % players.length];
+        return players.get((currentPlayerIndex + 1) % players.size());
     }
 
     public void setCurrentPlayerToNext() {
@@ -103,12 +105,7 @@ public class Game {
     }
 
     private int getPlayerIndex(Player player) {
-        for (int i = 0; i < players.length; i++) {
-            if (players[i] == player) {
-                return i;
-            }
-        }
-        return -1;
+        return players.indexOf(player);
     }
 
     public Player getCurrentPlayer() {
@@ -146,5 +143,17 @@ public class Game {
 
     public int forward(Player player, int step) {
         return (player.getLocationIndex() + step) % getMapSize();
+    }
+
+    public boolean checkFundingIsGreaterThanZero() {
+        return currentPlayer.getFunding() > 0;
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
+    public boolean isOver() {
+        return players.size() == 1;
     }
 }

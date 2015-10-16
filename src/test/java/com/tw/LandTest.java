@@ -1,6 +1,5 @@
 package com.tw;
 
-import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
 import com.tw.location.Location;
@@ -45,19 +44,6 @@ public class LandTest {
         Player player = Player.createPlayer(game, 1);
         player.buyEmptyLand();
         assertThat(land.getOwner(), sameInstance(player));
-    }
-
-    @Test(expected = CannotAccessLandException.class)
-    public void throw_exception_when_buy_land_if_current_location_if_not_empty() throws Exception {
-        Player player1 = Player.createPlayer(game, 1);
-        Player player2 = Player.createPlayer(game, 2);
-
-        Location landOwnByOthers = new Land(200);
-
-        landOwnByOthers.setOwner(player2);
-        when(game.location(anyInt())).thenReturn(landOwnByOthers);
-
-        player1.buyEmptyLand();
     }
 
     @Test

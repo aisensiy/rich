@@ -154,4 +154,12 @@ public class GameTest {
         game.forward(player, 3);
         assertThat(game.forward(player, 3), is(2));
     }
+
+    @Test
+    public void should_remove_player() throws Exception {
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        game.removePlayer(player);
+        assertThat(game.isOver(), is(true));
+    }
 }

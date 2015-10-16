@@ -3,7 +3,6 @@ package com.tw;
 import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
-import com.tw.location.Location;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,20 +58,6 @@ public class PlayerTest {
 
         player.upgradeLand();
         assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
-    }
-
-    @Test
-    public void upgradeLand_should_throw_exception_is_the_land_is_owned_by_others() throws Exception {
-        expectedException.expect(CannotAccessLandException.class);
-        expectedException.expectMessage("can not upgrade land which is not belong to you");
-        Player player1 = Player.createPlayer(game, 1);
-        Player player2 = Player.createPlayer(game, 2);
-
-        Location landOwnByOthers = createLandWithOwner(player2);
-
-        when(game.location(anyInt())).thenReturn(landOwnByOthers);
-
-        player1.upgradeLand();
     }
 
     @Rule

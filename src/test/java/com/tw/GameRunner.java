@@ -63,7 +63,7 @@ public class GameRunner {
                     System.out.print(e.getMessage());
                 }
             }
-        } else if (!location.isEmptyLand() && location.getOwner() != game.getCurrentPlayer()) {
+        } else if (location.isLand() && location.getOwner() != game.getCurrentPlayer()) {
             Land land = (Land) location;
             try {
                 land.process(game.getCurrentPlayer());
