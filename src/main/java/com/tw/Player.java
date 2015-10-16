@@ -8,12 +8,12 @@ import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.location.ToolShop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static com.tw.Tool.BOMB;
-import static com.tw.Tool.ROADBLOCK;
-import static com.tw.Tool.ROBOT;
+import static com.tw.Tool.*;
 
 public class Player {
     private final String name;
@@ -35,6 +35,7 @@ public class Player {
     private int point;
     private Map<Tool, Integer> toolMap = new HashMap<>();
     private String symbol;
+    private Map<Integer, List<Location>> landMap = new HashMap<>();
 
     private Player(Game game, String name, String symbol, int funding) {
         this.game = game;
@@ -162,5 +163,15 @@ public class Player {
                 "地产: 空地0处；茅屋0处；洋房0处；摩天楼0处\n" +
                 "道具: 路障%d个；炸弹%d个；机器娃娃%d个",
                 funding, point, getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
+    }
+
+    public int countOfEmptyLand() {
+        return landMap.getOrDefault(Land.EMPTY_LAND, new ArrayList<>()).size();
+    }
+
+    public void addEmptyLand(Land land) {
+        List<Location> locations = landMap.getOrDefault(Land.EMPTY_LAND, new ArrayList<>());
+        locations.add(land);
+        landMap.put(Land.EMPTY_LAND, locations);
     }
 }

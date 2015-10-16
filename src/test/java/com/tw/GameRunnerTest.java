@@ -115,11 +115,13 @@ public class GameRunnerTest {
         game.setPlayers("12");
 
         when(dice.getInt()).thenReturn(3);
+        systemInRule.provideLines("n");
         runner.turn();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
 
         when(dice.getInt()).thenReturn(5);
+        systemInRule.provideLines("n");
         runner.turn();
         assertThat(game.getPlayer(2).getLocationIndex(), is(5));
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
@@ -128,7 +130,7 @@ public class GameRunnerTest {
     @Test
     public void should_run_infinit_without_quit_command() throws Exception {
         when(dice.getInt()).thenReturn(5);
-        systemInRule.provideLines("", "12", "roll", "roll", "roll", "quit");
+        systemInRule.provideLines("", "12", "roll", "n", "roll", "n", "roll", "n", "quit");
         runner.run();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
         assertThat(game.getPlayer(1).getLocationIndex(), is(10));
@@ -152,8 +154,9 @@ public class GameRunnerTest {
     @Test
     public void should_ask_buy_land_when_arrive_at_empty_land() throws Exception {
         when(dice.getInt()).thenReturn(3);
-        systemInRule.provideLines("", "12", "roll", "quit");
+        systemInRule.provideLines("", "12", "roll", "Y", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("是否购买该处空地，200 元（Y/N）? "));
+        assertThat(game.getPlayer(1).countOfEmptyLand(), is(1));
     }
 }

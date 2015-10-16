@@ -6,6 +6,7 @@ import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 
 public class Land extends Location {
+    public static final int EMPTY_LAND = 0;
     private int price;
     private int level;
 
@@ -76,6 +77,7 @@ public class Land extends Location {
 
         ensureFoundingIsEnough(player);
         setOwner(player);
+        player.addEmptyLand(this);
         player.decreaseBy(price);
     }
 

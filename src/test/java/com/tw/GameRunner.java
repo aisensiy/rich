@@ -41,6 +41,14 @@ public class GameRunner {
         Location location = game.getCurrentPlayer().getCurrentLocation();
         if (location.isEmptyLand()) {
             System.out.println(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
+            String command = readLine().toLowerCase();
+            if (command.equals("y")) {
+                try {
+                    game.getCurrentPlayer().buyEmptyLand();
+                } catch (RichGameException e) {
+                    System.out.print(e.getMessage());
+                }
+            }
         }
         game.setCurrentPlayerToNext();
     }
