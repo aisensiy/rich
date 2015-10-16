@@ -7,13 +7,12 @@ import com.tw.exception.TypeCastException;
 import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.location.ToolShop;
+import com.tw.util.ToolBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.tw.Tool.*;
 
 public class Player {
     private final String name;
@@ -33,7 +32,7 @@ public class Player {
     private Game game;
     private int funding;
     private int point;
-    private Map<Tool, Integer> toolMap = new HashMap<>();
+    private ToolBox toolBox = new ToolBox(this);
     private String symbol;
     private Map<Integer, List<Location>> landMap = new HashMap<>();
 
@@ -124,27 +123,27 @@ public class Player {
     }
 
     private int getToolCount() {
-        return getCountOfRoadBlock() + getCountOfRobot() + getCountOfBomb();
+        return toolBox.getToolCount();
     }
 
     private int getCountOfBomb() {
-        return toolMap.getOrDefault(BOMB, 0);
+        return toolBox.getCountOfBomb();
     }
 
     public int getCountOfRoadBlock() {
-        return toolMap.getOrDefault(ROADBLOCK, 0);
+        return toolBox.getCountOfRoadBlock();
     }
 
     public void addTool(Tool tool) {
-        toolMap.put(tool, toolMap.getOrDefault(tool, 0) + 1);
+        toolBox.addTool(tool);
+    }
+
+    public int getCountOfRobot() {
+        return toolBox.getCountOfRobot();
     }
 
     public void decreasePoint(int toolPoint) {
         point -= toolPoint;
-    }
-
-    public int getCountOfRobot() {
-        return toolMap.getOrDefault(ROBOT, 0);
     }
 
     public String getSymbol() {
@@ -161,8 +160,8 @@ public class Player {
                 "资金: %d元\n" +
                 "点数: %d点\n" +
                 "地产: 空地0处；茅屋0处；洋房0处；摩天楼0处\n" +
-                "道具: 路障%d个；炸弹%d个；机器娃娃%d个",
-                funding, point, getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
+                "%s",
+                funding, point, toolBox);
     }
 
     public int countOfEmptyLand() {
