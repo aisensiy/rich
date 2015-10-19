@@ -16,9 +16,8 @@ public class Mine extends Location {
     }
 
     @Override
-    public void process(Player player) throws RichGameException {
+    public void triggerArriveEvent(Player player) throws RichGameException {
         player.increasePoint(point);
-        System.out.println(getMessage());
     }
 
     @Override
@@ -27,7 +26,7 @@ public class Mine extends Location {
     }
 
     @Override
-    public String getMessage() {
+    public String arriveMessage(Player player) {
         return String.format("在矿点获取点数" + point);
     }
 }

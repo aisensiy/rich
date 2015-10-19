@@ -23,7 +23,14 @@ public abstract class Location {
 
     public abstract String getName();
 
-    public abstract void process(Player player) throws RichGameException;
+    public void triggerArriveEvent(Player player) throws RichGameException {
+
+    }
+
+    public void process(Player player) throws RichGameException {
+        triggerArriveEvent(player);
+        System.out.println(arriveMessage(player));
+    }
 
     public abstract String getSymbol();
 
@@ -35,7 +42,7 @@ public abstract class Location {
         return land.getOwner() == null;
     }
 
-    public String getMessage() {
+    public String arriveMessage(Player player) {
         return "";
     };
 

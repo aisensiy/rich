@@ -10,11 +10,6 @@ public class GiftShop extends Location {
     }
 
     @Override
-    public void process(Player player) throws RichGameException {
-
-    }
-
-    @Override
     public String getSymbol() {
         return "G";
     }

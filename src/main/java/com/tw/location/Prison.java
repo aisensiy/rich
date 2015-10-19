@@ -10,13 +10,17 @@ public class Prison extends Location {
     }
 
     @Override
-    public void process(Player player) throws RichGameException {
+    public void triggerArriveEvent(Player player) throws RichGameException {
         player.setSkipRoll(3);
-        System.out.println(String.format("%s被送去监狱了", player.getName()));
     }
 
     @Override
     public String getSymbol() {
         return "P";
+    }
+
+    @Override
+    public String arriveMessage(Player player) {
+        return String.format("%s被送去监狱了", player.getName());
     }
 }

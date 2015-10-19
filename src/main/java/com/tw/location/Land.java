@@ -46,7 +46,7 @@ public class Land extends Location {
     }
 
     @Override
-    public void process(Player player) throws RichGameException {
+    public void triggerArriveEvent(Player player) throws RichGameException {
         if (getOwner() == null) {
             buy(player);
         } else if(getOwner() == player) {
