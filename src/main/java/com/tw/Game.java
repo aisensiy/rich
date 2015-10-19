@@ -169,4 +169,9 @@ public class Game {
     public Location getRelativeLocationWithCurrent(int relativeIndex) {
         return getLocation(currentPlayerIndex + relativeIndex);
     }
+
+    public void setBomb(int relativeIndex) {
+        getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.BOMB);
+        getCurrentPlayer().decreaseTool(Tool.BOMB);
+    }
 }

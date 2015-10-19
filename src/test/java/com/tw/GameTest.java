@@ -192,4 +192,14 @@ public class GameTest {
         assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.ROADBLOCK));
         assertThat(player.getCountOfRoadBlock(), is(0));
     }
+
+    @Test
+    public void should_set_bomb_by_current_player() throws Exception {
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.addTool(Tool.BOMB);
+        game.setBomb(5);
+        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.BOMB));
+        assertThat(player.getCountOfBomb(), is(0));
+    }
 }

@@ -92,7 +92,7 @@ public class Player {
         return toolBox.getToolCount();
     }
 
-    private int getCountOfBomb() {
+    public int getCountOfBomb() {
         return toolBox.getCountOfBomb();
     }
 
