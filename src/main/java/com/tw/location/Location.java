@@ -33,15 +33,8 @@ public abstract class Location {
         return land.getOwner() == null;
     }
 
-    public boolean isMine() {
-        return this.getClass() == Mine.class;
-    }
-
     public String getMessage() {
         return "";
     };
 
-    public boolean isPrison() {
-        return this.getClass() == Prison.class;
-    }
 }

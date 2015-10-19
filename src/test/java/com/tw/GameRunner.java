@@ -60,13 +60,7 @@ public class GameRunner {
                 if (command.equals("y")) {
                     location.process(currentPlayer);
                 }
-            } else if (location.isLand() && location.getOwner() != currentPlayer) {
-                Land land = (Land) location;
-                land.process(currentPlayer);
-            } else if (location.isMine()) {
-                location.process(currentPlayer);
-                System.out.println(location.getMessage());
-            } else if (location.isPrison()) {
+            } else {
                 location.process(currentPlayer);
             }
         } catch (RichGameException e) {
