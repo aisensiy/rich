@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import static com.tw.Tool.ROADBLOCK;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -243,7 +244,7 @@ public class GameRunnerTest {
 
         systemInRule.provideLines("200", "12", "roll", "roll", "roll", "1", "F", "quit");
         runner.run();
-        assertThat(game.getPlayer(1).getCountOf(Tool.ROADBLOCK), is(1));
+        assertThat(game.getPlayer(1).getCountOf(ROADBLOCK), is(1));
     }
 
     @Test
@@ -264,6 +265,23 @@ public class GameRunnerTest {
         systemInRule.provideLines("200", "12", "roll", "roll", "roll", "1", "1", "1", "1", "1", "F", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("no enough point to buy the tool"));
+    }
+
+    @Test
+    public void should_get_set_block_command() throws Exception {
+        game = gameWithMap(new MiniMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines(
+                "200", "12",
+                "roll",
+                "roll",
+                "roll", "1", "F",
+                "roll", "F",
+                "block 1",
+                "quit");
+        runner.run();
+        assertThat(game.getLocation(3).getTool(), is(ROADBLOCK));
     }
 
     private Game gameWithMap(GameMap map) {

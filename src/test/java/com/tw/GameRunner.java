@@ -17,12 +17,16 @@ public class GameRunner {
         this.game = game;
     }
 
-    public void run() throws IOException, RichGameException {
+    public void run() throws IOException {
         setInitFunding();
-        setPlayers();
+        try {
+            setPlayers();
+        } catch (RichGameException e) {
+            e.printStackTrace();
+        }
         System.out.println(game.display());
         System.out.print(String.format("%s> ", game.getCurrentPlayer()));
-        String command = readLine().toLowerCase();
+        String command = readLine();
         while (true) {
             if (command.equals("roll")) {
                 turn();
@@ -30,6 +34,12 @@ public class GameRunner {
                 System.out.println(game.getCurrentPlayer().getInfo());
             } else if (command.equals("help")) {
                 System.out.println(help());
+            } else if (command.startsWith("block")) {
+                try {
+                    game.setTool(Tool.ROADBLOCK, Integer.parseInt(command.split(" ")[1]));
+                } catch (RichGameException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 break;
             }
@@ -51,13 +61,13 @@ public class GameRunner {
         try {
             if (location.isEmptyLand()) {
                 System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
-                String command = readLine().toLowerCase();
+                String command = readLine();
                 if (command.equals("y")) {
                     location.process(currentPlayer);
                 }
             } else if (location.getOwner() == currentPlayer) {
                 System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
-                String command = readLine().toLowerCase();
+                String command = readLine();
                 if (command.equals("y")) {
                     location.process(currentPlayer);
                 }
@@ -68,10 +78,10 @@ public class GameRunner {
                     System.out.println("当前点数不足以购买任何道具，已退出道具店");
                 } else {
                     System.out.println("输入道具编号购买道具，或者输入F退出道具店");
-                    String command = readLine().toLowerCase();
+                    String command = readLine();
                     while (!command.equals("f")) {
                         toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
-                        command = readLine().toLowerCase();
+                        command = readLine();
                     }
                 }
             } else {
@@ -137,7 +147,7 @@ public class GameRunner {
 
     private String readLine() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        return br.readLine();
+        return br.readLine().toLowerCase();
     }
 
     public static void main(String... args) throws IOException, RichGameException {
