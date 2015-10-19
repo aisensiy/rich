@@ -125,7 +125,9 @@ public class Game {
         Player currentPlayer = getCurrentPlayer();
         for (int i = 1; i <= step; i++) {
             currentPlayer.go(1);
-            if (currentPlayer.getCurrentLocation().getTool() == Tool.ROADBLOCK) {
+            Location currentLocation = currentPlayer.getCurrentLocation();
+            if (currentLocation.getTool() == Tool.ROADBLOCK) {
+                currentLocation.setTool(null);
                 break;
             }
         }

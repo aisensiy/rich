@@ -256,5 +256,6 @@ public class GameTest {
         when(dice.getInt()).thenReturn(5);
         game.roll();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
+        assertThat(game.getLocation(3).getTool(), nullValue());
     }
 }
