@@ -47,42 +47,30 @@ public class GameRunner {
         System.out.print(String.format("%s> ", currentPlayer));
         game.roll();
         Location location = currentPlayer.getCurrentLocation();
-        if (location.isEmptyLand()) {
-            System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
-            String command = readLine().toLowerCase();
-            if (command.equals("y")) {
-                try {
+        try {
+            if (location.isEmptyLand()) {
+                System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
+                String command = readLine().toLowerCase();
+                if (command.equals("y")) {
                     location.process(currentPlayer);
-                } catch (RichGameException e) {
-                    System.out.print(e.getMessage());
                 }
-            }
-        } else if (location.getOwner() == currentPlayer) {
-            System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
-            String command = readLine().toLowerCase();
-            if (command.equals("y")) {
-                try {
+            } else if (location.getOwner() == currentPlayer) {
+                System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
+                String command = readLine().toLowerCase();
+                if (command.equals("y")) {
                     location.process(currentPlayer);
-                } catch (RichGameException e) {
-                    System.out.print(e.getMessage());
                 }
-            }
-        } else if (location.isLand() && location.getOwner() != currentPlayer) {
-            Land land = (Land) location;
-            try {
+            } else if (location.isLand() && location.getOwner() != currentPlayer) {
+                Land land = (Land) location;
                 land.process(currentPlayer);
-            } catch (RichGameException e) {
-                System.out.print(e.getMessage());
-            }
-        }
-        else if (location.isMine()) {
-            try {
+            } else if (location.isMine()) {
                 location.process(currentPlayer);
                 System.out.println(location.getMessage());
-            } catch (RichGameException e) {
-                System.out.println(e.getMessage());
             }
+        } catch (RichGameException e) {
+            System.out.println(e.getMessage());
         }
+
         if (currentPlayer.getFunding() < 0) {
             System.out.println(String.format("%s已经破产", currentPlayer.getName()));
             game.removePlayer(currentPlayer);
