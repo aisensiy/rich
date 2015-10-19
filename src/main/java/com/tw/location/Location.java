@@ -40,4 +40,8 @@ public abstract class Location {
     public String getMessage() {
         return "";
     };
+
+    public boolean isPrison() {
+        return this.getClass() == Prison.class;
+    }
 }

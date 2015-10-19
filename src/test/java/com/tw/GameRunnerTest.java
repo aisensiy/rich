@@ -4,6 +4,7 @@ import com.tw.location.Land;
 import com.tw.map.HospitalMap;
 import com.tw.map.LandMap;
 import com.tw.map.MineMap;
+import com.tw.map.PrisonMap;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -217,6 +218,16 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("游戏结束"));
     }
 
+    @Test
+    public void should_show_message_when_player_arrive_at_prision() throws Exception {
+        game = gameWithOnePrision();
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("钱夫人被送去监狱了"));
+    }
+
     private Game gameWithOneMine() {
         Game game = new Game(new MineMap());
         game.setDice(dice);
@@ -226,6 +237,13 @@ public class GameRunnerTest {
 
     private Game gameWithOneLand() {
         Game game = new Game(new LandMap());
+        game.setDice(dice);
+        runner.setGame(game);
+        return game;
+    }
+
+    private Game gameWithOnePrision() {
+        Game game = new Game(new PrisonMap());
         game.setDice(dice);
         runner.setGame(game);
         return game;

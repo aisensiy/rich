@@ -66,6 +66,8 @@ public class GameRunner {
             } else if (location.isMine()) {
                 location.process(currentPlayer);
                 System.out.println(location.getMessage());
+            } else if (location.isPrison()) {
+                location.process(currentPlayer);
             }
         } catch (RichGameException e) {
             System.out.println(e.getMessage());
