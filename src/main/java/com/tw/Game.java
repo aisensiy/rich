@@ -99,6 +99,10 @@ public class Game {
 
     public void setCurrentPlayerToNext() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        if (!getCurrentPlayer().canRoll()) {
+            getCurrentPlayer().decreaseSkipRoll();
+            setCurrentPlayerToNext();
+        }
     }
 
     private int getCurrentPlayerIndex() {

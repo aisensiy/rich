@@ -171,4 +171,15 @@ public class GameTest {
         game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
     }
+
+    @Test
+    public void should_skip_player_who_cannot_roll() throws Exception {
+        game.setPlayers("123");
+        game.getPlayer(2).setSkipRoll(1);
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(3)));
+        game.setCurrentPlayerToNext();
+        game.setCurrentPlayerToNext();
+        assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
+    }
 }

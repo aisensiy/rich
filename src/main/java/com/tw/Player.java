@@ -160,7 +160,7 @@ public class Player {
         return skipRoll == 0;
     }
 
-    public void decreaseRoll() {
+    public void decreaseSkipRoll() {
         if (skipRoll > 0)
             skipRoll--;
     }

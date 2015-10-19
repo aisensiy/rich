@@ -17,7 +17,7 @@ public class PrisonTest {
         prison.process(player);
         assertThat(player.canRoll(), is(false));
         for (int i = 0; i < 3; i++)
-            player.decreaseRoll();
+            player.decreaseSkipRoll();
         assertThat(player.canRoll(), is(true));
     }
 }
