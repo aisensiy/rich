@@ -24,4 +24,8 @@ public class ToolShop extends Location {
         player.addTool(tool);
         player.decreasePoint(tool.getPrice());
     }
+
+    public String showList() {
+        return null;
+    }
 }
