@@ -6,6 +6,7 @@ import com.tw.generator.DefaultMap;
 import com.tw.generator.GameMap;
 import com.tw.location.Location;
 import com.tw.util.Dice;
+import com.tw.util.RelativeIndex;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -184,14 +185,14 @@ public class Game {
         if (getCurrentPlayer().getCountOf(tool) == 0) {
             throw new RichGameException("no such tool");
         }
-        Location location = getRelativeLocationWithCurrent(relativeIndex);
+        Location location = getRelativeLocationWith(getCurrentPlayer(), relativeIndex);
         ensureNoToolOnLocation(location);
         ensureNoPlayerOnLocation(location);
         location.setTool(tool);
         getCurrentPlayer().decreaseTool(tool);
     }
 
-    public Location getRelativeLocationWithCurrent(int relativeIndex) {
-        return getLocation((currentPlayerIndex + relativeIndex) % getMapSize());
+    public Location getRelativeLocationWith(Player player, int relativeIndex) {
+        return location(RelativeIndex.get(player.getLocationIndex(), relativeIndex, getMapSize()));
     }
 }

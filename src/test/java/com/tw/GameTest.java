@@ -196,7 +196,7 @@ public class GameTest {
         Player player = game.getPlayer(1);
         player.addTool(ROADBLOCK);
         game.setTool(ROADBLOCK, 5);
-        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(ROADBLOCK));
+        assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(ROADBLOCK));
         assertThat(player.getCountOf(ROADBLOCK), is(0));
     }
 
@@ -206,7 +206,7 @@ public class GameTest {
         Player player = game.getPlayer(1);
         player.addTool(BOMB);
         game.setTool(BOMB, 5);
-        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(BOMB));
+        assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(BOMB));
         assertThat(player.getCountOf(BOMB), is(0));
     }
 
