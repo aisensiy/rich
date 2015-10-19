@@ -5,6 +5,7 @@ import com.tw.exception.RichGameException;
 import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.location.ToolShop;
+import com.tw.util.RelativeIndex;
 import com.tw.util.ToolBox;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class Player {
     }
 
     public void go(int step) {
-        currrentLocationIndex = game.forward(this, step);
+        currrentLocationIndex = RelativeIndex.get(currrentLocationIndex, step, game.getMapSize());
     }
 
     public Location getCurrentLocation() {

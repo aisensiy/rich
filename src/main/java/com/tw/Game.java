@@ -149,10 +149,6 @@ public class Game {
         return map.display();
     }
 
-    public int forward(Player player, int step) {
-        return (player.getLocationIndex() + step) % getMapSize();
-    }
-
     public void removePlayer(Player player) {
         players.remove(player);
         currentPlayerIndex--;

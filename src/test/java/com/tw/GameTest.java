@@ -153,16 +153,6 @@ public class GameTest {
     }
 
     @Test
-    public void should_get_new_location_after_roll() throws Exception {
-        Player player = Player.createPlayer(game, 1);
-        assertThat(game.forward(player, 3), is(3));
-
-        player.setCurrentLocation(game.getMapSize() - 1);
-        game.forward(player, 3);
-        assertThat(game.forward(player, 3), is(2));
-    }
-
-    @Test
     public void should_remove_player() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
