@@ -222,7 +222,18 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        Player player = game.getPlayer(1);
         game.setBomb(5);
+    }
+
+    @Test
+    public void throw_exception_when_there_is_tool_on_location() throws Exception {
+        expectedException.expect(RichGameException.class);
+        expectedException.expectMessage("there is already a tool on the location");
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.addTool(Tool.ROADBLOCK);
+        player.addTool(Tool.ROADBLOCK);
+        game.setBlock(5);
+        game.setBlock(5);
     }
 }

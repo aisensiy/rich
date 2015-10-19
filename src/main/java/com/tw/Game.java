@@ -165,12 +165,16 @@ public class Game {
         if (getCurrentPlayer().getCountOfRoadBlock() == 0) {
             throw new RichGameException("no such tool");
         }
-        getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.ROADBLOCK);
+        Location location = getRelativeLocationWithCurrent(relativeIndex);
+        if (location.getTool() != null) {
+            throw new RichGameException("there is already a tool on the location");
+        }
+        location.setTool(Tool.ROADBLOCK);
         getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
     }
 
     public void setBomb(int relativeIndex) throws RichGameException {
-        if (getCurrentPlayer().getCountOfRoadBlock() == 0) {
+        if (getCurrentPlayer().getCountOfBomb() == 0) {
             throw new RichGameException("no such tool");
         }
         getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.BOMB);
