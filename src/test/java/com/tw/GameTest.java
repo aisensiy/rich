@@ -216,4 +216,13 @@ public class GameTest {
         Player player = game.getPlayer(1);
         game.setBlock(5);
     }
+
+    @Test
+    public void should_throw_exception_when_set_bomb_which_is_not_enough() throws Exception {
+        expectedException.expect(RichGameException.class);
+        expectedException.expectMessage("no such tool");
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        game.setBomb(5);
+    }
 }

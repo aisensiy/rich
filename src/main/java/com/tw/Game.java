@@ -169,7 +169,10 @@ public class Game {
         getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
     }
 
-    public void setBomb(int relativeIndex) {
+    public void setBomb(int relativeIndex) throws RichGameException {
+        if (getCurrentPlayer().getCountOfRoadBlock() == 0) {
+            throw new RichGameException("no such tool");
+        }
         getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.BOMB);
         getCurrentPlayer().decreaseTool(Tool.BOMB);
     }
