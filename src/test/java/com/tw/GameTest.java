@@ -185,7 +185,11 @@ public class GameTest {
 
     @Test
     public void should_set_block_by_current_player() throws Exception {
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.addTool(Tool.ROADBLOCK);
         game.setBlock(5);
         assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.ROADBLOCK));
+        assertThat(player.getCountOfRoadBlock(), is(0));
     }
 }

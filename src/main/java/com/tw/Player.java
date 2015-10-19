@@ -164,4 +164,8 @@ public class Player {
     public boolean hasPointBuyTool() {
         return point >= Stream.of(Tool.values()).mapToInt(Tool::getPrice).min().getAsInt();
     }
+
+    public void decreaseTool(Tool tool) {
+        toolBox.remoteTool(tool);
+    }
 }

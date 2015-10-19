@@ -42,4 +42,8 @@ public class ToolBox {
     public String toString() {
         return String.format("道具: 路障%d个；炸弹%d个；机器娃娃%d个", getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
     }
+
+    public void remoteTool(Tool tool) {
+        toolMap.put(tool, toolMap.get(tool) - 1);
+    }
 }

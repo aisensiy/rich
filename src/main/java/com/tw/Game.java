@@ -163,6 +163,7 @@ public class Game {
 
     public void setBlock(int relativeIndex) {
         getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.ROADBLOCK);
+        getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
     }
 
     public Location getRelativeLocationWithCurrent(int relativeIndex) {
