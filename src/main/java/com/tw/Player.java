@@ -88,17 +88,7 @@ public class Player {
         this.point += point;
     }
 
-    public void buyTool(ToolShop toolShop, Tool tool) throws RichGameException {
-        if (getToolCount() >= 10) {
-            throw new CannotBuyToolException("the player already get 10 tools");
-        }
-        if (point < tool.getPrice()) {
-            throw new CannotBuyToolException("no enough point to buy the tool");
-        }
-        toolShop.buy(this, tool);
-    }
-
-    private int getToolCount() {
+    public int getToolCount() {
         return toolBox.getToolCount();
     }
 

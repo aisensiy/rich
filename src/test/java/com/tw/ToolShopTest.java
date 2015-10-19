@@ -29,13 +29,13 @@ public class ToolShopTest {
         player.increasePoint(50);
         int originPoint = player.getPoint();
 
-        player.buyTool(toolShop, ROADBLOCK);
+        toolShop.buy(player, ROADBLOCK);
         assertThat(player.getCountOfRoadBlock(), is(1));
         assertThat(originPoint - player.getPoint(), is(ROADBLOCK.getPrice()));
 
         player.increasePoint(50);
         originPoint = player.getPoint();
-        player.buyTool(toolShop, ROBOT);
+        toolShop.buy(player, ROBOT);
         assertThat(player.getCountOfRobot(), is(1));
         assertThat(originPoint - player.getPoint(), is(ROBOT.getPrice()));
     }
@@ -45,7 +45,7 @@ public class ToolShopTest {
         player.increasePoint(11 * ROADBLOCK.getPrice());
 
         for (int i = 0; i < 11; i++)
-            player.buyTool(toolShop, ROADBLOCK);
+            toolShop.buy(player, ROADBLOCK);
     }
 
     @Test(expected = CannotBuyToolException.class)
@@ -53,17 +53,17 @@ public class ToolShopTest {
         player.increasePoint(5 * ROADBLOCK.getPrice() + 5 * ROBOT.getPrice() + BOMB.getPrice());
 
         for (int i = 0; i < 5; i++)
-            player.buyTool(toolShop, ROADBLOCK);
+            toolShop.buy(player, ROADBLOCK);
 
         for (int i = 0; i < 5; i++)
-            player.buyTool(toolShop, ROBOT);
+            toolShop.buy(player, ROBOT);
 
-        player.buyTool(toolShop, BOMB);
+        toolShop.buy(player, BOMB);
     }
 
     @Test(expected = CannotBuyToolException.class)
     public void buy_tool_should_throw_exception_when_point_if_less_than_tool_price() throws Exception {
         player.increasePoint(ROADBLOCK.getPrice() - 10);
-        player.buyTool(toolShop, ROADBLOCK);
+        toolShop.buy(player, ROADBLOCK);
     }
 }

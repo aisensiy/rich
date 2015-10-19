@@ -231,7 +231,7 @@ public class GameRunnerTest {
         game = gameWithMap(new ToolShopMap());
         when(dice.getInt()).thenReturn(1);
 
-        systemInRule.provideLines("200", "12", "roll", "roll", "roll", "quit");
+        systemInRule.provideLines("200", "12", "roll", "roll", "roll", "F", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString(Tool.listTools()));
     }
@@ -254,6 +254,16 @@ public class GameRunnerTest {
         systemInRule.provideLines("200", "12", "roll", "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("当前点数不足以购买任何道具，已退出道具店"));
+    }
+
+    @Test
+    public void should_show_message_if_point_is_not_enough_to_buy_tool() throws Exception {
+        game = gameWithMap(new ToolShopMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "roll", "roll", "1", "1", "1", "1", "1", "F", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("no enough point to buy the tool"));
     }
 
     private Game gameWithMap(GameMap map) {

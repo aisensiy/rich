@@ -11,8 +11,8 @@ public class ToolShopMap extends GameMap {
     @Override
     public void init() {
         locations = new ArrayList<>();
-        locations.add(new Mine(10000));
-        locations.add(new Mine(10000));
+        locations.add(new Mine(100));
+        locations.add(new Mine(100));
         locations.add(new ToolShop());
     }
 
