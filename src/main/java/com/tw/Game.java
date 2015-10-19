@@ -161,27 +161,34 @@ public class Game {
         return players.size() == 1;
     }
 
-    public void setBlock(int relativeIndex) throws RichGameException {
-        if (getCurrentPlayer().getCountOfRoadBlock() == 0) {
-            throw new RichGameException("no such tool");
-        }
-        Location location = getRelativeLocationWithCurrent(relativeIndex);
-        if (location.getTool() != null) {
-            throw new RichGameException("there is already a tool on the location");
-        }
+    private void ensureNoPlayerOnLocation(Location location) throws RichGameException {
         if (getPlayerAtLocation(location) != null) {
             throw new RichGameException("there is a player on the location");
         }
-        location.setTool(Tool.ROADBLOCK);
-        getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
     }
 
-    public void setBomb(int relativeIndex) throws RichGameException {
-        if (getCurrentPlayer().getCountOfBomb() == 0) {
+    private void ensureNoToolOnLocation(Location location) throws RichGameException {
+        if (location.getTool() != null) {
+            throw new RichGameException("there is already a tool on the location");
+        }
+    }
+
+    private void ensureRangeForSettingTool(int relativeIndex) throws RichGameException {
+        if (relativeIndex > 10 || relativeIndex < -10) {
+            throw new RichGameException("range should between -10 and 10");
+        }
+    }
+
+    public void setTool(Tool tool, int relativeIndex) throws RichGameException {
+        ensureRangeForSettingTool(relativeIndex);
+        if (getCurrentPlayer().getCountOf(tool) == 0) {
             throw new RichGameException("no such tool");
         }
-        getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.BOMB);
-        getCurrentPlayer().decreaseTool(Tool.BOMB);
+        Location location = getRelativeLocationWithCurrent(relativeIndex);
+        ensureNoToolOnLocation(location);
+        ensureNoPlayerOnLocation(location);
+        location.setTool(tool);
+        getCurrentPlayer().decreaseTool(tool);
     }
 
     public Location getRelativeLocationWithCurrent(int relativeIndex) {

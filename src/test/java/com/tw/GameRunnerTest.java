@@ -243,7 +243,7 @@ public class GameRunnerTest {
 
         systemInRule.provideLines("200", "12", "roll", "roll", "roll", "1", "F", "quit");
         runner.run();
-        assertThat(game.getPlayer(1).getCountOfRoadBlock(), is(1));
+        assertThat(game.getPlayer(1).getCountOf(Tool.ROADBLOCK), is(1));
     }
 
     @Test

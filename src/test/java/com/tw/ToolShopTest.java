@@ -30,13 +30,13 @@ public class ToolShopTest {
         int originPoint = player.getPoint();
 
         toolShop.buy(player, ROADBLOCK);
-        assertThat(player.getCountOfRoadBlock(), is(1));
+        assertThat(player.getCountOf(ROADBLOCK), is(1));
         assertThat(originPoint - player.getPoint(), is(ROADBLOCK.getPrice()));
 
         player.increasePoint(50);
         originPoint = player.getPoint();
         toolShop.buy(player, ROBOT);
-        assertThat(player.getCountOfRobot(), is(1));
+        assertThat(player.getCountOf(ROBOT), is(1));
         assertThat(originPoint - player.getPoint(), is(ROBOT.getPrice()));
     }
 

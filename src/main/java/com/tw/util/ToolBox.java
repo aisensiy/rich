@@ -24,18 +24,6 @@ public class ToolBox {
         return tools.size();
     }
 
-    public int getCountOfBomb() {
-        return (int) tools.stream().filter(t -> t == Tool.BOMB).count();
-    }
-
-    public int getCountOfRoadBlock() {
-        return (int) tools.stream().filter(t -> t == Tool.ROADBLOCK).count();
-    }
-
-    public int getCountOfRobot() {
-        return (int) tools.stream().filter(t -> t == Tool.ROBOT).count();
-    }
-
     public void addTool(Tool tool) {
         tools.add(tool);
     }
@@ -46,6 +34,10 @@ public class ToolBox {
 
     @Override
     public String toString() {
-        return String.format("道具: 路障%d个；炸弹%d个；机器娃娃%d个", getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
+        return String.format("道具: 路障%d个；炸弹%d个；机器娃娃%d个", getCountOf(ROADBLOCK), getCountOf(BOMB), getCountOf(ROBOT));
+    }
+
+    public int getCountOf(Tool tool) {
+        return (int) tools.stream().filter(t -> t == tool).count();
     }
 }

@@ -92,20 +92,12 @@ public class Player {
         return toolBox.getToolCount();
     }
 
-    public int getCountOfBomb() {
-        return toolBox.getCountOfBomb();
-    }
-
-    public int getCountOfRoadBlock() {
-        return toolBox.getCountOfRoadBlock();
+    public int getCountOf(Tool tool) {
+        return toolBox.getCountOf(tool);
     }
 
     public void addTool(Tool tool) {
         toolBox.addTool(tool);
-    }
-
-    public int getCountOfRobot() {
-        return toolBox.getCountOfRobot();
     }
 
     public void decreasePoint(int toolPoint) {

@@ -10,6 +10,8 @@ import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.rules.ExpectedException;
 
+import static com.tw.Tool.BOMB;
+import static com.tw.Tool.ROADBLOCK;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -192,20 +194,20 @@ public class GameTest {
     public void should_set_block_by_current_player() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(Tool.ROADBLOCK);
-        game.setBlock(5);
-        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.ROADBLOCK));
-        assertThat(player.getCountOfRoadBlock(), is(0));
+        player.addTool(ROADBLOCK);
+        game.setTool(ROADBLOCK, 5);
+        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(ROADBLOCK));
+        assertThat(player.getCountOf(ROADBLOCK), is(0));
     }
 
     @Test
     public void should_set_bomb_by_current_player() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(Tool.BOMB);
-        game.setBomb(5);
-        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.BOMB));
-        assertThat(player.getCountOfBomb(), is(0));
+        player.addTool(BOMB);
+        game.setTool(BOMB, 5);
+        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(BOMB));
+        assertThat(player.getCountOf(BOMB), is(0));
     }
 
     @Test
@@ -214,7 +216,7 @@ public class GameTest {
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        game.setBlock(5);
+        game.setTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -222,7 +224,7 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        game.setBomb(5);
+        game.setTool(BOMB, 5);
     }
 
     @Test
@@ -231,10 +233,10 @@ public class GameTest {
         expectedException.expectMessage("there is already a tool on the location");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(Tool.ROADBLOCK);
-        player.addTool(Tool.ROADBLOCK);
-        game.setBlock(5);
-        game.setBlock(5);
+        player.addTool(ROADBLOCK);
+        player.addTool(ROADBLOCK);
+        game.setTool(ROADBLOCK, 5);
+        game.setTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -243,8 +245,17 @@ public class GameTest {
         expectedException.expectMessage("there is a player on the location");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(Tool.ROADBLOCK);
+        player.addTool(ROADBLOCK);
         game.getPlayer(2).go(5);
-        game.setBlock(5);
+        game.setTool(ROADBLOCK, 5);
+    }
+
+    @Test
+    public void set_tool_should_throw_exception_when_index_is_out_of_range() throws Exception {
+        expectedException.expectMessage("range should between -10 and 10");
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.addTool(ROADBLOCK);
+        game.setTool(ROADBLOCK, 11);
     }
 }
