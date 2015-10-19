@@ -3,6 +3,8 @@ package com.tw;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static java.util.stream.Collectors.joining;
+
 public enum Tool {
     ROADBLOCK(1, "路障", 50, "#"), ROBOT(2, "机器娃娃", 30, ""), BOMB(3, "炸弹", 50, "@");
 
@@ -39,6 +41,8 @@ public enum Tool {
 
     public static String listTools() {
         StringBuilder sb = new StringBuilder();
+        sb.append("道具\t编号\t点数\t显示方式");
+        sb.append(map.values().stream().map(Tool::toString).collect(joining("\n")));
         return sb.toString();
     }
 }
