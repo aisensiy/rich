@@ -11,7 +11,7 @@ public class Prison extends Location {
 
     @Override
     public void process(Player player) throws RichGameException {
-
+        player.setSkipRoll(3);
     }
 
     @Override

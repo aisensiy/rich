@@ -31,6 +31,7 @@ public class Player {
     private ToolBox toolBox = new ToolBox(this);
     private String symbol;
     private List<Land> lands = new ArrayList<>();
+    private int skipRoll = 0;
 
     private Player(Game game, String name, String symbol, int funding) {
         this.game = game;
@@ -153,5 +154,18 @@ public class Player {
 
     public int countOfLandWithLevel(int level) {
         return (int) lands.stream().filter(land -> land.getLevel() == level).count();
+    }
+
+    public boolean canRoll() {
+        return skipRoll == 0;
+    }
+
+    public void decreaseRoll() {
+        if (skipRoll > 0)
+            skipRoll--;
+    }
+
+    public void setSkipRoll(int n) {
+        skipRoll = n;
     }
 }
