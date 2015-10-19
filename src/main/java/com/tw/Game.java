@@ -161,17 +161,20 @@ public class Game {
         return players.size() == 1;
     }
 
-    public void setBlock(int relativeIndex) {
+    public void setBlock(int relativeIndex) throws RichGameException {
+        if (getCurrentPlayer().getCountOfRoadBlock() == 0) {
+            throw new RichGameException("no such tool");
+        }
         getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.ROADBLOCK);
         getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
-    }
-
-    public Location getRelativeLocationWithCurrent(int relativeIndex) {
-        return getLocation(currentPlayerIndex + relativeIndex);
     }
 
     public void setBomb(int relativeIndex) {
         getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.BOMB);
         getCurrentPlayer().decreaseTool(Tool.BOMB);
+    }
+
+    public Location getRelativeLocationWithCurrent(int relativeIndex) {
+        return getLocation(currentPlayerIndex + relativeIndex);
     }
 }

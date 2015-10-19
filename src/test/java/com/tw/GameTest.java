@@ -1,12 +1,14 @@
 package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
+import com.tw.exception.RichGameException;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,6 +21,9 @@ public class GameTest {
 
     @Rule
     public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Rule
     public final TextFromStandardInputStream systemInRule = TextFromStandardInputStream.emptyStandardInputStream();
@@ -201,5 +206,14 @@ public class GameTest {
         game.setBomb(5);
         assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.BOMB));
         assertThat(player.getCountOfBomb(), is(0));
+    }
+
+    @Test
+    public void should_throw_exception_when_set_road_block_which_is_not_enough() throws Exception {
+        expectedException.expect(RichGameException.class);
+        expectedException.expectMessage("no such tool");
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        game.setBlock(5);
     }
 }
