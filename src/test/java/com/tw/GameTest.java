@@ -236,4 +236,15 @@ public class GameTest {
         game.setBlock(5);
         game.setBlock(5);
     }
+
+    @Test
+    public void set_tool_should_throw_exception_when_there_is_player_on_location() throws Exception {
+        expectedException.expect(RichGameException.class);
+        expectedException.expectMessage("there is a player on the location");
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.addTool(Tool.ROADBLOCK);
+        game.getPlayer(2).go(5);
+        game.setBlock(5);
+    }
 }

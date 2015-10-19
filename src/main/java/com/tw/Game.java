@@ -169,6 +169,9 @@ public class Game {
         if (location.getTool() != null) {
             throw new RichGameException("there is already a tool on the location");
         }
+        if (getPlayerAtLocation(location) != null) {
+            throw new RichGameException("there is a player on the location");
+        }
         location.setTool(Tool.ROADBLOCK);
         getCurrentPlayer().decreaseTool(Tool.ROADBLOCK);
     }
@@ -182,6 +185,6 @@ public class Game {
     }
 
     public Location getRelativeLocationWithCurrent(int relativeIndex) {
-        return getLocation(currentPlayerIndex + relativeIndex);
+        return getLocation((currentPlayerIndex + relativeIndex) % getMapSize());
     }
 }
