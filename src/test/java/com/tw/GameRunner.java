@@ -64,11 +64,15 @@ public class GameRunner {
             } else if (location.isToolShop()) {
                 ToolShop toolShop = (ToolShop) location;
                 System.out.println(toolShop.showTools());
-                System.out.println("输入道具编号购买道具，或者输入F退出道具店");
-                String command = readLine().toLowerCase();
-                while (!command.equals("f")) {
-                    toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
-                    command = readLine().toLowerCase();
+                if (!currentPlayer.hasPointBuyTool()) {
+                    System.out.println("当前点数不足以购买任何道具，已退出道具店");
+                } else {
+                    System.out.println("输入道具编号购买道具，或者输入F退出道具店");
+                    String command = readLine().toLowerCase();
+                    while (!command.equals("f")) {
+                        toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
+                        command = readLine().toLowerCase();
+                    }
                 }
             } else {
                 location.process(currentPlayer);

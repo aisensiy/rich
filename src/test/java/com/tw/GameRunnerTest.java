@@ -246,6 +246,16 @@ public class GameRunnerTest {
         assertThat(game.getPlayer(1).getCountOfRoadBlock(), is(1));
     }
 
+    @Test
+    public void should_skip_tool_shop_if_no_enough_point() throws Exception {
+        game = gameWithMap(new OneToolShopMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("当前点数不足以购买任何道具，已退出道具店"));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);

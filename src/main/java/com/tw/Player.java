@@ -8,7 +8,9 @@ import com.tw.location.ToolShop;
 import com.tw.util.ToolBox;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Player {
     private final String name;
@@ -27,7 +29,7 @@ public class Player {
     private int currrentLocationIndex = 0;
     private Game game;
     private int funding;
-    private int point;
+    private int point = 0;
     private ToolBox toolBox = new ToolBox(this);
     private String symbol;
     private List<Land> lands = new ArrayList<>();
@@ -167,5 +169,9 @@ public class Player {
 
     public void setSkipRoll(int n) {
         skipRoll = n;
+    }
+
+    public boolean hasPointBuyTool() {
+        return point >= Stream.of(Tool.values()).mapToInt(Tool::getPrice).min().getAsInt();
     }
 }
