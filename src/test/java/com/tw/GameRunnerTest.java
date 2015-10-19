@@ -284,6 +284,19 @@ public class GameRunnerTest {
         assertThat(game.getLocation(3).getTool(), is(ROADBLOCK));
     }
 
+    @Test
+    public void set_block_should_show_error_message_when_no_block() throws Exception {
+        game = gameWithMap(new MiniMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines(
+                "200", "12",
+                "block 2",
+                "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("no such tool"));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);
