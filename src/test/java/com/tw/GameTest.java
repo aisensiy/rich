@@ -248,4 +248,13 @@ public class GameTest {
         player.addTool(ROADBLOCK);
         game.setTool(ROADBLOCK, 11);
     }
+
+    @Test
+    public void should_stop_player_with_road_block() throws Exception {
+        game.setPlayers("12");
+        game.getLocation(3).setTool(ROADBLOCK);
+        when(dice.getInt()).thenReturn(5);
+        game.roll();
+        assertThat(game.getPlayer(1).getLocationIndex(), is(3));
+    }
 }

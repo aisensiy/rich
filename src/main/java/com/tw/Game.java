@@ -121,7 +121,14 @@ public class Game {
     }
 
     public void roll() {
-        getCurrentPlayer().go(dice.getInt());
+        int step = dice.getInt();
+        Player currentPlayer = getCurrentPlayer();
+        for (int i = 1; i <= step; i++) {
+            currentPlayer.go(1);
+            if (currentPlayer.getCurrentLocation().getTool() == Tool.ROADBLOCK) {
+                break;
+            }
+        }
     }
 
     public void setDice(Dice dice) {
