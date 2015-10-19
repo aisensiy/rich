@@ -3,7 +3,9 @@ package com.tw.util;
 import com.tw.Player;
 import com.tw.Tool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.tw.Tool.BOMB;
@@ -11,7 +13,7 @@ import static com.tw.Tool.ROADBLOCK;
 import static com.tw.Tool.ROBOT;
 
 public class ToolBox {
-    private Map<Tool, Integer> toolMap = new HashMap<>();
+    private List<Tool> tools = new ArrayList<>();
     private Player player;
 
     public ToolBox(Player player) {
@@ -19,31 +21,31 @@ public class ToolBox {
     }
 
     public int getToolCount() {
-        return getCountOfRoadBlock() + getCountOfRobot() + getCountOfBomb();
+        return tools.size();
     }
 
     public int getCountOfBomb() {
-        return toolMap.getOrDefault(BOMB, 0);
+        return (int) tools.stream().filter(t -> t == Tool.BOMB).count();
     }
 
     public int getCountOfRoadBlock() {
-        return toolMap.getOrDefault(ROADBLOCK, 0);
-    }
-
-    public void addTool(Tool tool) {
-        toolMap.put(tool, toolMap.getOrDefault(tool, 0) + 1);
+        return (int) tools.stream().filter(t -> t == Tool.ROADBLOCK).count();
     }
 
     public int getCountOfRobot() {
-        return toolMap.getOrDefault(ROBOT, 0);
+        return (int) tools.stream().filter(t -> t == Tool.ROBOT).count();
+    }
+
+    public void addTool(Tool tool) {
+        tools.add(tool);
+    }
+
+    public void remoteTool(Tool tool) {
+        tools.remove(tool);
     }
 
     @Override
     public String toString() {
         return String.format("道具: 路障%d个；炸弹%d个；机器娃娃%d个", getCountOfRoadBlock(), getCountOfBomb(), getCountOfRobot());
-    }
-
-    public void remoteTool(Tool tool) {
-        toolMap.put(tool, toolMap.get(tool) - 1);
     }
 }
