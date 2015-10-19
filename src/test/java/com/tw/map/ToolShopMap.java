@@ -12,6 +12,7 @@ public class ToolShopMap extends GameMap {
     public void init() {
         locations = new ArrayList<>();
         locations.add(new Mine(10000));
+        locations.add(new Mine(10000));
         locations.add(new ToolShop());
     }
 

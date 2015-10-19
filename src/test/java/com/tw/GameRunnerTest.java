@@ -236,6 +236,16 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString(Tool.listTools()));
     }
 
+    @Test
+    public void should_buy_tool_when_player_have_enough_point() throws Exception {
+        game = gameWithMap(new ToolShopMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "roll", "roll", "1", "F", "quit");
+        runner.run();
+        assertThat(game.getPlayer(1).getCountOfRoadBlock(), is(1));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);
