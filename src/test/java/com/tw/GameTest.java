@@ -182,4 +182,10 @@ public class GameTest {
         game.setCurrentPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
     }
+
+    @Test
+    public void should_set_block_by_current_player() throws Exception {
+        game.setBlock(5);
+        assertThat(game.getRelativeLocationWithCurrent(5).getTool(), is(Tool.ROADBLOCK));
+    }
 }

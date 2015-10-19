@@ -1,11 +1,13 @@
 package com.tw.location;
 
 import com.tw.Player;
+import com.tw.Tool;
 import com.tw.exception.RichGameException;
 
 public abstract class Location {
 
     private Player owner;
+    private Tool tool;
 
     public Player getOwner() {
         return owner;
@@ -41,4 +43,11 @@ public abstract class Location {
         return this.getClass() == ToolShop.class;
     }
 
+    public Tool getTool() {
+        return tool;
+    }
+
+    public void setTool(Tool tool) {
+        this.tool = tool;
+    }
 }

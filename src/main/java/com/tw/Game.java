@@ -105,6 +105,8 @@ public class Game {
         }
     }
 
+
+
     private int getCurrentPlayerIndex() {
         return getPlayerIndex(currentPlayer);
     }
@@ -157,5 +159,13 @@ public class Game {
 
     public boolean isOver() {
         return players.size() == 1;
+    }
+
+    public void setBlock(int relativeIndex) {
+        getRelativeLocationWithCurrent(relativeIndex).setTool(Tool.ROADBLOCK);
+    }
+
+    public Location getRelativeLocationWithCurrent(int relativeIndex) {
+        return getLocation(currentPlayerIndex + relativeIndex);
     }
 }
