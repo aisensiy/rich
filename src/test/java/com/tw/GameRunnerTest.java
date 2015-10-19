@@ -1,10 +1,8 @@
 package com.tw;
 
+import com.tw.generator.GameMap;
 import com.tw.location.Land;
-import com.tw.map.HospitalMap;
-import com.tw.map.LandMap;
-import com.tw.map.MineMap;
-import com.tw.map.PrisonMap;
+import com.tw.map.*;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -169,7 +167,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_upgrade_land_when_arrive_at_own_land() throws Exception {
-        game = gameWithOneLand();
+        game = gameWithMap(new LandMap());
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
@@ -180,7 +178,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_error_message_when_upgrade_land_with_level_3() throws Exception {
-        game = gameWithOneLand();
+        game = gameWithMap(new LandMap());
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
@@ -189,7 +187,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_get_point_when_arrive_at_mine() throws Exception {
-        game = gameWithOneMine();
+        game = gameWithMap(new MineMap());
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "roll", "query", "quit");
         runner.run();
@@ -199,7 +197,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_lost_money_message_when_arrive_at_others_land() throws Exception {
-        game = gameWithOneLand();
+        game = gameWithMap(new LandMap());
         when(dice.getInt()).thenReturn(1);
 
         systemInRule.provideLines("", "12", "roll", "y", "roll", "quit");
@@ -209,7 +207,7 @@ public class GameRunnerTest {
 
     @Test
     public void game_over_when_only_one_player_left() throws Exception {
-        game = gameWithOneLand();
+        game = gameWithMap(new LandMap());
         when(dice.getInt()).thenReturn(1);
 
         systemInRule.provideLines("200", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "n", "roll");
@@ -220,7 +218,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_message_when_player_arrive_at_prision() throws Exception {
-        game = gameWithOnePrision();
+        game = gameWithMap(new PrisonMap());
         when(dice.getInt()).thenReturn(1);
 
         systemInRule.provideLines("200", "12", "roll", "quit");
@@ -228,22 +226,18 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("钱夫人被送去监狱了"));
     }
 
-    private Game gameWithOneMine() {
-        Game game = new Game(new MineMap());
-        game.setDice(dice);
-        runner.setGame(game);
-        return game;
+    @Test
+    public void should_show_tools_when_player_arrive_at_tool_shop() throws Exception {
+        game = gameWithMap(new ToolShopMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines("200", "12", "roll", "roll", "roll", "quit");
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString(Tool.listTools()));
     }
 
-    private Game gameWithOneLand() {
-        Game game = new Game(new LandMap());
-        game.setDice(dice);
-        runner.setGame(game);
-        return game;
-    }
-
-    private Game gameWithOnePrision() {
-        Game game = new Game(new PrisonMap());
+    private Game gameWithMap(GameMap map) {
+        Game game = new Game(map);
         game.setDice(dice);
         runner.setGame(game);
         return game;

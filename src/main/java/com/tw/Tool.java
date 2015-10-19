@@ -41,7 +41,7 @@ public enum Tool {
 
     public static String listTools() {
         StringBuilder sb = new StringBuilder();
-        sb.append("道具\t编号\t点数\t显示方式");
+        sb.append("道具\t编号\t点数\t显示方式\n");
         sb.append(map.values().stream().map(Tool::toString).collect(joining("\n")));
         return sb.toString();
     }

@@ -3,6 +3,7 @@ package com.tw;
 import com.tw.exception.RichGameException;
 import com.tw.location.Land;
 import com.tw.location.Location;
+import com.tw.location.ToolShop;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,6 +61,9 @@ public class GameRunner {
                 if (command.equals("y")) {
                     location.process(currentPlayer);
                 }
+            } else if (location.isToolShop()) {
+                ToolShop toolShop = (ToolShop) location;
+                System.out.println(toolShop.showTools());
             } else {
                 location.process(currentPlayer);
             }

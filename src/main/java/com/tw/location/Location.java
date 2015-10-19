@@ -37,4 +37,8 @@ public abstract class Location {
         return "";
     };
 
+    public boolean isToolShop() {
+        return this.getClass() == ToolShop.class;
+    }
+
 }
