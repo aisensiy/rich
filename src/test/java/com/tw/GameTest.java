@@ -275,4 +275,15 @@ public class GameTest {
         assertThat(game.getLocation(5).getTool(), nullValue());
         assertThat(player.getCountOf(ROBOT), is(0));
     }
+
+    @Test
+    public void should_decrease_unpunish_roll_every_roll() throws Exception {
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.setUnpunishRoll(1);
+        game.setCurrentPlayerToNext(); // to player2
+        assertThat(player.canPunish(), is(false));
+        game.setCurrentPlayerToNext(); // to player1
+        assertThat(player.canPunish(), is(true));
+    }
 }

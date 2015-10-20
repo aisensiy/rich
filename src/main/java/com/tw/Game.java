@@ -103,6 +103,9 @@ public class Game {
             getCurrentPlayer().decreaseSkipRoll();
             setCurrentPlayerToNext();
         }
+        if (!getCurrentPlayer().canPunish()) {
+            getCurrentPlayer().decreaseUnpunishRoll();
+        }
     }
 
     private int getPlayerIndex(Player player) {
