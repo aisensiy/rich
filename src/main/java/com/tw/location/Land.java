@@ -49,12 +49,18 @@ public class Land extends Location {
     public void triggerArriveEvent(Player player) throws RichGameException {
         if (getOwner() == null) {
             buy(player);
-        } else if(getOwner() == player) {
+        } else if (getOwner() == player) {
             upgrade(player);
-        } else if (getOwner().canRoll() && player.canPunish()) {
-            player.decreaseBy(punish());
-            getOwner().increaseBy(punish());
-            System.out.println(String.format("到达%s的%s,损失金钱%d元", getOwner().getName(), getName(), punish()));
+        } else {
+            if (!getOwner().canRoll()) {
+                System.out.println("由于土地拥有者在监狱或者医院，不惩罚");
+            } else if (!player.canPunish()) {
+                System.out.println("由于福神附身，不惩罚");
+            } else {
+                player.decreaseBy(punish());
+                getOwner().increaseBy(punish());
+                System.out.println(String.format("到达%s的%s,损失金钱%d元", getOwner().getName(), getName(), punish()));
+            }
         }
     }
 
