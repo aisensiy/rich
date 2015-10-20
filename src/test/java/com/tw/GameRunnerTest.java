@@ -68,45 +68,6 @@ public class GameRunnerTest {
     }
 
     @Test
-    public void should_show_map_with_player_position() throws Exception {
-        game.setPlayers("12");
-        String expected =
-                "Q0000000000000H0000000000000T\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "M0000000000000P0000000000000G";
-        assertThat(runner.display(), containsString(expected));
-
-        game.getPlayer(2).go(2);
-
-        expected =
-                "Q0A00000000000H0000000000000T\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "M0000000000000P0000000000000G";
-        assertThat(runner.display(), is(expected));
-        game.getPlayer(1).go(3);
-        expected =
-                "S0AQ0000000000H0000000000000T\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "$                           0\n" +
-                        "M0000000000000P0000000000000G";
-        assertThat(runner.display(), is(expected));
-    }
-
-    @Test
     public void should_show_current_player_name_and_symbol() throws Exception {
         game.setPlayers("123");
         runner.turn();

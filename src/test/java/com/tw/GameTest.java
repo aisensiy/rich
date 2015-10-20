@@ -137,7 +137,7 @@ public class GameTest {
     @Test
     public void should_show_the_nearest_player_to_roll_with_overlap() throws Exception {
         game.setPlayers("123");
-        assertThat(game.getSymbol(game.getLocation(0)), is("Q"));
+        assertThat(game.getSymbol(game.getLocation(0)), containsString("Q"));
         when(dice.getInt()).thenReturn(1);
         game.roll();
         game.setCurrentPlayerToNext();
@@ -150,7 +150,7 @@ public class GameTest {
         when(dice.getInt()).thenReturn(2);
         game.roll();
         game.setCurrentPlayerToNext();
-        assertThat(game.getSymbol(game.getLocation(3)), is("A"));
+        assertThat(game.getSymbol(game.getLocation(3)), containsString("A"));
     }
 
     @Test

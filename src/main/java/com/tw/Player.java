@@ -12,6 +12,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Player {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
     private final String name;
     private static final String[] playerNames = new String[]{
             "钱夫人",
@@ -25,20 +31,28 @@ public class Player {
             "S",
             "J"
     };
+    private static final String[] colors = new String[] {
+            ANSI_RED,
+            ANSI_GREEN,
+            ANSI_YELLOW,
+            ANSI_BLUE
+    };
     private int currrentLocationIndex = 0;
     private Game game;
     private int funding;
     private int point = 0;
+    private String color;
     private ToolBox toolBox = new ToolBox(this);
     private String symbol;
     private List<Land> lands = new ArrayList<>();
     private int skipRoll = 0;
     private int unpunishRoll = 0;
 
-    private Player(Game game, String name, String symbol, int funding) {
+    private Player(Game game, String name, String symbol, String color, int funding) {
         this.game = game;
         this.name = name;
         this.symbol = symbol;
+        this.color = color;
         this.funding = funding;
     }
 
@@ -48,7 +62,7 @@ public class Player {
     }
 
     public static Player createPlayer(Game game, int index, int funding) {
-        Player player = new Player(game, playerNames[index - 1], playerSymbols[index - 1], funding);
+        Player player = new Player(game, playerNames[index - 1], playerSymbols[index - 1], colors[index - 1], funding);
         return player;
     }
 
@@ -105,7 +119,7 @@ public class Player {
     }
 
     public String getSymbol() {
-        return symbol;
+        return color + symbol + ANSI_RESET;
     }
 
     @Override
