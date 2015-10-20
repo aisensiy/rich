@@ -4,6 +4,8 @@ import com.tw.Player;
 import com.tw.Tool;
 import com.tw.exception.RichGameException;
 
+import static com.tw.Tool.BOMB;
+
 public abstract class Location {
 
     private Player owner;
@@ -28,6 +30,9 @@ public abstract class Location {
     }
 
     public void process(Player player) throws RichGameException {
+        if (tool == BOMB) {
+            player.goToHospital();
+        }
         triggerArriveEvent(player);
         System.out.println(arriveMessage(player));
     }

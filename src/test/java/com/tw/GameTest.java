@@ -2,6 +2,7 @@ package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
 import com.tw.exception.RichGameException;
+import com.tw.location.Hospital;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;

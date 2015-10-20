@@ -161,4 +161,13 @@ public class Player {
     public void decreaseTool(Tool tool) {
         toolBox.remoteTool(tool);
     }
+
+    public int getSkipRoll() {
+        return skipRoll;
+    }
+
+    public void goToHospital() {
+        currrentLocationIndex = game.getHospitalIndex();
+        skipRoll = 3;
+    }
 }

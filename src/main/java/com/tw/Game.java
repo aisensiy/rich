@@ -200,4 +200,8 @@ public class Game {
     public Location getRelativeLocationWith(Player player, int relativeIndex) {
         return location(RelativeIndex.get(player.getLocationIndex(), relativeIndex, getMapSize()));
     }
+
+    public int getHospitalIndex() {
+        return map.getHospitalIndex();
+    }
 }
