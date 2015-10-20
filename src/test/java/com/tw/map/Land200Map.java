@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
-public class LandMap extends GameMap {
+public class Land200Map extends GameMap {
     @Override
     public void init() {
         locations = asList(new Land(200));

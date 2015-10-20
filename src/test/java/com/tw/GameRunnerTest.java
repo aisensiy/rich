@@ -170,7 +170,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_upgrade_land_when_arrive_at_own_land() throws Exception {
-        game = gameWithMap(new LandMap());
+        game = gameWithMap(new Land200Map());
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
@@ -181,7 +181,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_error_message_when_upgrade_land_with_level_3() throws Exception {
-        game = gameWithMap(new LandMap());
+        game = gameWithMap(new Land200Map());
         when(dice.getInt()).thenReturn(1);
         systemInRule.provideLines("", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "roll", "roll", "y", "quit");
         runner.run();
@@ -200,7 +200,7 @@ public class GameRunnerTest {
 
     @Test
     public void should_show_lost_money_message_when_arrive_at_others_land() throws Exception {
-        game = gameWithMap(new LandMap());
+        game = gameWithMap(new Land200Map());
         when(dice.getInt()).thenReturn(1);
 
         systemInRule.provideLines("", "12", "roll", "y", "roll", "quit");
@@ -210,7 +210,7 @@ public class GameRunnerTest {
 
     @Test
     public void game_over_when_only_one_player_left() throws Exception {
-        game = gameWithMap(new LandMap());
+        game = gameWithMap(new Land200Map());
         when(dice.getInt()).thenReturn(1);
 
         systemInRule.provideLines("200", "12", "roll", "y", "roll", "roll", "y", "roll", "roll", "n", "roll");
@@ -381,6 +381,22 @@ public class GameRunnerTest {
         );
         runner.run();
         assertThat(game.getPlayer(1).getPoint(), is(100));
+    }
+
+    @Test
+    public void should_receive_sell_command() throws Exception {
+        game = gameWithMap(new Land200Map());
+        when(dice.getInt()).thenReturn(1);
+        systemInRule.provideLines(
+                "200", "12",
+                "roll", "y",
+                "roll",
+                "sellland 0",
+                "quit"
+        );
+        runner.run();
+        assertThat(game.getPlayer(1).getFunding(), is(300));
+        assertThat(game.getLocation(0).getOwner(), nullValue());
     }
 
     private Game gameWithMap(GameMap map) {
