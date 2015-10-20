@@ -94,7 +94,7 @@ public class Land extends Location {
 
     private void ensureFoundingIsEnough(Player player) throws NoEnoughFoundException {
         if (player.getFunding() < price) {
-            throw new NoEnoughFoundException("");
+            throw new NoEnoughFoundException("没有足够的金钱");
         }
     }
 
