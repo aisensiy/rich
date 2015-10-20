@@ -19,11 +19,12 @@ public class LocationTest {
     public void should_trigger_bomb_and_send_player_to_hospital_skip_3_turn() throws Exception {
         Game game = mock(Game.class);
         when(game.getHospitalIndex()).thenReturn(10);
-        Location land = new Land(100);
-        land.setTool(BOMB);
+        Location mine = new Mine(100);
+        mine.setTool(BOMB);
         Player player = Player.createPlayer(game, 1);
-        land.process(player);
+        mine.process(player);
         assertThat(player.getLocationIndex(), is(10));
         assertThat(player.getSkipRoll(), is(3));
+        assertThat(player.getPoint(), is(0));
     }
 }

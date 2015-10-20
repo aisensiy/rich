@@ -32,6 +32,7 @@ public abstract class Location {
     public void process(Player player) throws RichGameException {
         if (tool == BOMB) {
             player.goToHospital();
+            return;
         }
         triggerArriveEvent(player);
         System.out.println(arriveMessage(player));
