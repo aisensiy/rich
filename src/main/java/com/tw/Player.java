@@ -181,4 +181,11 @@ public class Player {
         }
         this.decreaseTool(Tool.ROBOT);
     }
+
+    public void increaseBy(int money) {
+        funding += money;
+    }
+
+    public void getGod() {
+    }
 }
