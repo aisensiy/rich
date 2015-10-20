@@ -84,36 +84,13 @@ public class GameRunner {
         Location location = currentPlayer.getCurrentLocation();
         try {
             if (location.isEmptyLand()) {
-                System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
-                String command = readLine();
-                if (command.equals("y")) {
-                    location.process(currentPlayer);
-                }
+                landProcess(currentPlayer, location, String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
             } else if (location.getOwner() == currentPlayer) {
-                System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
-                String command = readLine();
-                if (command.equals("y")) {
-                    location.process(currentPlayer);
-                }
+                landProcess(currentPlayer, location, String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
             } else if (location.isToolShop()) {
-                ToolShop toolShop = (ToolShop) location;
-                System.out.println(toolShop.showTools());
-                if (!currentPlayer.hasPointBuyTool()) {
-                    System.out.println("当前点数不足以购买任何道具，已退出道具店");
-                } else {
-                    System.out.println("输入道具编号购买道具，或者输入F退出道具店");
-                    String command = readLine();
-                    while (!command.equals("f")) {
-                        toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
-                        command = readLine();
-                    }
-                }
+                toolShopProcess(currentPlayer, (ToolShop) location);
             } else if (location.isGiftShop()) {
-                GiftShop giftShop = (GiftShop) location;
-                System.out.println(giftShop.listGifts());
-                System.out.println("输入礼品编号选择礼品");
-                String command = readLine();
-                giftShop.get(currentPlayer, Gift.valueOf(Integer.parseInt(command)));
+                giftShopProcess(currentPlayer, (GiftShop) location);
             } else {
                 location.process(currentPlayer);
             }
@@ -129,6 +106,37 @@ public class GameRunner {
             }
         }
         game.setCurrentPlayerToNext();
+    }
+
+    private void landProcess(Player currentPlayer, Location location, String format) throws IOException, RichGameException {
+        System.out.print(format);
+        String command = readLine();
+        if (command.equals("y")) {
+            location.process(currentPlayer);
+        }
+    }
+
+    private void giftShopProcess(Player currentPlayer, GiftShop location) throws IOException {
+        GiftShop giftShop = location;
+        System.out.println(giftShop.listGifts());
+        System.out.println("输入礼品编号选择礼品");
+        String command = readLine();
+        giftShop.get(currentPlayer, Gift.valueOf(Integer.parseInt(command)));
+    }
+
+    private void toolShopProcess(Player currentPlayer, ToolShop location) throws IOException, RichGameException {
+        ToolShop toolShop = location;
+        System.out.println(toolShop.showTools());
+        if (!currentPlayer.hasPointBuyTool()) {
+            System.out.println("当前点数不足以购买任何道具，已退出道具店");
+        } else {
+            System.out.println("输入道具编号购买道具，或者输入F退出道具店");
+            String command = readLine();
+            while (!command.equals("f")) {
+                toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
+                command = readLine();
+            }
+        }
     }
 
     private boolean inToolList(String command) {
