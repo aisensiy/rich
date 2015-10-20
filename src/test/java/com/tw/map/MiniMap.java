@@ -15,7 +15,7 @@ public class MiniMap extends GameMap {
         locations.add(new Mine(100));
         locations.add(new Mine(100));
         locations.add(new ToolShop());
-        locations.add(new Land(50));
+        locations.add(new Mine(50));
         locations.add(new Land(50));
         locations.add(new Hospital());
     }

@@ -171,7 +171,10 @@ public class Player {
         skipRoll = 3;
     }
 
-    public void robot() {
+    public void robot() throws RichGameException {
+        if (getCountOf(Tool.ROBOT) == 0) {
+            throw new RichGameException("no such tool");
+        }
         for (int i = 1; i <= 10; i++) {
             Location location = game.getRelativeLocationWith(this, i);
             location.setTool(null);

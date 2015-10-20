@@ -12,6 +12,7 @@ import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
 import static com.tw.Tool.BOMB;
 import static com.tw.Tool.ROADBLOCK;
+import static com.tw.Tool.ROBOT;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -315,6 +316,27 @@ public class GameRunnerTest {
 
         runner.run();
         assertThat(game.getLocation(3).getTool(), is(BOMB));
+    }
+
+    @Test
+    public void should_get_robot_command() throws Exception {
+        game = gameWithMap(new MiniMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines(
+                "200", "12",
+                "roll",
+                "roll",
+                "roll", "3", "F",
+                "roll", "2", "F",
+                "bomb 2", "roll",
+                "robot",
+                "quit"
+        );
+
+        runner.run();
+        assertThat(game.getLocation(4).getTool(), nullValue());
+        assertThat(game.getPlayer(2).getCountOf(ROBOT), is(0));
     }
 
     private Game gameWithMap(GameMap map) {

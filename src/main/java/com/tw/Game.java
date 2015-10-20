@@ -22,7 +22,6 @@ public class Game {
 
     private List<Player> players;
     private int currentPlayerIndex;
-    private Player currentPlayer;
     private List<Location> locations = new ArrayList<>();
     private Dice dice = new Dice();
     private GameMap map;
@@ -104,12 +103,6 @@ public class Game {
             getCurrentPlayer().decreaseSkipRoll();
             setCurrentPlayerToNext();
         }
-    }
-
-
-
-    private int getCurrentPlayerIndex() {
-        return getPlayerIndex(currentPlayer);
     }
 
     private int getPlayerIndex(Player player) {
@@ -203,5 +196,9 @@ public class Game {
 
     public int getHospitalIndex() {
         return map.getHospitalIndex();
+    }
+
+    public void robot() throws RichGameException {
+        getCurrentPlayer().robot();
     }
 }

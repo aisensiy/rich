@@ -46,6 +46,12 @@ public class GameRunner {
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
+            } else if (command.equals("robot")) {
+                try {
+                    game.robot();
+                } catch (RichGameException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 break;
             }
