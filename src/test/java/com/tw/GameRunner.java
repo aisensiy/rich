@@ -1,10 +1,7 @@
 package com.tw;
 
 import com.tw.exception.RichGameException;
-import com.tw.location.GiftShop;
-import com.tw.location.Land;
-import com.tw.location.Location;
-import com.tw.location.ToolShop;
+import com.tw.location.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -100,6 +97,9 @@ public class GameRunner {
             } else if (location.isGiftShop()) {
                 GiftShop giftShop = (GiftShop) location;
                 System.out.println(giftShop.listGifts());
+                System.out.println("输入礼品编号选择礼品");
+                String command = readLine();
+                giftShop.get(currentPlayer, Gift.valueOf(Integer.parseInt(command)));
             } else {
                 location.process(currentPlayer);
             }

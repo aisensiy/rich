@@ -352,6 +352,20 @@ public class GameRunnerTest {
         assertThat(systemOutRule.getLog(), containsString("礼品\t编号"));
     }
 
+    @Test
+    public void should_select_gift_and_left() throws Exception {
+        game = gameWithMap(new GiftMap());
+        systemInRule.provideLines(
+                "200", "12",
+                "roll", "1",
+                "roll", "2",
+                "quit"
+        );
+        runner.run();
+        assertThat(game.getPlayer(1).getFunding(), is(2200));
+        assertThat(game.getPlayer(2).getPoint(), is(200));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);
