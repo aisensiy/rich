@@ -120,6 +120,13 @@ public class PlayerTest {
         assertThat(originalFunding - otherPlayer.getFunding(), is(300));
     }
 
+    @Test
+    public void should_set_unpunish_roll_to_5_after_get_god() throws Exception {
+        Player player = Player.createPlayer(game, 1);
+        player.getGod();
+        assertThat(player.getUnpunishRoll(), is(5));
+    }
+
     private Land createLandWithOwner(Player player) {
         Land land;
         land = new Land(200);

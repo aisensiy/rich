@@ -188,6 +188,7 @@ public class Player {
     }
 
     public void getGod() {
+        unpunishRoll = 5;
     }
 
     public void setUnpunishRoll(int roll) {
@@ -201,5 +202,9 @@ public class Player {
     public void decreaseUnpunishRoll() {
         if (unpunishRoll > 0)
             unpunishRoll--;
+    }
+
+    public int getUnpunishRoll() {
+        return unpunishRoll;
     }
 }

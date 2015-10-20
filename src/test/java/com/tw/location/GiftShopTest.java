@@ -12,17 +12,18 @@ import static org.mockito.Mockito.mock;
 public class GiftShopTest {
     private Game game;
     private Player player;
+    private GiftShop giftShop;
 
     @Before
     public void setUp() throws Exception {
         game = mock(Game.class);
         player = Player.createPlayer(game, 1);
+        giftShop = new GiftShop();
     }
 
     @Test
     public void should_gain_money_when_select_MONEY() throws Exception {
         int originalFunding = player.getFunding();
-        GiftShop giftShop = new GiftShop();
         giftShop.get(player, Gift.MONEY);
         assertThat(player.getFunding() - originalFunding, is(2000));
     }
@@ -30,7 +31,6 @@ public class GiftShopTest {
     @Test
     public void should_gain_point_when_select_POINT() throws Exception {
         int originalPoint = player.getPoint();
-        GiftShop giftShop = new GiftShop();
         giftShop.get(player, Gift.POINT);
         assertThat(player.getPoint() - originalPoint, is(200));
     }
