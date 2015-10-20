@@ -101,10 +101,8 @@ public class Game {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         if (!getCurrentPlayer().canRoll()) {
             getCurrentPlayer().decreaseSkipRoll();
-            setCurrentPlayerToNext();
-        }
-        if (!getCurrentPlayer().canPunish()) {
             getCurrentPlayer().decreaseUnpunishRoll();
+            setCurrentPlayerToNext();
         }
     }
 
