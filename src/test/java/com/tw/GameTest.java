@@ -273,5 +273,6 @@ public class GameTest {
         assertThat(game.getLocation(3).getTool(), nullValue());
         assertThat(game.getLocation(4).getTool(), nullValue());
         assertThat(game.getLocation(5).getTool(), nullValue());
+        assertThat(player.getCountOf(ROBOT), is(0));
     }
 }

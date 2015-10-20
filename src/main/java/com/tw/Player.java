@@ -176,5 +176,6 @@ public class Player {
             Location location = game.getRelativeLocationWith(this, i);
             location.setTool(null);
         }
+        this.decreaseTool(Tool.ROBOT);
     }
 }
