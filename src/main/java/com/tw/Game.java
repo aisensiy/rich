@@ -143,6 +143,9 @@ public class Game {
     }
 
     public String getSymbol(Location location) {
+        if (location.getTool() != null) {
+            return location.getTool().getSymbol();
+        }
         Player playerAtLocation = getPlayerAtLocation(location);
         if (playerAtLocation != null) {
             return playerAtLocation.getSymbol();

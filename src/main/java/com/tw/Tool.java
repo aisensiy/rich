@@ -45,4 +45,8 @@ public enum Tool {
         sb.append(map.values().stream().map(Tool::toString).collect(joining("\n")));
         return sb.toString();
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }
