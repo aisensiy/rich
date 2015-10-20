@@ -50,6 +50,12 @@ public class GameRunner {
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
+            } else if (command.startsWith("selltool")) {
+                try {
+                    game.getCurrentPlayer().sellTool(Tool.valueOf(Integer.parseInt(command.split(" ")[1])));
+                } catch (RichGameException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 break;
             }

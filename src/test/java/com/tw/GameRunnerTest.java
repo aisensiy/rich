@@ -366,6 +366,23 @@ public class GameRunnerTest {
         assertThat(game.getPlayer(2).getPoint(), is(200));
     }
 
+    @Test
+    public void should_receive_sell_tool_command() throws Exception {
+        game = gameWithMap(new MiniMap());
+        when(dice.getInt()).thenReturn(1);
+        systemInRule.provideLines(
+                "200", "12",
+                "roll",
+                "roll",
+                "roll", "3", "F",
+                "roll", "2", "F",
+                "sellTool 3",
+                "quit"
+        );
+        runner.run();
+        assertThat(game.getPlayer(1).getPoint(), is(100));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);
