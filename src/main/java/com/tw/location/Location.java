@@ -33,6 +33,7 @@ public abstract class Location {
         if (tool == BOMB) {
             player.goToHospital();
             tool = null;
+            System.out.println(String.format("%s踩到了炸弹，被送往了医院", player.getName()));
             return;
         }
         triggerArriveEvent(player);

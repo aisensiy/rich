@@ -116,12 +116,14 @@ public class Game {
 
     public void roll() {
         int step = dice.getInt();
+        System.out.println(String.format("掷骰子点数%d", step));
         Player currentPlayer = getCurrentPlayer();
         for (int i = 1; i <= step; i++) {
             currentPlayer.go(1);
             Location currentLocation = currentPlayer.getCurrentLocation();
             if (currentLocation.getTool() == Tool.ROADBLOCK) {
                 currentLocation.setTool(null);
+                System.out.println(String.format("%s被路障阻止", currentPlayer.getName()));
                 break;
             }
         }
