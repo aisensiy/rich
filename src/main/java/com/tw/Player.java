@@ -207,4 +207,12 @@ public class Player {
     public int getUnpunishRoll() {
         return unpunishRoll;
     }
+
+    public void sellTool(Tool tool) throws RichGameException {
+        if (getCountOf(tool) == 0) {
+            throw new RichGameException("no such tool");
+        }
+        decreaseTool(tool);
+        increasePoint(tool.getPrice());
+    }
 }

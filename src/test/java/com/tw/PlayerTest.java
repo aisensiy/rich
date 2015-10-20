@@ -127,6 +127,15 @@ public class PlayerTest {
         assertThat(player.getUnpunishRoll(), is(5));
     }
 
+    @Test
+    public void can_sell_tool() throws Exception {
+        Player player = Player.createPlayer(game, 1);
+        player.addTool(Tool.BOMB);
+        player.sellTool(Tool.BOMB);
+        assertThat(player.getPoint(), is(Tool.BOMB.getPrice()));
+        assertThat(player.getCountOf(Tool.BOMB), is(0));
+    }
+
     private Land createLandWithOwner(Player player) {
         Land land;
         land = new Land(200);
