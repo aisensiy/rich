@@ -1,7 +1,7 @@
 package com.tw.location;
 
 import com.tw.Player;
-import com.tw.Tool;
+import com.tw.util.Tool;
 import com.tw.exception.CannotBuyToolException;
 import com.tw.exception.RichGameException;
 

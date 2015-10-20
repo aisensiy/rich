@@ -2,14 +2,11 @@ package com.tw.location;
 
 import com.tw.Game;
 import com.tw.Player;
-import com.tw.util.Dice;
-import org.junit.Before;
 import org.junit.Test;
 
-import static com.tw.Tool.BOMB;
+import static com.tw.util.Tool.BOMB;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,10 +1,10 @@
 package com.tw.location;
 
 import com.tw.Player;
-import com.tw.Tool;
+import com.tw.util.Tool;
 import com.tw.exception.RichGameException;
 
-import static com.tw.Tool.BOMB;
+import static com.tw.util.Tool.BOMB;
 
 public abstract class Location {
 

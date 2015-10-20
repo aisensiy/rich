@@ -5,8 +5,8 @@ import com.tw.location.ToolShop;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.tw.Tool.*;
-import static com.tw.Tool.ROADBLOCK;
+import static com.tw.util.Tool.*;
+import static com.tw.util.Tool.ROADBLOCK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;

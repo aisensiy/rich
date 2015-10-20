@@ -1,16 +1,13 @@
 package com.tw.util;
 
 import com.tw.Player;
-import com.tw.Tool;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.tw.Tool.BOMB;
-import static com.tw.Tool.ROADBLOCK;
-import static com.tw.Tool.ROBOT;
+import static com.tw.util.Tool.BOMB;
+import static com.tw.util.Tool.ROADBLOCK;
+import static com.tw.util.Tool.ROBOT;
 
 public class ToolBox {
     private List<Tool> tools = new ArrayList<>();

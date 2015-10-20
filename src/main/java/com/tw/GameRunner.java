@@ -2,6 +2,8 @@ package com.tw;
 
 import com.tw.exception.RichGameException;
 import com.tw.location.*;
+import com.tw.util.Gift;
+import com.tw.util.Tool;
 
 import java.io.BufferedReader;
 import java.io.IOException;

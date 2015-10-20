@@ -2,7 +2,6 @@ package com.tw;
 
 import com.tw.exception.IllegalPlayerSettingException;
 import com.tw.exception.RichGameException;
-import com.tw.location.Hospital;
 import com.tw.util.Dice;
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,9 +10,9 @@ import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.rules.ExpectedException;
 
-import static com.tw.Tool.BOMB;
-import static com.tw.Tool.ROADBLOCK;
-import static com.tw.Tool.ROBOT;
+import static com.tw.util.Tool.BOMB;
+import static com.tw.util.Tool.ROADBLOCK;
+import static com.tw.util.Tool.ROBOT;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;

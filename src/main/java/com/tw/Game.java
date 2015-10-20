@@ -7,6 +7,7 @@ import com.tw.generator.GameMap;
 import com.tw.location.Location;
 import com.tw.util.Dice;
 import com.tw.util.RelativeIndex;
+import com.tw.util.Tool;
 
 import java.util.ArrayList;
 import java.util.HashSet;

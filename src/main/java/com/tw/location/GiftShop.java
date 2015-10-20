@@ -1,7 +1,7 @@
 package com.tw.location;
 
 import com.tw.Player;
-import com.tw.exception.RichGameException;
+import com.tw.util.Gift;
 
 public class GiftShop extends Location {
     @Override

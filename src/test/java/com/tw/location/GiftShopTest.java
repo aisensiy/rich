@@ -2,6 +2,7 @@ package com.tw.location;
 
 import com.tw.Game;
 import com.tw.Player;
+import com.tw.util.Gift;
 import org.junit.Before;
 import org.junit.Test;
 

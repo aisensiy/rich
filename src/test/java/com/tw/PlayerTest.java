@@ -3,7 +3,7 @@ package com.tw;
 import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
-import com.tw.location.Location;
+import com.tw.util.Tool;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
