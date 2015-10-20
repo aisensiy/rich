@@ -199,6 +199,7 @@ public class Player {
     }
 
     public void decreaseUnpunishRoll() {
-        unpunishRoll--;
+        if (unpunishRoll > 0)
+            unpunishRoll--;
     }
 }

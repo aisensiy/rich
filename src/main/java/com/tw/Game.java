@@ -127,6 +127,7 @@ public class Game {
                 break;
             }
         }
+        currentPlayer.decreaseUnpunishRoll();
     }
 
     public void setDice(Dice dice) {

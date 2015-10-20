@@ -281,9 +281,9 @@ public class GameTest {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
         player.setUnpunishRoll(1);
-        game.setCurrentPlayerToNext(); // to player2
         assertThat(player.canPunish(), is(false));
-        game.setCurrentPlayerToNext(); // to player1
+        game.roll();
+        game.setCurrentPlayerToNext();
         assertThat(player.canPunish(), is(true));
     }
 }
