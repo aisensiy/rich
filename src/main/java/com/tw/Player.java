@@ -170,4 +170,11 @@ public class Player {
         currrentLocationIndex = game.getHospitalIndex();
         skipRoll = 3;
     }
+
+    public void robot() {
+        for (int i = 1; i <= 10; i++) {
+            Location location = game.getRelativeLocationWith(this, i);
+            location.setTool(null);
+        }
+    }
 }

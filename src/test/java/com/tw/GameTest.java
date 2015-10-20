@@ -13,6 +13,7 @@ import org.junit.rules.ExpectedException;
 
 import static com.tw.Tool.BOMB;
 import static com.tw.Tool.ROADBLOCK;
+import static com.tw.Tool.ROBOT;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -258,5 +259,19 @@ public class GameTest {
         game.roll();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
         assertThat(game.getLocation(3).getTool(), nullValue());
+    }
+
+    @Test
+    public void robot_should_clean_road_in_10_step() throws Exception {
+        game.setPlayers("12");
+        game.getLocation(3).setTool(ROADBLOCK);
+        game.getLocation(4).setTool(ROADBLOCK);
+        game.getLocation(5).setTool(ROADBLOCK);
+        Player player = game.getPlayer(1);
+        player.addTool(ROBOT);
+        player.robot();
+        assertThat(game.getLocation(3).getTool(), nullValue());
+        assertThat(game.getLocation(4).getTool(), nullValue());
+        assertThat(game.getLocation(5).getTool(), nullValue());
     }
 }
