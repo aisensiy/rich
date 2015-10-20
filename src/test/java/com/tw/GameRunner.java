@@ -62,8 +62,10 @@ public class GameRunner {
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
-            } else {
+            } else if (command.equals("quit")){
                 break;
+            } else {
+                System.out.println("没有这样的命令，输入 help 查看命令列表");
             }
             if (game.isOver()) {
                 return;
