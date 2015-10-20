@@ -90,4 +90,29 @@ public class LandTest {
         land.process(player2);
         assertThat(player2.getFunding(), is(originalFunding));
     }
+
+    @Test
+    public void should_not_punish_money_when_player_has_unpunish_roll() throws Exception {
+        Land land = new Land(200);
+        Player player1 = Player.createPlayer(game, 1);
+        Player player2 = Player.createPlayer(game, 1);
+        land.setOwner(player1);
+        int originalFunding = player2.getFunding();
+        player2.setUnpunishRoll(1);
+        land.process(player2);
+        assertThat(player2.getFunding(), is(originalFunding));
+    }
+
+    @Test
+    public void should_can_punish_player_when_decrease_punish_roll_to_zero() throws Exception {
+        Land land = new Land(200);
+        Player player1 = Player.createPlayer(game, 1);
+        Player player2 = Player.createPlayer(game, 1);
+        land.setOwner(player1);
+        int originalFunding = player2.getFunding();
+        player2.setUnpunishRoll(1);
+        player2.decreaseUnpunishRoll();
+        land.process(player2);
+        assertThat(player2.getFunding(), is(originalFunding - 100));
+    }
 }

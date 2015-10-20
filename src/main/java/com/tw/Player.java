@@ -35,6 +35,7 @@ public class Player {
     private String symbol;
     private List<Land> lands = new ArrayList<>();
     private int skipRoll = 0;
+    private int unpunishRoll = 0;
 
     private Player(Game game, String name, String symbol, int funding) {
         this.game = game;
@@ -187,5 +188,17 @@ public class Player {
     }
 
     public void getGod() {
+    }
+
+    public void setUnpunishRoll(int roll) {
+        unpunishRoll = roll;
+    }
+
+    public boolean canPunish() {
+        return unpunishRoll == 0;
+    }
+
+    public void decreaseUnpunishRoll() {
+        unpunishRoll--;
     }
 }

@@ -344,7 +344,7 @@ public class GameRunnerTest {
         game = gameWithMap(new GiftMap());
         systemInRule.provideLines(
                 "200", "12",
-                "roll",
+                "roll", "1",
                 "quit"
         );
 

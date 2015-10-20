@@ -51,7 +51,7 @@ public class Land extends Location {
             buy(player);
         } else if(getOwner() == player) {
             upgrade(player);
-        } else if (getOwner().canRoll()) {
+        } else if (getOwner().canRoll() && player.canPunish()) {
             player.decreaseBy(punish());
             getOwner().increaseBy(punish());
             System.out.println(String.format("到达%s的%s,损失金钱%d元", getOwner().getName(), getName(), punish()));
