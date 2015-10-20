@@ -60,7 +60,7 @@ public class PlayerTest {
         int originalFunding = player.getFunding();
 
         land.process(player);
-        assertThat(originalFunding - player.getFunding(), is(land.getPrice()));
+        assertThat(originalFunding - player.getFunding(), is(land.getLandPrice()));
     }
 
     @Rule

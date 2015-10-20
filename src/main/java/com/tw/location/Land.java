@@ -20,7 +20,7 @@ public class Land extends Location {
     }
 
     public int getPrice() {
-        return price;
+        return price * (level + 1);
     }
 
     public int getLevel() {
@@ -106,5 +106,9 @@ public class Land extends Location {
     public void reset() {
         setOwner(null);
         level = 0;
+    }
+
+    public int getLandPrice() {
+        return price;
     }
 }
