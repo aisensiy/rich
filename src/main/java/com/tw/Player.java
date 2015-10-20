@@ -215,4 +215,18 @@ public class Player {
         decreaseTool(tool);
         increasePoint(tool.getPrice());
     }
+
+    public void sell(int index) throws RichGameException {
+        if (!game.getLocation(index).isLand() || lands.indexOf(game.getLocation(index)) == -1) {
+            throw new RichGameException("no such land");
+        }
+        Land land = (Land) game.getLocation(index);
+        land.setOwner(null);
+        increaseBy(land.getPrice());
+        removeLand(land);
+    }
+
+    private void removeLand(Land land) {
+        lands.remove(land);
+    }
 }

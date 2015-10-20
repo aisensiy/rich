@@ -9,7 +9,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -134,6 +136,19 @@ public class PlayerTest {
         player.sellTool(Tool.BOMB);
         assertThat(player.getPoint(), is(Tool.BOMB.getPrice()));
         assertThat(player.getCountOf(Tool.BOMB), is(0));
+    }
+
+    @Test
+    public void can_sell_land() throws Exception {
+        Player player = Player.createPlayer(game, 1);
+        int originalFunding = player.getFunding();
+        Land land = new Land(100);
+        land.setOwner(player);
+        when(game.getLocation(10)).thenReturn(land);
+        player.addLand(land);
+        player.sell(10);
+        assertThat(player.getFunding(), is(originalFunding + land.getPrice()));
+        assertThat(player.getLandInfo(), not(containsString("1")));
     }
 
     private Land createLandWithOwner(Player player) {
