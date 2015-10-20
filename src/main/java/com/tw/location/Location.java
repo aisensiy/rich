@@ -64,4 +64,8 @@ public abstract class Location {
     public void setTool(Tool tool) {
         this.tool = tool;
     }
+
+    public boolean isGiftShop() {
+        return this.getClass() == GiftShop.class;
+    }
 }

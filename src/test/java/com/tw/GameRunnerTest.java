@@ -339,6 +339,19 @@ public class GameRunnerTest {
         assertThat(game.getPlayer(2).getCountOf(ROBOT), is(0));
     }
 
+    @Test
+    public void should_show_message_when_arrive_at_gift_shop() throws Exception {
+        game = gameWithMap(new GiftMap());
+        systemInRule.provideLines(
+                "200", "12",
+                "roll",
+                "quit"
+        );
+
+        runner.run();
+        assertThat(systemOutRule.getLog(), containsString("礼品\t编号"));
+    }
+
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
         game.setDice(dice);

@@ -27,4 +27,8 @@ public class GiftShop extends Location {
                 break;
         }
     }
+
+    public String listGifts() {
+        return Gift.listGifts();
+    }
 }

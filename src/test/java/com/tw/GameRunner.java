@@ -1,6 +1,7 @@
 package com.tw;
 
 import com.tw.exception.RichGameException;
+import com.tw.location.GiftShop;
 import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.location.ToolShop;
@@ -96,6 +97,9 @@ public class GameRunner {
                         command = readLine();
                     }
                 }
+            } else if (location.isGiftShop()) {
+                GiftShop giftShop = (GiftShop) location;
+                System.out.println(giftShop.listGifts());
             } else {
                 location.process(currentPlayer);
             }
