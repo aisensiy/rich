@@ -78,4 +78,16 @@ public class LandTest {
         Player player = Player.createPlayer(game, 1, 20);
         land.process(player);
     }
+
+    @Test
+    public void should_not_punish_money_when_player_skip_roll() throws Exception {
+        Land land = new Land(200);
+        Player player1 = Player.createPlayer(game, 1);
+        Player player2 = Player.createPlayer(game, 1);
+        land.setOwner(player1);
+        int originalFunding = player2.getFunding();
+        player1.setSkipRoll(1);
+        land.process(player2);
+        assertThat(player2.getFunding(), is(originalFunding));
+    }
 }
