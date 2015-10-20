@@ -155,7 +155,14 @@ public class Game {
 
     public void removePlayer(Player player) {
         players.remove(player);
+        cleanLand(player);
         currentPlayerIndex--;
+    }
+
+    private void cleanLand(Player player) {
+        for (int i = 0; i < getMapSize(); i++) {
+            getLocation(i).reset();
+        }
     }
 
     public boolean isOver() {

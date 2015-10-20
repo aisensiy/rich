@@ -101,4 +101,10 @@ public class Land extends Location {
     public boolean isHighestLevel() {
         return level == 3;
     }
+
+    @Override
+    public void reset() {
+        setOwner(null);
+        level = 0;
+    }
 }

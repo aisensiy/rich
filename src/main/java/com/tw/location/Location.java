@@ -68,4 +68,8 @@ public abstract class Location {
     public boolean isGiftShop() {
         return this.getClass() == GiftShop.class;
     }
+
+    public void reset() {
+
+    }
 }
