@@ -15,7 +15,7 @@ public class StartPoint extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "S";
     }
 }

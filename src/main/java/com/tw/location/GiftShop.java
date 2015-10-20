@@ -10,7 +10,7 @@ public class GiftShop extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "G";
     }
 

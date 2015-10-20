@@ -2,6 +2,7 @@ package com.tw.location;
 
 import com.tw.Game;
 import com.tw.Player;
+import com.tw.util.Tool;
 import org.junit.Test;
 
 import static com.tw.util.Tool.BOMB;
@@ -23,5 +24,12 @@ public class LocationTest {
         assertThat(player.getLocationIndex(), is(10));
         assertThat(player.getSkipRoll(), is(3));
         assertThat(player.getPoint(), is(0));
+    }
+
+    @Test
+    public void should_show_tool_if_tool_exists() throws Exception {
+        Location land = new Land(100);
+        land.setTool(BOMB);
+        assertThat(land.getSymbol(), is(BOMB.getSymbol()));
     }
 }

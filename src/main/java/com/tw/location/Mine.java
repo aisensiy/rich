@@ -21,7 +21,7 @@ public class Mine extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    protected String getLocationSymbol() {
         return "$";
     }
 

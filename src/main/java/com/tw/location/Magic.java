@@ -15,7 +15,7 @@ public class Magic extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "M";
     }
 }

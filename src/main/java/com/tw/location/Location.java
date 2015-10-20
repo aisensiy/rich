@@ -40,7 +40,15 @@ public abstract class Location {
         System.out.println(arriveMessage(player));
     }
 
-    public abstract String getSymbol();
+    public String getSymbol() {
+        if (tool != null) {
+            return tool.getSymbol();
+        } else {
+            return getLocationSymbol();
+        }
+    }
+
+    protected abstract String getLocationSymbol();
 
     public boolean isEmptyLand() {
         if (!isLand()) {

@@ -10,7 +10,7 @@ public class Hospital extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "H";
     }
 }

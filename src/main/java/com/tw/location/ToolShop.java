@@ -17,7 +17,7 @@ public class ToolShop extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "T";
     }
 

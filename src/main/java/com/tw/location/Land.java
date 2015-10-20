@@ -63,7 +63,7 @@ public class Land extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    protected String getLocationSymbol() {
         return Integer.toString(level);
     }
 

@@ -15,7 +15,7 @@ public class Prison extends Location {
     }
 
     @Override
-    public String getSymbol() {
+    public String getLocationSymbol() {
         return "P";
     }
 
