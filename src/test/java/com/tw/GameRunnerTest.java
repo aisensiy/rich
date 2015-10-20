@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import static com.tw.Tool.BOMB;
 import static com.tw.Tool.ROADBLOCK;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -295,6 +296,25 @@ public class GameRunnerTest {
                 "quit");
         runner.run();
         assertThat(systemOutRule.getLog(), containsString("no such tool"));
+    }
+
+    @Test
+    public void should_get_set_bomb_command() throws Exception {
+        game = gameWithMap(new MiniMap());
+        when(dice.getInt()).thenReturn(1);
+
+        systemInRule.provideLines(
+                "200", "12",
+                "roll",
+                "roll",
+                "roll", "3", "F",
+                "roll", "F",
+                "bomb 1",
+                "quit"
+        );
+
+        runner.run();
+        assertThat(game.getLocation(3).getTool(), is(BOMB));
     }
 
     private Game gameWithMap(GameMap map) {

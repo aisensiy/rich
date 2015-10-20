@@ -1,6 +1,7 @@
 package com.tw.map;
 
 import com.tw.generator.GameMap;
+import com.tw.location.Hospital;
 import com.tw.location.Land;
 import com.tw.location.Mine;
 import com.tw.location.ToolShop;
@@ -16,6 +17,7 @@ public class MiniMap extends GameMap {
         locations.add(new ToolShop());
         locations.add(new Land(50));
         locations.add(new Land(50));
+        locations.add(new Hospital());
     }
 
     @Override

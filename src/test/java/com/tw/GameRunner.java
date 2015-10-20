@@ -40,6 +40,12 @@ public class GameRunner {
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
+            } else if (command.startsWith("bomb")) {
+                try {
+                    game.setTool(Tool.BOMB, Integer.parseInt(command.split(" ")[1]));
+                } catch (RichGameException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 break;
             }
