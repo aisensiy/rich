@@ -241,4 +241,8 @@ public class Player {
     private void removeLand(Land land) {
         lands.remove(land);
     }
+
+    public String getColor() {
+        return color;
+    }
 }

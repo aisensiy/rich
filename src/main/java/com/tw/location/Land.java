@@ -64,7 +64,11 @@ public class Land extends Location {
 
     @Override
     protected String getLocationSymbol() {
-        return Integer.toString(level);
+        if (getOwner() != null) {
+            return getOwner().getColor() + Integer.toString(level) + Player.ANSI_RESET;
+        } else {
+            return Integer.toString(level);
+        }
     }
 
     private void upgrade(Player player) throws RichGameException {
