@@ -164,27 +164,6 @@ public class GameRunner {
         }
     }
 
-    public String display() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 29; i++) {
-            sb.append(game.getSymbol(game.getLocation(i)));
-        }
-        sb.append("\n");
-        int size = game.getMapSize();
-        for (int i = 0; i < 6; i++) {
-            sb.append(game.getSymbol(game.getLocation(size - i - 1)));
-            sb.append("                           ");
-            sb.append(game.getSymbol(game.getLocation(29 + i)));
-            sb.append("\n");
-        }
-        for (int i = 63; i > 63 - 29; i--) {
-            sb.append(game.getSymbol(game.getLocation(i)));
-        }
-        return sb.toString();
-    }
-
-
     private String readLine() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         return br.readLine().toLowerCase();
