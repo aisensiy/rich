@@ -47,11 +47,7 @@ public class Land extends Location {
 
     @Override
     public void triggerArriveEvent(Player player) throws RichGameException {
-        if (getOwner() == null) {
-            buy(player);
-        } else if (getOwner() == player) {
-            upgrade(player);
-        } else {
+        if (getOwner() != null && getOwner() != player) {
             if (!getOwner().canRoll()) {
                 System.out.println("由于土地拥有者在监狱或者医院，不惩罚");
             } else if (!player.canPunish()) {

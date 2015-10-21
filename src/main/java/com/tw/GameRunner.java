@@ -86,9 +86,17 @@ public class GameRunner {
         Location location = currentPlayer.getCurrentLocation();
         try {
             if (location.isEmptyLand()) {
-                landProcess(currentPlayer, location, String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getPrice()));
+                System.out.print(String.format("是否购买该处空地，%d 元（Y/N）? ", ((Land) location).getLandPrice()));
+                String command = readLine();
+                if (command.equals("y")) {
+                    currentPlayer.buyLand((Land) location);
+                }
             } else if (location.getOwner() == currentPlayer) {
-                landProcess(currentPlayer, location, String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getPrice()));
+                System.out.print(String.format("是是否升级该处地产，%d 元（Y/N）? ", ((Land) location).getLandPrice()));
+                String command = readLine();
+                if (command.equals("y")) {
+                    currentPlayer.upgradeLand((Land) location);
+                }
             } else if (location.isToolShop()) {
                 toolShopProcess(currentPlayer, (ToolShop) location);
             } else if (location.isGiftShop()) {
@@ -108,14 +116,6 @@ public class GameRunner {
             }
         }
         game.setCurrentPlayerToNext();
-    }
-
-    private void landProcess(Player currentPlayer, Location location, String format) throws IOException, RichGameException {
-        System.out.print(format);
-        String command = readLine();
-        if (command.equals("y")) {
-            location.process(currentPlayer);
-        }
     }
 
     private void giftShopProcess(Player currentPlayer, GiftShop location) throws IOException {

@@ -1,5 +1,7 @@
 package com.tw;
 
+import com.tw.exception.CannotAccessLandException;
+import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.location.Land;
 import com.tw.location.Location;
@@ -236,6 +238,37 @@ public class Player {
         land.reset();
         increaseBy(land.getPrice());
         removeLand(land);
+    }
+
+    public void buyLand(Land land) throws RichGameException {
+        if (land.getOwner() != null) {
+            throw new CannotAccessLandException("current location already get an owner");
+        }
+
+        ensureFoundingIsEnough(land.getLandPrice());
+        land.setOwner(this);
+        addLand(land);
+        decreaseBy(land.getLandPrice());
+    }
+
+    public void upgradeLand(Land land) throws RichGameException {
+        if (land.getOwner() != this) {
+            throw new CannotAccessLandException("can not upgrade land which is not belong to you");
+        }
+
+        if (land.isHighestLevel()) {
+            throw new CannotAccessLandException("can not upgrade land with highest level");
+        }
+
+        ensureFoundingIsEnough(land.getLandPrice());
+        decreaseBy(land.getLandPrice());
+        land.upgradeLevel();
+    }
+
+    private void ensureFoundingIsEnough(int price) throws NoEnoughFoundException {
+        if (getFunding() < price) {
+            throw new NoEnoughFoundException("没有足够的金钱");
+        }
     }
 
     private void removeLand(Land land) {
