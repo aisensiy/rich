@@ -30,15 +30,21 @@ public abstract class Location {
     }
 
     public void process(Player player) throws RichGameException {
-        if (tool == BOMB) {
-            player.goToHospital();
-            tool = null;
-            System.out.println(String.format("%s踩到了炸弹，被送往了医院", player.getName()));
+        boolean stopProess = triggerArriveToolEvent(player);
+        if (stopProess) {
             return;
         }
         triggerArriveEvent(player);
         if (arriveMessage(player) != null || !arriveMessage(player).isEmpty())
             System.out.println(arriveMessage(player));
+    }
+
+    private boolean triggerArriveToolEvent(Player player) {
+        boolean stop = false;
+        if (tool != null)
+            stop = tool.triggerArriveEvent(player);
+        tool = null;
+        return stop;
     }
 
     public String getSymbol() {

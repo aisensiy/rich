@@ -1,5 +1,7 @@
 package com.tw.util;
 
+import com.tw.Player;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -48,5 +50,14 @@ public enum Tool {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public boolean triggerArriveEvent(Player player) {
+        if (this == BOMB) {
+            player.goToHospital();
+            System.out.println(String.format("%s踩到了炸弹，被送往了医院", player.getName()));
+            return true;
+        }
+        return false;
     }
 }
