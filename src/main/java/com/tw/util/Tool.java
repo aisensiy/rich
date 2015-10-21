@@ -60,4 +60,12 @@ public enum Tool {
         }
         return false;
     }
+
+    public boolean triggerPassEvent(Player player) {
+        if (this == Tool.ROADBLOCK) {
+            System.out.println(String.format("%s被路障阻止", player.getName()));
+            return true;
+        }
+        return false;
+    }
 }

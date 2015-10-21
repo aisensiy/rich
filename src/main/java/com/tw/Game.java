@@ -122,13 +122,18 @@ public class Game {
         for (int i = 1; i <= step; i++) {
             currentPlayer.go(1);
             Location currentLocation = currentPlayer.getCurrentLocation();
-            if (currentLocation.getTool() == Tool.ROADBLOCK) {
-                currentLocation.setTool(null);
-                System.out.println(String.format("%s被路障阻止", currentPlayer.getName()));
-                break;
-            }
+            if (triggerPassEvent(currentPlayer, currentLocation)) break;
         }
         currentPlayer.decreaseUnpunishRoll();
+    }
+
+    private boolean triggerPassEvent(Player player, Location location) {
+        boolean stop = false;
+        if (location.getTool() != null) {
+            stop = location.getTool().triggerPassEvent(player);
+            location.setTool(null);
+        }
+        return stop;
     }
 
     public void setDice(Dice dice) {
