@@ -278,4 +278,10 @@ public class Player {
     public String getColor() {
         return color;
     }
+
+    public void cleanLand() {
+        for (Land land : lands) {
+            land.reset();
+        }
+    }
 }

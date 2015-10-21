@@ -168,9 +168,7 @@ public class Game {
     }
 
     private void cleanLand(Player player) {
-        for (int i = 0; i < getMapSize(); i++) {
-            getLocation(i).reset();
-        }
+        player.cleanLand();
     }
 
     public boolean isOver() {
