@@ -37,7 +37,8 @@ public abstract class Location {
             return;
         }
         triggerArriveEvent(player);
-        System.out.println(arriveMessage(player));
+        if (arriveMessage(player) != null || !arriveMessage(player).isEmpty())
+            System.out.println(arriveMessage(player));
     }
 
     public String getSymbol() {

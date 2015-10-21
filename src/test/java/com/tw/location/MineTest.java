@@ -1,5 +1,7 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Game;
+import com.tw.Player;
 import com.tw.location.Location;
 import com.tw.location.Mine;
 import org.junit.Before;

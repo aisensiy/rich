@@ -233,7 +233,7 @@ public class Player {
             throw new RichGameException("no such land");
         }
         Land land = (Land) game.getLocation(index);
-        land.setOwner(null);
+        land.reset();
         increaseBy(land.getPrice());
         removeLand(land);
     }

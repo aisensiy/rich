@@ -1,5 +1,7 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Game;
+import com.tw.Player;
 import com.tw.exception.CannotBuyToolException;
 import com.tw.location.ToolShop;
 import org.junit.Before;

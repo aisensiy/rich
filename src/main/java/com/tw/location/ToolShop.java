@@ -6,6 +6,7 @@ import com.tw.exception.CannotBuyToolException;
 import com.tw.exception.RichGameException;
 
 public class ToolShop extends Location {
+
     @Override
     public String getName() {
         return null;

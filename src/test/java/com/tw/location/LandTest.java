@@ -1,5 +1,7 @@
-package com.tw;
+package com.tw.location;
 
+import com.tw.Game;
+import com.tw.Player;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
 import com.tw.location.Location;

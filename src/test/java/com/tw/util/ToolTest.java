@@ -1,4 +1,4 @@
-package com.tw;
+package com.tw.util;
 
 import com.tw.util.Tool;
 import org.junit.Test;
