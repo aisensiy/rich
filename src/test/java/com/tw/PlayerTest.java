@@ -4,6 +4,7 @@ import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.location.Land;
 import com.tw.location.Location;
+import com.tw.util.Dice;
 import com.tw.util.Tool;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
@@ -21,12 +22,15 @@ public class PlayerTest {
 
     private Game game;
     private Player player;
+    private Dice dice;
 
     @Before
     public void setUp() throws Exception {
         game = mock(Game.class);
         when(game.getMapSize()).thenReturn(70);
         player = Player.createPlayer(game, 1);
+        dice = mock(Dice.class);
+        Dice.dice = dice;
     }
 
     @Test
@@ -37,7 +41,7 @@ public class PlayerTest {
 
     @Test
     public void should_get_type_of_land() throws Exception {
-        when(game.location(anyInt())).thenReturn(new Land(200));
+        when(game.getLocation(anyInt())).thenReturn(new Land(200));
         Player player = Player.createPlayer(game, 1);
         assertThat(player.getCurrentLocation().isLand(), is(true));
     }
@@ -46,7 +50,7 @@ public class PlayerTest {
     public void should_upgrade_level_by_1_after_upgrade() throws Exception {
         Player player = Player.createPlayer(game, 1);
         Land land = createLandWithOwner(player);
-        when(game.location(anyInt())).thenReturn(land);
+        when(game.getLocation(anyInt())).thenReturn(land);
         assertThat(land.getLevel(), is(0));
 
         player.upgradeLand(land);
@@ -104,7 +108,7 @@ public class PlayerTest {
         expectedException.expectMessage("can not upgrade land with highest level");
 
         Land land = createLandWithOwner(player);
-        when(game.location(anyInt())).thenReturn(land);
+        when(game.getLocation(anyInt())).thenReturn(land);
 
         player.upgradeLand(land);
         player.upgradeLand(land);
@@ -170,6 +174,16 @@ public class PlayerTest {
         player.sell(10);
         assertThat(player.getFunding(), is(originalFunding));
         assertThat(player.getLandInfo(), not(containsString("1")));
+    }
+
+    @Test
+    public void should_update_current_player_location_after_roll() throws Exception {
+        when(dice.getInt()).thenReturn(5);
+        when(game.getLocation(anyInt())).thenReturn(new Land(100));
+        Player player = Player.createPlayer(game, 1);
+        int player1OriginalLocation = player.getLocationIndex();
+        player.roll();
+        assertThat(player.getLocationIndex() - player1OriginalLocation, is(5));
     }
 
     private Land createLandWithOwner(Player player) {

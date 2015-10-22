@@ -79,8 +79,8 @@ public class GameRunner {
     }
 
     public void turn() throws IOException {
-        game.roll();
         Player currentPlayer = game.getCurrentPlayer();
+        currentPlayer.roll();
         System.out.println(game.display());
         System.out.print(String.format("%s> ", currentPlayer));
         Location location = currentPlayer.getCurrentLocation();

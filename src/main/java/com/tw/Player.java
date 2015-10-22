@@ -5,6 +5,7 @@ import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.location.Land;
 import com.tw.location.Location;
+import com.tw.util.Dice;
 import com.tw.util.RelativeIndex;
 import com.tw.util.Tool;
 
@@ -88,7 +89,7 @@ public class Player {
     }
 
     public Location getCurrentLocation() {
-        return game.location(currrentLocationIndex);
+        return game.getLocation(currrentLocationIndex);
     }
 
     public int getFunding() {
@@ -109,6 +110,25 @@ public class Player {
 
     public int getToolCount() {
         return tools.size();
+    }
+
+    public void roll() {
+        int step = Dice.roll();
+        System.out.println(String.format("掷骰子点数%d", step));
+        for (int i = 1; i <= step; i++) {
+            go(1);
+            if (triggerPassEvent(getCurrentLocation())) break;
+        }
+        decreaseUnpunishRoll();
+    }
+
+    private boolean triggerPassEvent(Location location) {
+        boolean stop = false;
+        if (location.getTool() != null) {
+            stop = location.getTool().triggerPassEvent(this);
+            location.setTool(null);
+        }
+        return stop;
     }
 
     public int getCountOf(Tool tool) {

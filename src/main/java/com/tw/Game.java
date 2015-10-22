@@ -24,7 +24,6 @@ public class Game {
     private List<Player> players;
     private int currentPlayerIndex;
     private List<Location> locations = new ArrayList<>();
-    private Dice dice = new Dice();
     private GameMap map;
 
     public Game() {
@@ -74,10 +73,6 @@ public class Game {
         }
     }
 
-    public Location location(int currrentLocationIndex) {
-        return locations.get(currrentLocationIndex);
-    }
-
     public Player getPlayerAtLocation(Location location) {
         if (getCurrentPlayer().getCurrentLocation() == location) {
             return getCurrentPlayer();
@@ -116,28 +111,7 @@ public class Game {
     }
 
     public void roll() {
-        int step = dice.getInt();
-        System.out.println(String.format("掷骰子点数%d", step));
-        Player currentPlayer = getCurrentPlayer();
-        for (int i = 1; i <= step; i++) {
-            currentPlayer.go(1);
-            Location currentLocation = currentPlayer.getCurrentLocation();
-            if (triggerPassEvent(currentPlayer, currentLocation)) break;
-        }
-        currentPlayer.decreaseUnpunishRoll();
-    }
-
-    private boolean triggerPassEvent(Player player, Location location) {
-        boolean stop = false;
-        if (location.getTool() != null) {
-            stop = location.getTool().triggerPassEvent(player);
-            location.setTool(null);
-        }
-        return stop;
-    }
-
-    public void setDice(Dice dice) {
-        this.dice = dice;
+        getCurrentPlayer().roll();
     }
 
     public int getMapSize() {
@@ -206,7 +180,7 @@ public class Game {
     }
 
     public Location getRelativeLocationWith(Player player, int relativeIndex) {
-        return location(RelativeIndex.get(player.getLocationIndex(), relativeIndex, getMapSize()));
+        return getLocation(RelativeIndex.get(player.getLocationIndex(), relativeIndex, getMapSize()));
     }
 
     public int getHospitalIndex() {

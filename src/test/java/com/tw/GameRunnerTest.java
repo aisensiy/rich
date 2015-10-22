@@ -34,7 +34,7 @@ public class GameRunnerTest {
     public void setUp() throws Exception {
         game = new Game();
         dice = mock(Dice.class);
-        game.setDice(dice);
+        Dice.dice = dice;
         runner = new GameRunner(game);
     }
 
@@ -81,7 +81,6 @@ public class GameRunnerTest {
     @Test
     public void should_receive_roll_command_and_update_location() throws Exception {
         game = new Game(new HospitalMap());
-        game.setDice(dice);
 
         game.setPlayers("12");
         runner.setGame(game);
@@ -363,7 +362,7 @@ public class GameRunnerTest {
 
     private Game gameWithMap(GameMap map) {
         Game game = new Game(map);
-        game.setDice(dice);
+        Dice.dice = dice;
         runner.setGame(game);
         return game;
     }

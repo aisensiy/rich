@@ -36,7 +36,7 @@ public class GameTest {
     public void setUp() throws Exception {
         game = new Game();
         dice = mock(Dice.class);
-        game.setDice(dice);
+        Dice.dice = dice;
     }
 
     @Test
@@ -77,48 +77,26 @@ public class GameTest {
     }
 
     @Test
-    public void should_current_player_change_to_another_player_after_roll_with_2_players() throws Exception {
+    public void should_current_player_change_to_another_player_after_call_set_player_to_next_with_2_players() throws Exception {
         game.setPlayers("12");
         Player anotherPlayer = game.getPlayer(2);
-        game.roll();
         game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(anotherPlayer));
     }
 
     @Test
-    public void should_current_player_change_to_another_player_after_roll_with_3_players() throws Exception {
+    public void should_current_player_change_to_another_player_after_set_player_to_next_with_3_players() throws Exception {
         game.setPlayers("312");
         Player player1 = game.getCurrentPlayer();
         Player player2 = game.getPlayer(2);
         Player player3 = game.getPlayer(3);
 
-        game.roll();
         game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player2));
-        game.roll();
         game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player3));
-        game.roll();
         game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player1));
-    }
-
-    @Test
-    public void should_update_current_player_location_after_roll() throws Exception {
-        when(dice.getInt()).thenReturn(5);
-        game.setPlayers("12");
-        Player player1 = game.getCurrentPlayer();
-        Player player2 = game.getPlayer(2);
-
-        int player1OriginalLocation = game.getCurrentPlayer().getLocationIndex();
-        game.roll();
-        game.setPlayerToNext();
-        assertThat(player1.getLocationIndex() - player1OriginalLocation, is(5));
-
-        int player2OriginalLocation = game.getCurrentPlayer().getLocationIndex();
-        game.roll();
-        game.setPlayerToNext();
-        assertThat(player2.getLocationIndex() - player2OriginalLocation, is(5));
     }
 
     @Test
