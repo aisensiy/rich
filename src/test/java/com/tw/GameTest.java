@@ -131,8 +131,7 @@ public class GameTest {
 
     @Test
     public void should_remove_player() throws Exception {
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         game.removePlayer(player);
         assertThat(game.isOver(), is(true));
     }
@@ -159,8 +158,7 @@ public class GameTest {
 
     @Test
     public void should_set_block_by_current_player() throws Exception {
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
         game.userTool(ROADBLOCK, 5);
@@ -170,8 +168,7 @@ public class GameTest {
 
     @Test
     public void should_set_bomb_by_current_player() throws Exception {
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(BOMB);
         game.userTool(BOMB, 5);
@@ -199,8 +196,7 @@ public class GameTest {
     public void throw_exception_when_there_is_tool_on_location() throws Exception {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("there is already a tool on the location");
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
         player.buyTool(ROADBLOCK);
@@ -212,8 +208,7 @@ public class GameTest {
     public void set_tool_should_throw_exception_when_there_is_player_on_location() throws Exception {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("there is a player on the location");
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
         game.getPlayer(2).go(5);
@@ -223,9 +218,8 @@ public class GameTest {
     @Test
     public void set_tool_should_throw_exception_when_index_is_out_of_range() throws Exception {
         expectedException.expectMessage("range should between -10 and 10");
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
-        player.addTool(ROADBLOCK);
+        Player player = initGameWithTwoPlayer();
+        player.buyTool(ROADBLOCK);
         game.userTool(ROADBLOCK, 11);
     }
 
@@ -241,12 +235,11 @@ public class GameTest {
 
     @Test
     public void robot_should_clean_road_in_10_step() throws Exception {
-        game.setPlayers("12");
         game.getLocation(3).setTool(ROADBLOCK);
         game.getLocation(4).setTool(ROADBLOCK);
         game.getLocation(5).setTool(ROADBLOCK);
-        Player player = game.getPlayer(1);
-        player.addTool(ROBOT);
+        Player player = initGameWithTwoPlayer();
+        player.buyTool(ROBOT);
         player.robot();
         assertThat(game.getLocation(3).getTool(), nullValue());
         assertThat(game.getLocation(4).getTool(), nullValue());
@@ -256,12 +249,18 @@ public class GameTest {
 
     @Test
     public void should_decrease_unpunish_roll_every_roll() throws Exception {
-        game.setPlayers("12");
-        Player player = game.getPlayer(1);
+        Player player = initGameWithTwoPlayer();
         player.setUnpunishTurn(1);
         assertThat(player.canPunish(), is(false));
         game.roll();
         game.setPlayerToNext();
         assertThat(player.canPunish(), is(true));
+    }
+
+    private Player initGameWithTwoPlayer() throws RichGameException {
+        game.setPlayers("12");
+        Player player = game.getPlayer(1);
+        player.increasePoint(10000);
+        return player;
     }
 }

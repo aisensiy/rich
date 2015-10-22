@@ -136,10 +136,6 @@ public class Player {
         return (int) tools.stream().filter(t -> t == tool).count();
     }
 
-    public void addTool(Tool tool) {
-        tools.add(tool);
-    }
-
     public String getSymbol() {
         return color + symbol + ANSI_RESET;
     }
@@ -316,7 +312,7 @@ public class Player {
         if (getPoint() < tool.getPrice()) {
             throw new CannotBuyToolException("no enough point to buy the tool");
         }
-        addTool(tool);
+        tools.add(tool);
         point -= tool.getPrice();
     }
 }
