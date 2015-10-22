@@ -1,9 +1,6 @@
 package com.tw;
 
-import com.tw.exception.CannotAccessLandException;
-import com.tw.exception.CannotBuyToolException;
-import com.tw.exception.NoEnoughFoundException;
-import com.tw.exception.RichGameException;
+import com.tw.exception.*;
 import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.util.Dice;
@@ -91,7 +88,8 @@ public class Player {
         return funding;
     }
 
-    public void decreaseFunding(int price) {
+    public void decreaseFunding(int price) throws NoEnoughFoundException {
+        ensureFoundingIsEnough(price);
         funding -= price;
     }
 
@@ -246,11 +244,9 @@ public class Player {
 
     public void buyLand(Land land) throws RichGameException {
         ensureIsEmptyLand(land);
-        ensureFoundingIsEnough(land.getLandPrice());
-
+        decreaseFunding(land.getLandPrice());
         land.setOwner(this);
         addLand(land);
-        decreaseFunding(land.getLandPrice());
     }
 
     private void ensureIsEmptyLand(Land land) throws CannotAccessLandException {
@@ -291,19 +287,31 @@ public class Player {
     }
 
     public void buyTool(Tool tool) throws RichGameException {
+        ensureToolCountLessThan();
+        tools.add(tool);
+        decreasePoint(tool.getPrice());
+    }
+
+    private void ensureToolCountLessThan() throws CannotBuyToolException {
         if (getToolCount() >= 10) {
             throw new CannotBuyToolException("the player already get 10 tools");
         }
-        if (getPoint() < tool.getPrice()) {
-            throw new CannotBuyToolException("no enough point to buy the tool");
-        }
-        tools.add(tool);
-        point -= tool.getPrice();
     }
 
-    public void getTollFrom(Player player, int punish) {
+    private void decreasePoint(int price) throws CannotBuyToolException {
+        if (getPoint() < price) {
+            throw new CannotBuyToolException("no enough point to buy the tool");
+        }
+        point -= price;
+    }
+
+    public void getTollFrom(Player player, int punish) throws PlayerIsOutException {
+        try {
+            player.decreaseFunding(punish);
+        } catch (NoEnoughFoundException e) {
+            throw new PlayerIsOutException(player.getName() + " is out");
+        }
         increaseFunding(punish);
-        player.decreaseFunding(punish);
     }
 
     public void useTool(Tool tool, int relativeIndex) throws RichGameException {

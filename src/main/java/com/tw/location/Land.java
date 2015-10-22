@@ -3,6 +3,7 @@ package com.tw.location;
 import com.tw.Player;
 import com.tw.exception.CannotAccessLandException;
 import com.tw.exception.NoEnoughFoundException;
+import com.tw.exception.PlayerIsOutException;
 import com.tw.exception.RichGameException;
 
 public class Land extends Location {
@@ -46,7 +47,7 @@ public class Land extends Location {
     }
 
     @Override
-    public void triggerArriveEvent(Player player) throws RichGameException {
+    public void triggerArriveEvent(Player player) throws RichGameException, PlayerIsOutException {
         if (getOwner() != null && getOwner() != player) {
             if (!getOwner().canRoll()) {
                 System.out.println("由于土地拥有者在监狱或者医院，不惩罚");

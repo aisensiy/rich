@@ -1,5 +1,6 @@
 package com.tw;
 
+import com.tw.exception.PlayerIsOutException;
 import com.tw.exception.RichGameException;
 import com.tw.location.*;
 import com.tw.util.Gift;
@@ -106,9 +107,7 @@ public class GameRunner {
             }
         } catch (RichGameException e) {
             System.out.println(e.getMessage());
-        }
-
-        if (currentPlayer.getFunding() < 0) {
+        } catch (PlayerIsOutException e) {
             System.out.println(String.format("%s已经破产", currentPlayer.getName()));
             game.removePlayer(currentPlayer);
             if (game.isOver()) {

@@ -1,6 +1,7 @@
 package com.tw.location;
 
 import com.tw.Player;
+import com.tw.exception.PlayerIsOutException;
 import com.tw.util.Tool;
 import com.tw.exception.RichGameException;
 
@@ -25,11 +26,11 @@ public abstract class Location {
 
     public abstract String getName();
 
-    public void triggerArriveEvent(Player player) throws RichGameException {
+    public void triggerArriveEvent(Player player) throws RichGameException, PlayerIsOutException {
 
     }
 
-    public void process(Player player) throws RichGameException {
+    public void process(Player player) throws RichGameException, PlayerIsOutException {
         boolean stopProess = triggerArriveToolEvent(player);
         if (stopProess) {
             return;
