@@ -50,9 +50,9 @@ public class Player {
     private int point = 0;
     private String color;
     private String symbol;
-    private List<Land> lands = new ArrayList<>();
     private int skipRoll = 0;
     private int unpunishRoll = 0;
+    private List<Land> lands = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
 
     private Player(Game game, String name, String symbol, String color, int funding) {
@@ -79,10 +79,6 @@ public class Player {
 
     public int getLocationIndex() {
         return currrentLocationIndex;
-    }
-
-    public void setCurrentLocation(int currentLocation) {
-        this.currrentLocationIndex = currentLocation;
     }
 
     public void go(int step) {
@@ -213,7 +209,7 @@ public class Player {
         this.decreaseTool(Tool.ROBOT);
     }
 
-    public void increaseBy(int money) {
+    public void increaseFunding(int money) {
         funding += money;
     }
 
@@ -252,7 +248,7 @@ public class Player {
         }
         Land land = (Land) game.getLocation(index);
         land.reset();
-        increaseBy(land.getPrice());
+        increaseFunding(land.getPrice());
         removeLand(land);
     }
 
@@ -314,5 +310,10 @@ public class Player {
         }
         tools.add(tool);
         point -= tool.getPrice();
+    }
+
+    public void getTollFrom(Player player, int punish) {
+        increaseFunding(punish);
+        player.decreaseFunding(punish);
     }
 }

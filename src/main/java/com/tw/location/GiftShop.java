@@ -17,7 +17,7 @@ public class GiftShop extends Location {
     public void get(Player player, Gift gift) {
         switch (gift) {
             case MONEY:
-                player.increaseBy(2000);
+                player.increaseFunding(2000);
                 break;
             case POINT:
                 player.increasePoint(200);
