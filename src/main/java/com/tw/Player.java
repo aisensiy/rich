@@ -123,7 +123,7 @@ public class Player {
         boolean stop = false;
         if (location.getTool() != null) {
             stop = location.getTool().triggerPassEvent(this);
-            location.setTool(null);
+            location.removeTool();
         }
         return stop;
     }
@@ -200,7 +200,7 @@ public class Player {
         }
         for (int i = 1; i <= 10; i++) {
             Location location = game.getRelativeLocationWith(this, i);
-            location.setTool(null);
+            location.removeTool();
         }
         tools.remove(Tool.ROBOT);
     }
@@ -320,7 +320,7 @@ public class Player {
         }
         Location location = game.getRelativeLocationWith(this, relativeIndex);
         ensureNoPlayerOnLocation(location);
-        location.setTool(tool);
+        location.addTool(tool);
         tools.remove(tool);
     }
 

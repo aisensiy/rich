@@ -18,7 +18,7 @@ public class LocationTest {
         Game game = mock(Game.class);
         when(game.getHospitalIndex()).thenReturn(10);
         Location mine = new Mine(100);
-        mine.setTool(BOMB);
+        mine.addTool(BOMB);
         Player player = Player.createPlayer(game, 1);
         mine.process(player);
         assertThat(player.getLocationIndex(), is(10));
@@ -29,7 +29,7 @@ public class LocationTest {
     @Test
     public void should_show_tool_if_tool_exists() throws Exception {
         Location land = new Land(100);
-        land.setTool(BOMB);
+        land.addTool(BOMB);
         assertThat(land.getSymbol(), is(BOMB.getSymbol()));
     }
 }

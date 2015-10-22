@@ -226,7 +226,7 @@ public class GameTest {
     @Test
     public void should_stop_player_with_road_block() throws Exception {
         game.setPlayers("12");
-        game.getLocation(3).setTool(ROADBLOCK);
+        game.getLocation(3).addTool(ROADBLOCK);
         when(dice.getInt()).thenReturn(5);
         game.roll();
         assertThat(game.getPlayer(1).getLocationIndex(), is(3));
@@ -235,9 +235,9 @@ public class GameTest {
 
     @Test
     public void robot_should_clean_road_in_10_step() throws Exception {
-        game.getLocation(3).setTool(ROADBLOCK);
-        game.getLocation(4).setTool(ROADBLOCK);
-        game.getLocation(5).setTool(ROADBLOCK);
+        game.getLocation(3).addTool(ROADBLOCK);
+        game.getLocation(4).addTool(ROADBLOCK);
+        game.getLocation(5).addTool(ROADBLOCK);
         Player player = initGameWithTwoPlayer();
         player.buyTool(ROBOT);
         player.robot();
