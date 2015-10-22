@@ -1,6 +1,7 @@
 package com.tw;
 
 import com.tw.exception.CannotAccessLandException;
+import com.tw.exception.CannotBuyToolException;
 import com.tw.exception.NoEnoughFoundException;
 import com.tw.exception.RichGameException;
 import com.tw.location.Land;
@@ -137,10 +138,6 @@ public class Player {
 
     public void addTool(Tool tool) {
         tools.add(tool);
-    }
-
-    public void decreasePoint(int toolPoint) {
-        point -= toolPoint;
     }
 
     public String getSymbol() {
@@ -310,5 +307,16 @@ public class Player {
         for (Land land : lands) {
             land.reset();
         }
+    }
+
+    public void buyTool(Tool tool) throws RichGameException {
+        if (getToolCount() >= 10) {
+            throw new CannotBuyToolException("the player already get 10 tools");
+        }
+        if (getPoint() < tool.getPrice()) {
+            throw new CannotBuyToolException("no enough point to buy the tool");
+        }
+        addTool(tool);
+        point -= tool.getPrice();
     }
 }

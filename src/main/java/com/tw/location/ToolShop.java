@@ -22,17 +22,6 @@ public class ToolShop extends Location {
         return "T";
     }
 
-    public void buy(Player player, Tool tool) throws RichGameException {
-        if (player.getToolCount() >= 10) {
-            throw new CannotBuyToolException("the player already get 10 tools");
-        }
-        if (player.getPoint() < tool.getPrice()) {
-            throw new CannotBuyToolException("no enough point to buy the tool");
-        }
-        player.addTool(tool);
-        player.decreasePoint(tool.getPrice());
-    }
-
     public String showTools() {
         return Tool.listTools();
     }

@@ -21,16 +21,14 @@ import static org.mockito.Mockito.when;
 public class GameTest {
 
     private Game game;
-
+    private Dice dice;
     @Rule
     public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
     @Rule
     public final TextFromStandardInputStream systemInRule = TextFromStandardInputStream.emptyStandardInputStream();
-    private Dice dice;
 
     @Before
     public void setUp() throws Exception {
@@ -163,7 +161,8 @@ public class GameTest {
     public void should_set_block_by_current_player() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(ROADBLOCK);
+        player.increasePoint(100);
+        player.buyTool(ROADBLOCK);
         game.userTool(ROADBLOCK, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(ROADBLOCK));
         assertThat(player.getCountOf(ROADBLOCK), is(0));
@@ -173,7 +172,8 @@ public class GameTest {
     public void should_set_bomb_by_current_player() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(BOMB);
+        player.increasePoint(100);
+        player.buyTool(BOMB);
         game.userTool(BOMB, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(BOMB));
         assertThat(player.getCountOf(BOMB), is(0));
@@ -184,7 +184,6 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        Player player = game.getPlayer(1);
         game.userTool(ROADBLOCK, 5);
     }
 
@@ -202,8 +201,9 @@ public class GameTest {
         expectedException.expectMessage("there is already a tool on the location");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(ROADBLOCK);
-        player.addTool(ROADBLOCK);
+        player.increasePoint(100);
+        player.buyTool(ROADBLOCK);
+        player.buyTool(ROADBLOCK);
         game.userTool(ROADBLOCK, 5);
         game.userTool(ROADBLOCK, 5);
     }
@@ -214,7 +214,8 @@ public class GameTest {
         expectedException.expectMessage("there is a player on the location");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.addTool(ROADBLOCK);
+        player.increasePoint(100);
+        player.buyTool(ROADBLOCK);
         game.getPlayer(2).go(5);
         game.userTool(ROADBLOCK, 5);
     }

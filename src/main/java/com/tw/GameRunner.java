@@ -135,7 +135,7 @@ public class GameRunner {
             System.out.println("输入道具编号购买道具，或者输入F退出道具店");
             String command = readLine();
             while (!command.equals("f")) {
-                toolShop.buy(currentPlayer, Tool.valueOf(Integer.parseInt(command)));
+                currentPlayer.buyTool(Tool.valueOf(Integer.parseInt(command)));
                 command = readLine();
             }
         }

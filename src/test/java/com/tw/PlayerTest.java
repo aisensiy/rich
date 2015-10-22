@@ -159,9 +159,10 @@ public class PlayerTest {
 
     @Test
     public void can_sell_tool() throws Exception {
-        player.addTool(Tool.BOMB);
+        player.increasePoint(100);
+        player.buyTool(Tool.BOMB);
         player.sellTool(Tool.BOMB);
-        assertThat(player.getPoint(), is(Tool.BOMB.getPrice()));
+        assertThat(player.getPoint(), is(100));
         assertThat(player.getCountOf(Tool.BOMB), is(0));
     }
 
