@@ -161,7 +161,7 @@ public class GameTest {
         Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
-        game.userTool(ROADBLOCK, 5);
+        game.useTool(ROADBLOCK, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(ROADBLOCK));
         assertThat(player.getCountOf(ROADBLOCK), is(0));
     }
@@ -171,7 +171,7 @@ public class GameTest {
         Player player = initGameWithTwoPlayer();
         player.increasePoint(100);
         player.buyTool(BOMB);
-        game.userTool(BOMB, 5);
+        game.useTool(BOMB, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(BOMB));
         assertThat(player.getCountOf(BOMB), is(0));
     }
@@ -181,7 +181,7 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        game.userTool(ROADBLOCK, 5);
+        game.useTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -189,7 +189,7 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        game.userTool(BOMB, 5);
+        game.useTool(BOMB, 5);
     }
 
     @Test
@@ -200,8 +200,8 @@ public class GameTest {
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
         player.buyTool(ROADBLOCK);
-        game.userTool(ROADBLOCK, 5);
-        game.userTool(ROADBLOCK, 5);
+        game.useTool(ROADBLOCK, 5);
+        game.useTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -212,7 +212,7 @@ public class GameTest {
         player.increasePoint(100);
         player.buyTool(ROADBLOCK);
         game.getPlayer(2).go(5);
-        game.userTool(ROADBLOCK, 5);
+        game.useTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -220,7 +220,7 @@ public class GameTest {
         expectedException.expectMessage("range should between -10 and 10");
         Player player = initGameWithTwoPlayer();
         player.buyTool(ROADBLOCK);
-        game.userTool(ROADBLOCK, 11);
+        game.useTool(ROADBLOCK, 11);
     }
 
     @Test

@@ -36,13 +36,13 @@ public class GameRunner {
                 System.out.println(help());
             } else if (command.startsWith("block")) {
                 try {
-                    game.userTool(Tool.ROADBLOCK, Integer.parseInt(command.split(" ")[1]));
+                    game.useTool(Tool.ROADBLOCK, Integer.parseInt(command.split(" ")[1]));
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
             } else if (command.startsWith("bomb")) {
                 try {
-                    game.userTool(Tool.BOMB, Integer.parseInt(command.split(" ")[1]));
+                    game.useTool(Tool.BOMB, Integer.parseInt(command.split(" ")[1]));
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }

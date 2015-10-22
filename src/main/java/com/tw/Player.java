@@ -185,10 +185,6 @@ public class Player {
         return point >= Stream.of(Tool.values()).mapToInt(Tool::getPrice).min().getAsInt();
     }
 
-    public void decreaseTool(Tool tool) {
-        tools.remove(tool);
-    }
-
     public int getSkipRoll() {
         return skipRoll;
     }
@@ -206,7 +202,7 @@ public class Player {
             Location location = game.getRelativeLocationWith(this, i);
             location.setTool(null);
         }
-        this.decreaseTool(Tool.ROBOT);
+        tools.remove(Tool.ROBOT);
     }
 
     public void increaseFunding(int money) {
@@ -238,7 +234,7 @@ public class Player {
         if (getCountOf(tool) == 0) {
             throw new RichGameException("no such tool");
         }
-        decreaseTool(tool);
+        tools.remove(tool);
         increasePoint(tool.getPrice());
     }
 
@@ -316,4 +312,28 @@ public class Player {
         increaseFunding(punish);
         player.decreaseFunding(punish);
     }
+
+    public void useTool(Tool tool, int relativeIndex) throws RichGameException {
+        ensureRangeForSettingTool(relativeIndex);
+        if (getCountOf(tool) == 0) {
+            throw new RichGameException("no such tool");
+        }
+        Location location = game.getRelativeLocationWith(this, relativeIndex);
+        ensureNoPlayerOnLocation(location);
+        location.setTool(tool);
+        tools.remove(tool);
+    }
+
+    private void ensureNoPlayerOnLocation(Location location) throws RichGameException {
+        if (game.getPlayerAtLocation(location) != null) {
+            throw new RichGameException("there is a player on the location");
+        }
+    }
+
+    private void ensureRangeForSettingTool(int relativeIndex) throws RichGameException {
+        if (relativeIndex > 10 || relativeIndex < -10) {
+            throw new RichGameException("range should between -10 and 10");
+        }
+    }
+
 }

@@ -5,7 +5,6 @@ import com.tw.exception.RichGameException;
 import com.tw.generator.DefaultMap;
 import com.tw.generator.GameMap;
 import com.tw.location.Location;
-import com.tw.util.Dice;
 import com.tw.util.RelativeIndex;
 import com.tw.util.Tool;
 
@@ -149,34 +148,8 @@ public class Game {
         return players.size() == 1;
     }
 
-    private void ensureNoPlayerOnLocation(Location location) throws RichGameException {
-        if (getPlayerAtLocation(location) != null) {
-            throw new RichGameException("there is a player on the location");
-        }
-    }
-
-    private void ensureNoToolOnLocation(Location location) throws RichGameException {
-        if (location.getTool() != null) {
-            throw new RichGameException("there is already a tool on the location");
-        }
-    }
-
-    private void ensureRangeForSettingTool(int relativeIndex) throws RichGameException {
-        if (relativeIndex > 10 || relativeIndex < -10) {
-            throw new RichGameException("range should between -10 and 10");
-        }
-    }
-
-    public void userTool(Tool tool, int relativeIndex) throws RichGameException {
-        ensureRangeForSettingTool(relativeIndex);
-        if (getCurrentPlayer().getCountOf(tool) == 0) {
-            throw new RichGameException("no such tool");
-        }
-        Location location = getRelativeLocationWith(getCurrentPlayer(), relativeIndex);
-        ensureNoToolOnLocation(location);
-        ensureNoPlayerOnLocation(location);
-        location.setTool(tool);
-        getCurrentPlayer().decreaseTool(tool);
+    public void useTool(Tool tool, int relativeIndex) throws RichGameException {
+        getCurrentPlayer().useTool(tool, relativeIndex);
     }
 
     public Location getRelativeLocationWith(Player player, int relativeIndex) {

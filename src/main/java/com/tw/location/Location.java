@@ -77,7 +77,8 @@ public abstract class Location {
         return tool;
     }
 
-    public void setTool(Tool tool) {
+    public void setTool(Tool tool) throws RichGameException {
+        ensureNoToolOnLocation(this);
         this.tool = tool;
     }
 
@@ -87,5 +88,11 @@ public abstract class Location {
 
     public void reset() {
 
+    }
+
+    private void ensureNoToolOnLocation(Location location) throws RichGameException {
+        if (location.getTool() != null) {
+            throw new RichGameException("there is already a tool on the location");
+        }
     }
 }
