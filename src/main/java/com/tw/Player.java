@@ -7,11 +7,14 @@ import com.tw.location.Land;
 import com.tw.location.Location;
 import com.tw.util.RelativeIndex;
 import com.tw.util.Tool;
-import com.tw.util.ToolBox;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static com.tw.util.Tool.BOMB;
+import static com.tw.util.Tool.ROADBLOCK;
+import static com.tw.util.Tool.ROBOT;
 
 public class Player {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -44,11 +47,11 @@ public class Player {
     private int funding;
     private int point = 0;
     private String color;
-    private ToolBox toolBox = new ToolBox(this);
     private String symbol;
     private List<Land> lands = new ArrayList<>();
     private int skipRoll = 0;
     private int unpunishRoll = 0;
+    private List<Tool> tools = new ArrayList<>();
 
     private Player(Game game, String name, String symbol, String color, int funding) {
         this.game = game;
@@ -105,15 +108,15 @@ public class Player {
     }
 
     public int getToolCount() {
-        return toolBox.getToolCount();
+        return tools.size();
     }
 
     public int getCountOf(Tool tool) {
-        return toolBox.getCountOf(tool);
+        return (int) tools.stream().filter(t -> t == tool).count();
     }
 
     public void addTool(Tool tool) {
-        toolBox.addTool(tool);
+        tools.add(tool);
     }
 
     public void decreasePoint(int toolPoint) {
@@ -137,7 +140,7 @@ public class Player {
                 "%s",
                 funding, point,
                 getLandInfo(),
-                toolBox);
+                getToolInfo());
     }
 
     public String getLandInfo() {
@@ -174,7 +177,7 @@ public class Player {
     }
 
     public void decreaseTool(Tool tool) {
-        toolBox.remoteTool(tool);
+        tools.remove(tool);
     }
 
     public int getSkipRoll() {
@@ -238,6 +241,10 @@ public class Player {
         land.reset();
         increaseBy(land.getPrice());
         removeLand(land);
+    }
+
+    public String getToolInfo() {
+        return String.format("道具: 路障%d个；炸弹%d个；机器娃娃%d个", getCountOf(ROADBLOCK), getCountOf(BOMB), getCountOf(ROBOT));
     }
 
     public void buyLand(Land land) throws RichGameException {
