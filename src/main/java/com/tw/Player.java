@@ -38,7 +38,7 @@ public class Player {
             "S",
             "J"
     };
-    private static final String[] colors = new String[] {
+    private static final String[] colors = new String[]{
             ANSI_RED,
             ANSI_GREEN,
             ANSI_YELLOW,
@@ -64,13 +64,11 @@ public class Player {
     }
 
     public static Player createPlayer(Game game, int index) {
-        Player player = createPlayer(game, index, Game.DEFAULT_FUNDING);
-        return player;
+        return createPlayer(game, index, Game.DEFAULT_FUNDING);
     }
 
     public static Player createPlayer(Game game, int index, int funding) {
-        Player player = new Player(game, playerNames[index - 1], playerSymbols[index - 1], colors[index - 1], funding);
-        return player;
+        return new Player(game, playerNames[index - 1], playerSymbols[index - 1], colors[index - 1], funding);
     }
 
     public String getName() {
@@ -144,9 +142,9 @@ public class Player {
     public String getInfo() {
         return String.format(
                 "资金: %d元\n" +
-                "点数: %d点\n" +
-                "%s\n" +
-                "%s",
+                        "点数: %d点\n" +
+                        "%s\n" +
+                        "%s",
                 funding, point,
                 getLandInfo(),
                 getToolInfo());
@@ -195,9 +193,7 @@ public class Player {
     }
 
     public void robot() throws RichGameException {
-        if (getCountOf(Tool.ROBOT) == 0) {
-            throw new RichGameException("no such tool");
-        }
+        ensureEnoughToolCount(Tool.ROBOT);
         for (int i = 1; i <= 10; i++) {
             Location location = game.getRelativeLocationWith(this, i);
             location.removeTool();
@@ -231,21 +227,17 @@ public class Player {
     }
 
     public void sellTool(Tool tool) throws RichGameException {
-        if (getCountOf(tool) == 0) {
-            throw new RichGameException("no such tool");
-        }
+        ensureEnoughToolCount(tool);
         tools.remove(tool);
         increasePoint(tool.getPrice());
     }
 
     public void sell(int index) throws RichGameException {
-        if (!game.getLocation(index).isLand() || lands.indexOf(game.getLocation(index)) == -1) {
-            throw new RichGameException("no such land");
-        }
+        ensureLandExist(index);
         Land land = (Land) game.getLocation(index);
         land.reset();
         increaseFunding(land.getPrice());
-        removeLand(land);
+        lands.remove(land);
     }
 
     public String getToolInfo() {
@@ -253,28 +245,39 @@ public class Player {
     }
 
     public void buyLand(Land land) throws RichGameException {
-        if (land.getOwner() != null) {
-            throw new CannotAccessLandException("current location already get an owner");
-        }
-
+        ensureIsEmptyLand(land);
         ensureFoundingIsEnough(land.getLandPrice());
+
         land.setOwner(this);
         addLand(land);
         decreaseFunding(land.getLandPrice());
     }
 
-    public void upgradeLand(Land land) throws RichGameException {
-        if (land.getOwner() != this) {
-            throw new CannotAccessLandException("can not upgrade land which is not belong to you");
+    private void ensureIsEmptyLand(Land land) throws CannotAccessLandException {
+        if (land.getOwner() != null) {
+            throw new CannotAccessLandException("current location already get an owner");
         }
+    }
 
+    public void upgradeLand(Land land) throws RichGameException {
+        ensureHandleOwnLand(land);
+        ensureCanUpgrade(land);
+        ensureFoundingIsEnough(land.getLandPrice());
+
+        decreaseFunding(land.getLandPrice());
+        land.upgradeLevel();
+    }
+
+    private void ensureCanUpgrade(Land land) throws CannotAccessLandException {
         if (land.isHighestLevel()) {
             throw new CannotAccessLandException("can not upgrade land with highest level");
         }
+    }
 
-        ensureFoundingIsEnough(land.getLandPrice());
-        decreaseFunding(land.getLandPrice());
-        land.upgradeLevel();
+    private void ensureHandleOwnLand(Land land) throws CannotAccessLandException {
+        if (land.getOwner() != this) {
+            throw new CannotAccessLandException("can not upgrade land which is not belong to you");
+        }
     }
 
     private void ensureFoundingIsEnough(int price) throws NoEnoughFoundException {
@@ -283,18 +286,8 @@ public class Player {
         }
     }
 
-    private void removeLand(Land land) {
-        lands.remove(land);
-    }
-
     public String getColor() {
         return color;
-    }
-
-    public void cleanLand() {
-        for (Land land : lands) {
-            land.reset();
-        }
     }
 
     public void buyTool(Tool tool) throws RichGameException {
@@ -315,13 +308,23 @@ public class Player {
 
     public void useTool(Tool tool, int relativeIndex) throws RichGameException {
         ensureRangeForSettingTool(relativeIndex);
-        if (getCountOf(tool) == 0) {
-            throw new RichGameException("no such tool");
-        }
+        ensureEnoughToolCount(tool);
         Location location = game.getRelativeLocationWith(this, relativeIndex);
         ensureNoPlayerOnLocation(location);
         location.addTool(tool);
         tools.remove(tool);
+    }
+
+    public void cleanLand() {
+        for (Land land : lands) {
+            land.reset();
+        }
+    }
+
+    private void ensureEnoughToolCount(Tool tool) throws RichGameException {
+        if (getCountOf(tool) == 0) {
+            throw new RichGameException("no such tool");
+        }
     }
 
     private void ensureNoPlayerOnLocation(Location location) throws RichGameException {
@@ -333,6 +336,12 @@ public class Player {
     private void ensureRangeForSettingTool(int relativeIndex) throws RichGameException {
         if (relativeIndex > 10 || relativeIndex < -10) {
             throw new RichGameException("range should between -10 and 10");
+        }
+    }
+
+    private void ensureLandExist(int index) throws RichGameException {
+        if (!game.getLocation(index).isLand() || lands.indexOf(game.getLocation(index)) == -1) {
+            throw new RichGameException("no such land");
         }
     }
 

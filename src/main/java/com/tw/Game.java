@@ -136,12 +136,8 @@ public class Game {
 
     public void removePlayer(Player player) {
         players.remove(player);
-        cleanLand(player);
-        currentPlayerIndex--;
-    }
-
-    private void cleanLand(Player player) {
         player.cleanLand();
+        currentPlayerIndex--;
     }
 
     public boolean isOver() {
