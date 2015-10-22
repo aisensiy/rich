@@ -92,7 +92,7 @@ public class Player {
         return funding;
     }
 
-    public void decreaseBy(int price) {
+    public void decreaseFunding(int price) {
         funding -= price;
     }
 
@@ -165,7 +165,7 @@ public class Player {
             skipRoll--;
     }
 
-    public void setSkipRoll(int n) {
+    public void setSkipTurn(int n) {
         skipRoll = n;
     }
 
@@ -205,7 +205,7 @@ public class Player {
         unpunishRoll = 5;
     }
 
-    public void setUnpunishRoll(int roll) {
+    public void setUnpunishTurn(int roll) {
         unpunishRoll = roll;
     }
 
@@ -248,7 +248,7 @@ public class Player {
         ensureFoundingIsEnough(land.getLandPrice());
         land.setOwner(this);
         addLand(land);
-        decreaseBy(land.getLandPrice());
+        decreaseFunding(land.getLandPrice());
     }
 
     public void upgradeLand(Land land) throws RichGameException {
@@ -261,7 +261,7 @@ public class Player {
         }
 
         ensureFoundingIsEnough(land.getLandPrice());
-        decreaseBy(land.getLandPrice());
+        decreaseFunding(land.getLandPrice());
         land.upgradeLevel();
     }
 

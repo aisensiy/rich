@@ -165,11 +165,10 @@ public class PlayerTest {
     public void can_sell_land() throws Exception {
         int originalFunding = player.getFunding();
         Land land = new Land(100);
-        land.setOwner(player);
+        player.buyLand(land);
         when(game.getLocation(10)).thenReturn(land);
-        player.addLand(land);
         player.sell(10);
-        assertThat(player.getFunding(), is(originalFunding + land.getPrice()));
+        assertThat(player.getFunding(), is(originalFunding));
         assertThat(player.getLandInfo(), not(containsString("1")));
     }
 

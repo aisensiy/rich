@@ -53,7 +53,7 @@ public class Land extends Location {
             } else if (!player.canPunish()) {
                 System.out.println("由于福神附身，不惩罚");
             } else {
-                player.decreaseBy(punish());
+                player.decreaseFunding(punish());
                 getOwner().increaseBy(punish());
                 System.out.println(String.format("到达%s的%s,损失金钱%d元", getOwner().getName(), getName(), punish()));
             }
@@ -83,19 +83,8 @@ public class Land extends Location {
         }
 
         ensureFoundingIsEnough(player);
-        player.decreaseBy(price);
+        player.decreaseFunding(price);
         upgradeLevel();
-    }
-
-    private void buy(Player player) throws RichGameException {
-        if (getOwner() != null) {
-            throw new CannotAccessLandException("current location already get an owner");
-        }
-
-        ensureFoundingIsEnough(player);
-        setOwner(player);
-        player.addLand(this);
-        player.decreaseBy(price);
     }
 
     private void ensureFoundingIsEnough(Player player) throws NoEnoughFoundException {

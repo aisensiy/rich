@@ -11,7 +11,7 @@ public class Prison extends Location {
 
     @Override
     public void triggerArriveEvent(Player player) throws RichGameException {
-        player.setSkipRoll(3);
+        player.setSkipTurn(3);
     }
 
     @Override

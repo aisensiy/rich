@@ -36,19 +36,19 @@ public class GameRunner {
                 System.out.println(help());
             } else if (command.startsWith("block")) {
                 try {
-                    game.setTool(Tool.ROADBLOCK, Integer.parseInt(command.split(" ")[1]));
+                    game.userTool(Tool.ROADBLOCK, Integer.parseInt(command.split(" ")[1]));
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
             } else if (command.startsWith("bomb")) {
                 try {
-                    game.setTool(Tool.BOMB, Integer.parseInt(command.split(" ")[1]));
+                    game.userTool(Tool.BOMB, Integer.parseInt(command.split(" ")[1]));
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
             } else if (command.equals("robot")) {
                 try {
-                    game.robot();
+                    game.useRobot();
                 } catch (RichGameException e) {
                     System.out.println(e.getMessage());
                 }
@@ -115,7 +115,7 @@ public class GameRunner {
                 System.out.println("游戏结束");
             }
         }
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
     }
 
     private void giftShopProcess(Player currentPlayer, GiftShop location) throws IOException {

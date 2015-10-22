@@ -81,7 +81,7 @@ public class GameTest {
         game.setPlayers("12");
         Player anotherPlayer = game.getPlayer(2);
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(anotherPlayer));
     }
 
@@ -93,13 +93,13 @@ public class GameTest {
         Player player3 = game.getPlayer(3);
 
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player2));
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player3));
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(player1));
     }
 
@@ -112,25 +112,25 @@ public class GameTest {
 
         int player1OriginalLocation = game.getCurrentPlayer().getLocationIndex();
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(player1.getLocationIndex() - player1OriginalLocation, is(5));
 
         int player2OriginalLocation = game.getCurrentPlayer().getLocationIndex();
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(player2.getLocationIndex() - player2OriginalLocation, is(5));
     }
 
     @Test
     public void should_set_current_player_to_next() throws Exception {
         game.setPlayers("1234");
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(3)));
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(4)));
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
     }
 
@@ -140,16 +140,16 @@ public class GameTest {
         assertThat(game.getSymbol(game.getLocation(0)), containsString("Q"));
         when(dice.getInt()).thenReturn(1);
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         when(dice.getInt()).thenReturn(3);
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         when(dice.getInt()).thenReturn(2);
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         when(dice.getInt()).thenReturn(2);
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getSymbol(game.getLocation(3)), containsString("A"));
     }
 
@@ -166,18 +166,18 @@ public class GameTest {
         game.setPlayers("123");
         Player player = game.getPlayer(1);
         game.removePlayer(player);
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(1)));
     }
 
     @Test
     public void should_skip_player_who_cannot_roll() throws Exception {
         game.setPlayers("123");
-        game.getPlayer(2).setSkipRoll(1);
-        game.setCurrentPlayerToNext();
+        game.getPlayer(2).setSkipTurn(1);
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(3)));
-        game.setCurrentPlayerToNext();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
+        game.setPlayerToNext();
         assertThat(game.getCurrentPlayer(), is(game.getPlayer(2)));
     }
 
@@ -186,7 +186,7 @@ public class GameTest {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
         player.addTool(ROADBLOCK);
-        game.setTool(ROADBLOCK, 5);
+        game.userTool(ROADBLOCK, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(ROADBLOCK));
         assertThat(player.getCountOf(ROADBLOCK), is(0));
     }
@@ -196,7 +196,7 @@ public class GameTest {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
         player.addTool(BOMB);
-        game.setTool(BOMB, 5);
+        game.userTool(BOMB, 5);
         assertThat(game.getRelativeLocationWith(player, 5).getTool(), is(BOMB));
         assertThat(player.getCountOf(BOMB), is(0));
     }
@@ -207,7 +207,7 @@ public class GameTest {
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        game.setTool(ROADBLOCK, 5);
+        game.userTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -215,7 +215,7 @@ public class GameTest {
         expectedException.expect(RichGameException.class);
         expectedException.expectMessage("no such tool");
         game.setPlayers("12");
-        game.setTool(BOMB, 5);
+        game.userTool(BOMB, 5);
     }
 
     @Test
@@ -226,8 +226,8 @@ public class GameTest {
         Player player = game.getPlayer(1);
         player.addTool(ROADBLOCK);
         player.addTool(ROADBLOCK);
-        game.setTool(ROADBLOCK, 5);
-        game.setTool(ROADBLOCK, 5);
+        game.userTool(ROADBLOCK, 5);
+        game.userTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -238,7 +238,7 @@ public class GameTest {
         Player player = game.getPlayer(1);
         player.addTool(ROADBLOCK);
         game.getPlayer(2).go(5);
-        game.setTool(ROADBLOCK, 5);
+        game.userTool(ROADBLOCK, 5);
     }
 
     @Test
@@ -247,7 +247,7 @@ public class GameTest {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
         player.addTool(ROADBLOCK);
-        game.setTool(ROADBLOCK, 11);
+        game.userTool(ROADBLOCK, 11);
     }
 
     @Test
@@ -279,10 +279,10 @@ public class GameTest {
     public void should_decrease_unpunish_roll_every_roll() throws Exception {
         game.setPlayers("12");
         Player player = game.getPlayer(1);
-        player.setUnpunishRoll(1);
+        player.setUnpunishTurn(1);
         assertThat(player.canPunish(), is(false));
         game.roll();
-        game.setCurrentPlayerToNext();
+        game.setPlayerToNext();
         assertThat(player.canPunish(), is(true));
     }
 }

@@ -98,12 +98,12 @@ public class Game {
         return players.get((currentPlayerIndex + 1) % players.size());
     }
 
-    public void setCurrentPlayerToNext() {
+    public void setPlayerToNext() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         if (!getCurrentPlayer().canRoll()) {
             getCurrentPlayer().decreaseSkipRoll();
             getCurrentPlayer().decreaseUnpunishRoll();
-            setCurrentPlayerToNext();
+            setPlayerToNext();
         }
     }
 
@@ -193,7 +193,7 @@ public class Game {
         }
     }
 
-    public void setTool(Tool tool, int relativeIndex) throws RichGameException {
+    public void userTool(Tool tool, int relativeIndex) throws RichGameException {
         ensureRangeForSettingTool(relativeIndex);
         if (getCurrentPlayer().getCountOf(tool) == 0) {
             throw new RichGameException("no such tool");
@@ -213,7 +213,7 @@ public class Game {
         return map.getHospitalIndex();
     }
 
-    public void robot() throws RichGameException {
+    public void useRobot() throws RichGameException {
         getCurrentPlayer().robot();
     }
 }

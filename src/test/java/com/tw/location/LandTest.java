@@ -2,19 +2,12 @@ package com.tw.location;
 
 import com.tw.Game;
 import com.tw.Player;
-import com.tw.exception.NoEnoughFoundException;
-import com.tw.location.Land;
-import com.tw.location.Location;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class LandTest {
     private Game game;
@@ -46,7 +39,7 @@ public class LandTest {
         Player player2 = Player.createPlayer(game, 1);
         land.setOwner(player1);
         int originalFunding = player2.getFunding();
-        player1.setSkipRoll(1);
+        player1.setSkipTurn(1);
         land.process(player2);
         assertThat(player2.getFunding(), is(originalFunding));
     }
@@ -58,7 +51,7 @@ public class LandTest {
         Player player2 = Player.createPlayer(game, 1);
         land.setOwner(player1);
         int originalFunding = player2.getFunding();
-        player2.setUnpunishRoll(1);
+        player2.setUnpunishTurn(1);
         land.process(player2);
         assertThat(player2.getFunding(), is(originalFunding));
     }
@@ -70,7 +63,7 @@ public class LandTest {
         Player player2 = Player.createPlayer(game, 1);
         land.setOwner(player1);
         int originalFunding = player2.getFunding();
-        player2.setUnpunishRoll(1);
+        player2.setUnpunishTurn(1);
         player2.decreaseUnpunishRoll();
         land.process(player2);
         assertThat(player2.getFunding(), is(originalFunding - 100));
